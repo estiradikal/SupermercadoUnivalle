@@ -1,7 +1,14 @@
 package supermercado;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01  
@@ -30,6 +37,7 @@ public class Supermercado {
      * Constructor de la clase Supermercado
      */
     public Supermercado(){
+        restaurarDatos();
     }
 
     /**
@@ -46,6 +54,7 @@ public class Supermercado {
      */
     public void setProductosEnElMercado(List<ProductoProveedor> productosEnElMercado) {
         this.productosEnElMercado = productosEnElMercado;
+        guardarDatos();
     }
 
     /**
@@ -62,6 +71,7 @@ public class Supermercado {
      */
     public void setMisProductos(List<ProductoInventario> misProductos) {
         this.misProductos = misProductos;
+        guardarDatos();
     }
 
     /**
@@ -78,6 +88,7 @@ public class Supermercado {
      */
     public void setMisClientes(List<Cliente> misClientes) {
         this.misClientes = misClientes;
+        guardarDatos();
     }
 
     /**
@@ -85,7 +96,7 @@ public class Supermercado {
      * @return El arreglo de proveedores (List-Proveedor-)
      */
     public List<Proveedor> getMisProveedores() {
-        return misProveedores;
+        return misProveedores;        
     }
 
     /**
@@ -94,6 +105,7 @@ public class Supermercado {
      */
     public void setMisProveedores(List<Proveedor> misProveedores) {
         this.misProveedores = misProveedores;
+        guardarDatos();
     }
 
     /**
@@ -110,5 +122,44 @@ public class Supermercado {
      */
     public void setMisVentas(List<Venta> misVentas) {
         this.misVentas = misVentas;
+        guardarDatos();
+    }
+    
+    public void guardarDatos(){
+        try {
+            
+            ObjectOutputStream backup = new ObjectOutputStream(new FileOutputStream("persistentInfo.data"));
+            backup.writeObject(productosEnElMercado);
+            backup.writeObject(misProductos);
+            backup.writeObject(misClientes);
+            backup.writeObject(misProveedores);
+            backup.writeObject(misVentas);
+            backup.flush();
+            
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error: Ruta para exportar valida");
+        }
+    }
+    
+    public void restaurarDatos(){
+        try {
+            
+            ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("persistentInfo.data"));
+            productosEnElMercado = (ArrayList) recuperar.readObject();
+            misProductos = (ArrayList) recuperar.readObject();
+            misClientes = (ArrayList) recuperar.readObject();
+            misProveedores = (ArrayList) recuperar.readObject();
+            misVentas = (ArrayList) recuperar.readObject();
+            recuperar.close();
+            
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error: ClassNotFoundException");
+        } catch (EOFException e) {
+            JOptionPane.showMessageDialog(null, "Error: EOFException");
+        } catch (IOException e) {
+            // El archivo de informacion aun no existe
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Error: NullPointerException");
+        }
     }
 }
