@@ -1,4 +1,4 @@
-package POO;
+package supermercado;
 
 import java.util.ArrayList;
 import java.util.List;

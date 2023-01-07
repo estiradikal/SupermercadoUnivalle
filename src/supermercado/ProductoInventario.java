@@ -1,4 +1,4 @@
-package POO;
+package supermercado;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01  
@@ -22,12 +22,12 @@ public class ProductoInventario extends ProductoProveedor {
     /**
      * Constructor de la clase ProductoProveedor
      * @param cantidad La cantidad de producto que se comprara (int)
-     * @param Id El id del producto (String)
+     * @param Id El id del producto (int)
      * @param nombre El nombre del producto (String)
      * @param precio El precio del producto (int)
      * @param medida La medida (kilogramos o unidades) del producto (String)
      */
-    public ProductoInventario(int cantidad, String Id, String nombre, int precio, String medida) {
+    public ProductoInventario(int cantidad, int Id, String nombre, int precio, String medida) {
         super(Id, nombre, precio, medida);
         this.cantidad = cantidad;
     }

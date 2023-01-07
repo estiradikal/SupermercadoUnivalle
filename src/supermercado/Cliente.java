@@ -1,4 +1,4 @@
-package POO;
+package supermercado;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01  

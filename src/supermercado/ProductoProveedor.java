@@ -1,4 +1,4 @@
-package POO;
+package supermercado;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01  
@@ -17,19 +17,19 @@ package POO;
 
 public class ProductoProveedor {
 
-    protected String Id;
+    protected int Id;
     protected String nombre;
     protected int precio;
     protected String medida; // Kg: Kilogramos o Unid: Unidades
 
     /**
      * Constructor de ProductoProveedor
-     * @param Id El id del producto (String)
+     * @param Id El id del producto (int)
      * @param nombre El nombre del producto (String)
      * @param precio El precio del producto (int)
      * @param medida La medida (kilogramos o unidades) del producto (String)
      */
-    public ProductoProveedor(String Id, String nombre, int precio, String medida) {
+    public ProductoProveedor(int Id, String nombre, int precio, String medida) {
         this.Id = Id;
         this.nombre = nombre;
         this.precio = precio;
@@ -38,17 +38,17 @@ public class ProductoProveedor {
 
     /**
      * Obtiene el id del producto
-     * @return Id El id del producto (String)
+     * @return Id El id del producto (int)
      */
-    public String getId() {
+    public int getId() {
         return Id;
     }
 
     /**
      * Asigna un id al producto
-     * @param Id El nuevo id del producto (String)
+     * @param Id El nuevo id del producto (int)
      */
-    public void setId(String Id) {
+    public void setId(int Id) {
         this.Id = Id;
     }
 

@@ -1,4 +1,4 @@
-package POO;
+package supermercado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +111,4 @@ public class Supermercado {
     public void setMisVentas(List<Venta> misVentas) {
         this.misVentas = misVentas;
     }
-    
-    
 }
