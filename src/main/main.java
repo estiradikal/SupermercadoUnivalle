@@ -15,8 +15,14 @@ package main;
  * 
 */
 
+import modelo.*;
+import vista.*;
+import controlador.*;
+
 public class main {
     public static void main(String[] args) {
-        System.out.println("Hola mundo");
+        VentanaPrincipalModelo modelo = new VentanaPrincipalModelo();
+        VentanaPrincipalVista vista = new VentanaPrincipalVista();
+        VentanaPrincipalControlador controlador = new VentanaPrincipalControlador(modelo, vista);
     }
 }
