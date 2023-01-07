@@ -2,7 +2,7 @@ package POO;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01  
- *    Laboratorio # 
+ *    Laboratorio # 4
  *    Profesor: Luis Romo Portilla 
  *
  *    Archivo:  Supermercado.java
@@ -17,4 +17,88 @@ package POO;
 
 public class ProductoProveedor {
 
+    protected String Id;
+    protected String nombre;
+    protected int precio;
+    protected String medida; // Kg: Kilogramos o Unid: Unidades
+
+    /**
+     * Constructor de ProductoProveedor
+     * @param Id El id del producto (String)
+     * @param nombre El nombre del producto (String)
+     * @param precio El precio del producto (int)
+     * @param medida La medida (kilogramos o unidades) del producto (String)
+     */
+    public ProductoProveedor(String Id, String nombre, int precio, String medida) {
+        this.Id = Id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.medida = medida;
+    }
+
+    /**
+     * Obtiene el id del producto
+     * @return Id El id del producto (String)
+     */
+    public String getId() {
+        return Id;
+    }
+
+    /**
+     * Asigna un id al producto
+     * @param Id El nuevo id del producto (String)
+     */
+    public void setId(String Id) {
+        this.Id = Id;
+    }
+
+    /**
+     * Obtiene el nombre del producto
+     * @return nombre El nombre del producto (String)
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Asigna un nombre al producto
+     * @param nombre El nuevo nombre delproducto (String)
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * Obtiene el precio del producto
+     * @return precio El precio del producto (int)
+     */
+    public int getPrecio() {
+        return precio;
+    }
+
+    /**
+     * Asigna un precio al producto
+     * @param precio  El precio del producto (int)
+     */
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    /**
+     * Obtiene la forma en como se mide el producto
+     * Kg: Kilogramos | Unid: Unidades
+     * @return medida La medida del producto (String)
+     */
+    public String getMedida() {
+        return medida;
+    }
+
+    /**
+     * Asigna la medida del producto
+     * Kg: Kilogramos | Unid: Unidades
+     * @param medida La medida del producto (String)
+     */
+    public void setMedida(String medida) {
+        this.medida = medida;
+    }
 }

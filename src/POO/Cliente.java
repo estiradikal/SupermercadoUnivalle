@@ -2,7 +2,7 @@ package POO;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01  
- *    Laboratorio # 
+ *    Laboratorio # 4
  *    Profesor: Luis Romo Portilla 
  *
  *    Archivo:  Supermercado.java
@@ -16,5 +16,49 @@ package POO;
 */
 
 public class Cliente {
+    
+    protected int cedula;
+    protected String nombre;
 
+    /**
+     * Constructor de la clase Cliente
+     * @param cedula La cedula del cliente (int)
+     * @param nombre El nombre completo del cliente (String)
+     */
+    public Cliente(int cedula, String nombre) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+    }
+
+    /**
+     * Obtiene la cedula del cliente
+     * @return cedula El numero de la cedula (int)
+     */
+    public int getCedula() {
+        return cedula;
+    }
+
+    /**
+     * Asigna una cedula al cliente
+     * @param cedula El numero de cedula para asignar (int)
+     */
+    public void setCedula(int cedula) {
+        this.cedula = cedula;
+    }
+
+    /**
+     * Obtiene el nombre del cliente
+     * @return nombre El nombre completo del cliente (String)
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Asigna un nombre al cliente
+     * @param nombre El nombre completo del cliente (String)
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 }
