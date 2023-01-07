@@ -75,7 +75,7 @@ public class VentanaClientesControlador {
     //              MODOS DE OPERACION               //
     /**
      * Habilita y deshabilita elementos en la interfaz para REGISTRAR NUEVOS
-     * AFILIADOS
+     * CLIENTES
      */
     public void modoRegistrar() {
         vista.setGuiaModificar();
@@ -87,7 +87,7 @@ public class VentanaClientesControlador {
 
     /**
      * Habilita y deshabilita elementos en la interfaz para HACER MODIFICACIONES
-     * EN AFILIADOS EXISTENTES (Modificar datos y eliminar)
+     * EN CLIENTES EXISTENTES (Modificar datos y eliminar)
      */
     public void modoModificar() {
         vista.setGuiaRegistrar();
@@ -172,7 +172,7 @@ public class VentanaClientesControlador {
                         "Error: Debe escribir un nombre en el campo de nombre", 
                         "Error", 
                         JOptionPane.ERROR_MESSAGE);
-                else if (modelo.existeCedula(cedula)){
+                else if (modelo.existeCedula(cedula) && cedula != selectedId){
                     JOptionPane.showMessageDialog(null,
                         "Error: Ya existe alguien con esta cedula", 
                         "Error", 
