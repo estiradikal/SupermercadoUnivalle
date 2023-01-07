@@ -1,5 +1,7 @@
 package supermercado;
 
+import java.io.Serializable;
+
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01  
  *    Laboratorio # 4
@@ -15,7 +17,7 @@ package supermercado;
  * 
 */
 
-public class ProductoProveedor {
+public class ProductoProveedor implements Serializable{
 
     protected int Id;
     protected String nombre;

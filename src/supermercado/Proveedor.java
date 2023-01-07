@@ -1,5 +1,6 @@
 package supermercado;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * 
 */
 
-public class Proveedor {
+public class Proveedor implements Serializable{
 
     protected int id;
     protected String nombre;
