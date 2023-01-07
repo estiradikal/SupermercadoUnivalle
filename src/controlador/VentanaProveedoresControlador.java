@@ -14,7 +14,7 @@ import modelo.*;
  *    Elboratorio # 4
  *    Profesor: Luis Romo Portilla 
  *
- *    Archivo:  VentanaClientesControlador.java
+ *    Archivo:  VentanaProveedoresControlador.java
  *    Licencia: GNU-GPL 
  *    @version  1.0
  *    
@@ -26,20 +26,20 @@ import modelo.*;
 
 import vista.*;
 
-public class VentanaClientesControlador {
+public class VentanaProveedoresControlador {
     
     protected int selectedId;
     protected int selectedRow;
     
-    protected VentanaClientesModelo modelo = new VentanaClientesModelo();
-    protected VentanaClientesVista vista = new VentanaClientesVista();    
+    protected VentanaProveedoresModelo modelo = new VentanaProveedoresModelo();
+    protected VentanaProveedoresVista vista = new VentanaProveedoresVista();    
     
     /**
-     * Constructor de la clase VentanaClientesControlador
-     * @param modelo El modelo de la ventana (VentanaClientesModelo)
-     * @param vista La vista de la ventana (VentanaClientesVista)
+     * Constructor de el clase VentanaProveedoresControlador
+     * @param modelo El modelo de el ventana (VentanaProveedoresModelo)
+     * @param vista La vista de el ventana (VentanaProveedoresVista)
      */
-    public VentanaClientesControlador(VentanaClientesModelo modelo, VentanaClientesVista vista) {
+    public VentanaProveedoresControlador(VentanaProveedoresModelo modelo, VentanaProveedoresVista vista) {
         this.modelo = modelo;
         this.vista = vista;
         
@@ -61,21 +61,21 @@ public class VentanaClientesControlador {
     
     //              ELEMENTOS DE LA INTERFAZ               //
     /**
-     * Carga los datos del arreglo en el modelo a la tabla
+     * Carga los datos del arreglo en el modelo a el tabla
      */
     public void cargarTabla() {
-        for (int i = 0; i < modelo.getCantidadClientes(); i++) {
-            int cedula = modelo.getCedula(i);
+        for (int i = 0; i < modelo.getCantidadProveedores(); i++) {
+            int id = modelo.getId(i);
             String nombre = modelo.getNombre(i);
-            vista.nuevaFila(cedula, nombre);
+            vista.nuevaFila(id, nombre);
         }
     }
 
     
     //              MODOS DE OPERACION               //
     /**
-     * Habilita y deshabilita elementos en la interfaz para REGISTRAR NUEVOS
-     * CLIENTES
+     * Habilita y deshabilita elementos en el interfaz para REGISTRAR NUEVOS
+     * PROVEEDORES
      */
     public void modoRegistrar() {
         vista.setGuiaModificar();
@@ -86,8 +86,8 @@ public class VentanaClientesControlador {
     }
 
     /**
-     * Habilita y deshabilita elementos en la interfaz para HACER MODIFICACIONES
-     * EN CLIENTES EXISTENTES (Modificar datos y eliminar)
+     * Habilita y deshabilita elementos en el interfaz para HACER MODIFICACIONES
+     * EN PROVEEDORES EXISTENTES (Modificar datos y eliminar)
      */
     public void modoModificar() {
         vista.setGuiaRegistrar();
@@ -98,7 +98,7 @@ public class VentanaClientesControlador {
     }
     
     /**
-     * Recarga algunos elementos y datos de la vista
+     * Recarga algunos elementos y datos de el vista
      */
     public void recargarTodo(){
         vista.limpiarCampos();
@@ -108,7 +108,7 @@ public class VentanaClientesControlador {
     }
     
     /**
-     * Instancia una VentanaPrincipal y cierra la actual
+     * Instancia una VentanaPrincipal y cierra el actual
      */
     public void volverAlMenu(){
         vista.cerrar();
@@ -118,14 +118,14 @@ public class VentanaClientesControlador {
     
     //              LISTENERS               //
     /**
-     * Se encarga de registrar un nuevo cliente cuidando la integridad de la 
+     * Se encarga de registrar un nuevo proveedor cuidando el integridad de el 
      * informacion
      */
     ActionListener oyenteRegistrar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
             try{
-                int cedula = Integer.parseInt(vista.getCedula());
+                int id = Integer.parseInt(vista.getId());
                 String nombre;
                 
                 if(vista.getNombre().isBlank())
@@ -133,15 +133,15 @@ public class VentanaClientesControlador {
                         "Error: Debe escribir un nombre en el campo de nombre", 
                         "Error", 
                         JOptionPane.ERROR_MESSAGE);
-                else if (modelo.existeCedula(cedula)){
+                else if (modelo.existeId(id)){
                     JOptionPane.showMessageDialog(null,
-                        "Error: Ya existe alguien con esta cedula", 
+                        "Error: Ya existe alguien con esta id", 
                         "Error", 
                         JOptionPane.ERROR_MESSAGE);
                 }
                 else{
                     nombre = vista.getNombre();
-                    modelo.registrar(cedula, nombre);
+                    modelo.registrar(id, nombre);
                     
                     JOptionPane.showMessageDialog(null, "Registro exitoso!");
                     recargarTodo();
@@ -149,7 +149,7 @@ public class VentanaClientesControlador {
                  
             } catch(NumberFormatException e){
                 JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un numero en el campo de cedula", 
+                        "Error: Debe escribir un numero en el campo de id", 
                         "Error", 
                         JOptionPane.ERROR_MESSAGE);
             }
@@ -157,14 +157,14 @@ public class VentanaClientesControlador {
     };
     
     /**
-     * Se encarga de modificar un nuevo cliente cuidando la integridad de la 
+     * Se encarga de modificar un nuevo proveedor cuidando el integridad de el 
      * informacion
      */
     ActionListener oyenteModificar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
             try{
-                int cedula = Integer.parseInt(vista.getCedula());
+                int id = Integer.parseInt(vista.getId());
                 String nombre = vista.getNombre();
                 
                 if(vista.getNombre().isBlank())
@@ -172,15 +172,15 @@ public class VentanaClientesControlador {
                         "Error: Debe escribir un nombre en el campo de nombre", 
                         "Error", 
                         JOptionPane.ERROR_MESSAGE);
-                else if (modelo.existeCedula(cedula) && cedula != selectedId){
+                else if (modelo.existeId(id) && id != selectedId){
                     JOptionPane.showMessageDialog(null,
-                        "Error: Ya existe alguien con esta cedula", 
+                        "Error: Ya existe alguien con esta id", 
                         "Error", 
                         JOptionPane.ERROR_MESSAGE);
                 }
                 else {
                     
-                    modelo.modificar(selectedId, cedula, nombre);
+                    modelo.modificar(selectedId, id, nombre);
             
                     JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
                     recargarTodo();
@@ -188,7 +188,7 @@ public class VentanaClientesControlador {
                  
             } catch(NumberFormatException e){
                 JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un numero en el campo de cedula", 
+                        "Error: Debe escribir un numero en el campo de id", 
                         "Error", 
                         JOptionPane.ERROR_MESSAGE);
             }
@@ -196,7 +196,7 @@ public class VentanaClientesControlador {
     };
     
     /**
-     * Se encarga de eliminar clientes del arreglo
+     * Se encarga de eliminar proveedores del arreglo
      */
     ActionListener oyenteEliminar = new ActionListener() {
         @Override
@@ -217,7 +217,7 @@ public class VentanaClientesControlador {
     };
     
     /**
-     * Redirige a la VentanaPrincipal
+     * Redirige a el VentanaPrincipal
      */
     ActionListener oyenteVolver = new ActionListener() {
         @Override
@@ -227,7 +227,7 @@ public class VentanaClientesControlador {
     };
     
     /**
-     * Gestiona los clics en las filas de la tabla
+     * Gestiona los clics en las filas de el tabla
      */
     MouseListener oyenteFilas = new MouseListener() {
         @Override
@@ -246,7 +246,7 @@ public class VentanaClientesControlador {
             }
 
             if (Mouse_evt.getClickCount() == 1) {
-                vista.setCedula(table.getValueAt(table.getSelectedRow(), 0).toString());
+                vista.setId(table.getValueAt(table.getSelectedRow(), 0).toString());
                 vista.setNombre(table.getValueAt(table.getSelectedRow(), 1).toString());
                 modoModificar();
             }
