@@ -7,7 +7,7 @@ package controlador;
  *
  *    Archivo:  VentanaPrincipalControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.0
+ *    @version  1.1
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -53,8 +53,8 @@ public class VentanaPrincipalControlador {
     ActionListener oyenteProductos = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
-            modelo.iniciarVentanaProductos();
             vista.cerrar();
+            modelo.iniciarVentanaProductos();
         }
     };
     
@@ -64,8 +64,8 @@ public class VentanaPrincipalControlador {
     ActionListener oyenteProveedores = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
-            modelo.iniciarVentanaProveedores();
             vista.cerrar();
+            modelo.iniciarVentanaProveedores();
         }
     };
     
@@ -75,8 +75,8 @@ public class VentanaPrincipalControlador {
     ActionListener oyenteClientes = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
-            modelo.iniciarVentanaClientes();
             vista.cerrar();
+            modelo.iniciarVentanaClientes();
         }
     };
     
@@ -87,8 +87,8 @@ public class VentanaPrincipalControlador {
         @Override
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null, "Aun no implementado");
-//            modelo.iniciarVentanaProductosProveedores();
 //            vista.cerrar();
+//            modelo.iniciarVentanaProductosProveedores();
         }
     };
     
@@ -99,8 +99,8 @@ public class VentanaPrincipalControlador {
         @Override
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null, "Aun no implementado");
-//            modelo.iniciarVentanaComprarProductos();
 //            vista.cerrar();
+//            modelo.iniciarVentanaComprarProductos();
         }
     };
     
@@ -111,8 +111,8 @@ public class VentanaPrincipalControlador {
         @Override
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null, "Aun no implementado");
-//            modelo.iniciarVentanaRegistroVentas();
 //            vista.cerrar();
+//            modelo.iniciarVentanaRegistroVentas();
         }
     };
 }
