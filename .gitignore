@@ -18,5 +18,8 @@ nbdist/
 *.war
 *.ear
 
+# Archivos de informacion persistente #
+*.data
+
 # Archivos desconocidos #
 /desktop.ini
