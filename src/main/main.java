@@ -2,11 +2,11 @@ package main;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01  
-    Laboratorio # 
-    Profesor: Luis Romo Portilla 
-
-    Archivo:  main.java
-    Licencia: GNU-GPL 
+ *    Laboratorio # 4
+ *    Profesor: Luis Romo Portilla 
+ *
+ *    Archivo:  main.java
+ *    Licencia: GNU-GPL 
  *    @version  1.0
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}

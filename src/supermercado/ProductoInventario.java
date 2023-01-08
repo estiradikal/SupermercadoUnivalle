@@ -41,7 +41,6 @@ public class ProductoInventario extends ProductoProveedor implements Serializabl
     public int getCantidad() {
         return cantidad;
     }
-
     
     /**
      * Asigna la cantidad de producto disponible

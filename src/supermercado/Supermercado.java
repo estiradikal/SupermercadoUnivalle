@@ -125,6 +125,9 @@ public class Supermercado {
         guardarDatos();
     }
     
+    /**
+     * Crea un archivo binario con extension .data para guardar los arreglos de la clase
+     */
     public void guardarDatos(){
         try {
             
@@ -141,6 +144,9 @@ public class Supermercado {
         }
     }
     
+    /**
+     * Usa un archivo binario con extension .data para restaurar los arreglos de la clase
+     */
     public void restaurarDatos(){
         try {
             
