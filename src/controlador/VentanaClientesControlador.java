@@ -16,7 +16,7 @@ import modelo.*;
  *
  *    Archivo:  VentanaClientesControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.0
+ *    @version  1.1
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -116,6 +116,67 @@ public class VentanaClientesControlador {
     }
     
     
+     //              MEDIDAS DE SEGURIDAD                //
+    /**
+     * Medida de seguridad, verifica si el campo de nombre esta vacio y retroalimenta al usuario
+     * @return true, el campo esta vacio; false, el campo no esta vacio
+     */
+    public boolean campoNombreEstaVacio(){
+        
+        boolean respuesta = true;
+        
+        if(!vista.getNombre().isBlank()){
+            respuesta = false;
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Error: Debe escribir un nombre en el campo de nombre",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+            
+        return respuesta;
+    }
+    
+    /**
+     * Medida de seguridad, verifica si el campo de cedula tiene un numero y retroalimenta al usuario
+     * @return true, el campo tiene un numero; false, el campo contiene otros caracteres
+     */
+    public boolean cedulaEsNumericaEnVista(){
+        boolean respuesta = false;
+        
+        try{
+            Integer.parseInt(vista.getCedula());
+            respuesta = true;
+        } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: Debe escribir un numero en el campo de cedula",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+        }
+        return respuesta;
+    }
+    
+    /**
+     * Medida de seguridad, verifica si existe otro cliente con este cedula y retroalimenta al usuario
+     * @param cedula La cedula del cliente a analizar (int)
+     * @return true, este cedula ya esta ocupado por otro cliente; false, el cedula esta libre
+     */
+    public boolean existeOtroClienteConCedula(int cedula) {
+        
+        boolean respuesta = false;
+        
+        if (modelo.existeCedula(cedula) && cedula != selectedId) {
+            respuesta = true;
+            JOptionPane.showMessageDialog(null,
+                    "Error: Ya existe un cliente con esta cedula",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return respuesta;
+    }
+    
+    
     //              LISTENERS               //
     /**
      * Se encarga de registrar un nuevo cliente cuidando la integridad de la 
@@ -124,34 +185,18 @@ public class VentanaClientesControlador {
     ActionListener oyenteRegistrar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            try{
+          
+            if (cedulaEsNumericaEnVista() && !campoNombreEstaVacio()) {
+
                 int cedula = Integer.parseInt(vista.getCedula());
-                String nombre;
-                
-                if(vista.getNombre().isBlank())
-                    JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un nombre en el campo de nombre", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
-                else if (modelo.existeCedula(cedula)){
-                    JOptionPane.showMessageDialog(null,
-                        "Error: Ya existe alguien con esta cedula", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
-                }
-                else{
-                    nombre = vista.getNombre();
+                String nombre = vista.getNombre();
+
+                if (!existeOtroClienteConCedula(cedula)) {
                     modelo.registrar(cedula, nombre);
-                    
+
                     JOptionPane.showMessageDialog(null, "Registro exitoso!");
                     recargarTodo();
                 }
-                 
-            } catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un numero en el campo de cedula", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
             }
         }
     };
@@ -163,34 +208,27 @@ public class VentanaClientesControlador {
     ActionListener oyenteModificar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            try{
+            if (cedulaEsNumericaEnVista() && !campoNombreEstaVacio()) {
+
                 int cedula = Integer.parseInt(vista.getCedula());
                 String nombre = vista.getNombre();
-                
-                if(vista.getNombre().isBlank())
-                    JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un nombre en el campo de nombre", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
-                else if (modelo.existeCedula(cedula) && cedula != selectedId){
-                    JOptionPane.showMessageDialog(null,
-                        "Error: Ya existe alguien con esta cedula", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
+
+                if (!existeOtroClienteConCedula(cedula)) {
+                    int eleccion = JOptionPane.showConfirmDialog(null, """    
+                                                                   Al modificar este cliente los datos anteriores seran borrados.
+                                                               
+                                                                   ¿Esta seguro de que desea continuar?""",
+                            "Advertencia: Modificacion de cliente",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE);
+                    switch (eleccion) {
+                        case JOptionPane.YES_OPTION:
+                            modelo.modificar(selectedId, cedula, nombre);
+                            JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
+                            recargarTodo();
+                            break;
+                    }
                 }
-                else {
-                    
-                    modelo.modificar(selectedId, cedula, nombre);
-            
-                    JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
-                    recargarTodo();
-                }
-                 
-            } catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un numero en el campo de cedula", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
             }
         }
     };
@@ -201,8 +239,20 @@ public class VentanaClientesControlador {
     ActionListener oyenteEliminar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-         modelo.eliminar(selectedId);
-         recargarTodo();
+            int eleccion = JOptionPane.showConfirmDialog(null, """    
+                                                                   Esta operacion es irreversible.
+                                                               
+                                                                   ¿Esta seguro de que desea continuar?""",
+                    "Advertencia: Eliminacion de cliente",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+            switch (eleccion) {
+                case JOptionPane.YES_OPTION:
+                    modelo.eliminar(selectedId);
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente.");
+                    recargarTodo();
+                    break;
+            }
         }
     };
     
