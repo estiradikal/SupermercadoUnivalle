@@ -116,6 +116,66 @@ public class VentanaProveedoresControlador {
     }
     
     
+    //              MEDIDAS DE SEGURIDAD                //
+    /**
+     * Medida de seguridad, verifica si el campo de nombre esta vacio y retroalimenta al usuario
+     * @return true, el campo esta vacio; false, el campo no esta vacio
+     */
+    public boolean campoNombreEstaVacio(){
+        
+        boolean respuesta = true;
+        
+        if(!vista.getNombre().isBlank()){
+            respuesta = false;
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Error: Debe escribir un nombre en el campo de nombre",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+            
+        return respuesta;
+    }
+    
+    /**
+     * Medida de seguridad, verifica si el campo de id tiene un numero y retroalimenta al usuario
+     * @return true, el campo tiene un numero; false, el campo contiene otros caracteres
+     */
+    public boolean idEsNumericoEnVista(){
+        boolean respuesta = false;
+        
+        try{
+            Integer.parseInt(vista.getId());
+            respuesta = true;
+        } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: Debe escribir un numero en el campo de id",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+        }
+        return respuesta;
+    }
+    
+    /**
+     * Medida de seguridad, verifica si existe otro proveedor con este id y retroalimenta al usuario
+     * @param id El id del proveedor a analizar (int)
+     * @return true, este id ya esta ocupado por otro proveedor; false, el id esta libre
+     */
+    public boolean existeOtroProveedorConEsteId(int id) {
+        
+        boolean respuesta = false;
+        
+        if (modelo.existeId(id) && id != selectedId) {
+            respuesta = true;
+            JOptionPane.showMessageDialog(null,
+                    "Error: Ya existe un producto con este id",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return respuesta;
+    }
+    
     //              LISTENERS               //
     /**
      * Se encarga de registrar un nuevo proveedor cuidando el integridad de el 
@@ -124,35 +184,22 @@ public class VentanaProveedoresControlador {
     ActionListener oyenteRegistrar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            try{
-                int id = Integer.parseInt(vista.getId());
-                String nombre;
-                
-                if(vista.getNombre().isBlank())
-                    JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un nombre en el campo de nombre", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
-                else if (modelo.existeId(id)){
-                    JOptionPane.showMessageDialog(null,
-                        "Error: Ya existe alguien con esta id", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
-                }
-                else{
-                    nombre = vista.getNombre();
-                    modelo.registrar(id, nombre);
+            
+            if(idEsNumericoEnVista()){
+                if(!campoNombreEstaVacio()){
                     
-                    JOptionPane.showMessageDialog(null, "Registro exitoso!");
-                    recargarTodo();
+                    int id = Integer.parseInt(vista.getId());
+                    String nombre;
+
+                    if(!existeOtroProveedorConEsteId(id)){
+                        nombre = vista.getNombre();
+                        modelo.registrar(id, nombre);
+
+                        JOptionPane.showMessageDialog(null, "Registro exitoso!");
+                        recargarTodo();
+                    }
                 }
-                 
-            } catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un numero en el campo de id", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
-            }
+            }      
         }
     };
     
