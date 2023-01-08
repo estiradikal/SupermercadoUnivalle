@@ -168,7 +168,7 @@ public class VentanaProveedoresControlador {
         if (modelo.existeId(id) && id != selectedId) {
             respuesta = true;
             JOptionPane.showMessageDialog(null,
-                    "Error: Ya existe un producto con este id",
+                    "Error: Ya existe un proveedor con este id",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -184,20 +184,18 @@ public class VentanaProveedoresControlador {
         @Override
         public void actionPerformed(ActionEvent evt) {
             
-            if(idEsNumericoEnVista()){
-                if(!campoNombreEstaVacio()){
-                    
-                    int id = Integer.parseInt(vista.getId());
-                    String nombre = vista.getNombre();
+            if (idEsNumericoEnVista() && !campoNombreEstaVacio()) {
 
-                    if(!existeOtroProveedorConEsteId(id)){
-                        modelo.registrar(id, nombre);
+                int id = Integer.parseInt(vista.getId());
+                String nombre = vista.getNombre();
 
-                        JOptionPane.showMessageDialog(null, "Registro exitoso!");
-                        recargarTodo();
-                    }
+                if (!existeOtroProveedorConEsteId(id)) {
+                    modelo.registrar(id, nombre);
+
+                    JOptionPane.showMessageDialog(null, "Registro exitoso!");
+                    recargarTodo();
                 }
-            }      
+            }   
         }
     };
     
@@ -207,27 +205,26 @@ public class VentanaProveedoresControlador {
     ActionListener oyenteModificar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            if(idEsNumericoEnVista()){
-                if(!campoNombreEstaVacio()){
-                    
-                    int id = Integer.parseInt(vista.getId());
-                    String nombre = vista.getNombre();
+            
+            if (idEsNumericoEnVista() && !campoNombreEstaVacio()) {
 
-                    if (!existeOtroProveedorConEsteId(id)) {
-                        int eleccion = JOptionPane.showConfirmDialog(null, """    
+                int id = Integer.parseInt(vista.getId());
+                String nombre = vista.getNombre();
+
+                if (!existeOtroProveedorConEsteId(id)) {
+                    int eleccion = JOptionPane.showConfirmDialog(null, """    
                                                                    Al modificar este proveedor los datos anteriores seran borrados:
                                                                    
                                                                    ¿Desea continuar con la operación?""",
-                                "Advertencia: Modificacion de proveedor",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.WARNING_MESSAGE);
-                        switch (eleccion) {
-                            case JOptionPane.YES_OPTION:
-                                modelo.modificar(selectedId, id, nombre);
-                                JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
-                                recargarTodo();
-                                break;
-                        }
+                            "Advertencia: Modificacion de proveedor",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE);
+                    switch (eleccion) {
+                        case JOptionPane.YES_OPTION:
+                            modelo.modificar(selectedId, id, nombre);
+                            JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
+                            recargarTodo();
+                            break;
                     }
                 }
             }
