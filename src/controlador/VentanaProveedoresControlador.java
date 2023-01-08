@@ -16,7 +16,7 @@ import modelo.*;
  *
  *    Archivo:  VentanaProveedoresControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.0
+ *    @version  1.1
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -178,8 +178,7 @@ public class VentanaProveedoresControlador {
     
     //              LISTENERS               //
     /**
-     * Se encarga de registrar un nuevo proveedor cuidando el integridad de el 
-     * informacion
+     * Se encarga de registrar un nuevo proveedor
      */
     ActionListener oyenteRegistrar = new ActionListener() {
         @Override
@@ -189,10 +188,9 @@ public class VentanaProveedoresControlador {
                 if(!campoNombreEstaVacio()){
                     
                     int id = Integer.parseInt(vista.getId());
-                    String nombre;
+                    String nombre = vista.getNombre();
 
                     if(!existeOtroProveedorConEsteId(id)){
-                        nombre = vista.getNombre();
                         modelo.registrar(id, nombre);
 
                         JOptionPane.showMessageDialog(null, "Registro exitoso!");
@@ -204,40 +202,34 @@ public class VentanaProveedoresControlador {
     };
     
     /**
-     * Se encarga de modificar un nuevo proveedor cuidando el integridad de el 
-     * informacion
+     * Se encarga de modificar un nuevo proveedor
      */
     ActionListener oyenteModificar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            try{
-                int id = Integer.parseInt(vista.getId());
-                String nombre = vista.getNombre();
-                
-                if(vista.getNombre().isBlank())
-                    JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un nombre en el campo de nombre", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
-                else if (modelo.existeId(id) && id != selectedId){
-                    JOptionPane.showMessageDialog(null,
-                        "Error: Ya existe alguien con esta id", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
-                }
-                else {
+            if(idEsNumericoEnVista()){
+                if(!campoNombreEstaVacio()){
                     
-                    modelo.modificar(selectedId, id, nombre);
-            
-                    JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
-                    recargarTodo();
+                    int id = Integer.parseInt(vista.getId());
+                    String nombre = vista.getNombre();
+
+                    if (!existeOtroProveedorConEsteId(id)) {
+                        int eleccion = JOptionPane.showConfirmDialog(null, """    
+                                                                   Al modificar este proveedor los datos anteriores seran borrados:
+                                                                   
+                                                                   ¿Desea continuar con la operación?""",
+                                "Advertencia: Modificacion de proveedor",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.WARNING_MESSAGE);
+                        switch (eleccion) {
+                            case JOptionPane.YES_OPTION:
+                                modelo.modificar(selectedId, id, nombre);
+                                JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
+                                recargarTodo();
+                                break;
+                        }
+                    }
                 }
-                 
-            } catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un numero en el campo de id", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
             }
         }
     };
@@ -248,8 +240,20 @@ public class VentanaProveedoresControlador {
     ActionListener oyenteEliminar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-         modelo.eliminar(selectedId);
-         recargarTodo();
+            int eleccion = JOptionPane.showConfirmDialog(null, """    
+                                                                   Esta operacion es irreversible.
+                                                               
+                                                                   ¿Esta seguro de que desea continuar?""",
+                    "Advertencia: Eliminacion de proveedor",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+            switch (eleccion) {
+                case JOptionPane.YES_OPTION:
+                    modelo.eliminar(selectedId);
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente.");
+                    recargarTodo();
+                    break;
+            }
         }
     };
     
