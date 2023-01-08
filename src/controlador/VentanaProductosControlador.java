@@ -1,7 +1,12 @@
 package controlador;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import modelo.*;
 
 /**
@@ -11,7 +16,7 @@ import modelo.*;
  *
  *    Archivo:  VentanaProductosControlador.java
  *    Licencia: GNU-GPL 
- *    @version  0.1
+ *    @version  1.0
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -22,6 +27,10 @@ import modelo.*;
 import vista.*;
 
 public class VentanaProductosControlador {
+    
+    int selectedId;
+    int selectedRow;
+    
     protected VentanaProductosModelo modelo = new VentanaProductosModelo();
     protected VentanaProductosVista vista = new VentanaProductosVista();
 
@@ -32,39 +41,320 @@ public class VentanaProductosControlador {
         vista.setVisible(true);
         vista.setLocationRelativeTo(null);
         vista.setResizable(false);
-    
+        
         vista.addActionVolver(oyenteVolver);
         vista.addActionRegistrar(oyenteRegistrar);
         vista.addActionModificar(oyenteModificar);
         vista.addActionEliminar(oyenteEliminar);
+        vista.addActionCancelar(oyenteCancelar);
+        vista.addActionTable(oyenteFilas);
+        
+        cargarTabla();
+        vista.setGuiaModificar();
     }
     
+    
+    //              ELEMENTOS DE LA INTERFAZ               //
+    /**
+     * Carga los datos del arreglo en el modelo a el tabla
+     */
+    public void cargarTabla() {
+        for (int i = 0; i < modelo.getCantidadProductos(); i++) {
+            int id = modelo.getId(i);
+            String nombre = modelo.getNombre(i);
+            int precio = modelo.getPrecio(i);
+            String medida = modelo.getMedida(i);
+            vista.nuevaFila(id, nombre, precio, medida);
+        }
+    }
+    
+    
+    //              MODOS DE OPERACION               //
+    /**
+     * Habilita y deshabilita elementos en el interfaz para REGISTRAR NUEVOS
+     * PROVEEDORES
+     */
+    public void modoRegistrar() {
+        vista.setGuiaModificar();
+        vista.deshabilitarCancelar();
+        vista.deshabilitarModificar();
+        vista.deshabilitarEliminar();
+        vista.habilitarRegistrar();
+    }
+
+    /**
+     * Habilita y deshabilita elementos en el interfaz para HACER MODIFICACIONES
+     * EN PROVEEDORES EXISTENTES (Modificar datos y eliminar)
+     */
+    public void modoModificar() {
+        vista.setGuiaRegistrar();
+        vista.deshabilitarRegistrar();
+        vista.habilitarModificar();
+        vista.habilitarEliminar();
+        vista.habilitarCancelar();
+    }
+    
+    /**
+     * Recarga algunos elementos y datos de el vista
+     */
+    public void recargarTodo(){
+        vista.limpiarCampos();
+        vista.limpiarTabla();
+        modoRegistrar();
+        cargarTabla();
+    }
+    
+    /**
+     * Instancia una VentanaPrincipal y cierra el actual
+     */
+    public void volverAlMenu(){
+        vista.cerrar();
+        modelo.iniciarVentanaPrincipal();
+    }
+    
+    
+    //              MEDIDAS DE SEGURIDAD                //
+    /**
+     * Medida de seguridad, verifica si el campo de nombre esta vacio y retroalimenta al usuario
+     * @return true, el campo esta vacio; false, el campo no esta vacio
+     */
+    public boolean campoNombreEstaVacio(){
+        
+        boolean respuesta = true;
+        
+        if(!vista.getNombre().isBlank()){
+            respuesta = false;
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Error: Debe escribir un nombre en el campo de nombre",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+            
+        return respuesta;
+    }
+    
+    /**
+     * Medida de seguridad, verifica si el campo de id tiene un numero y retroalimenta al usuario
+     * @return true, el campo tiene un numero; false, el campo contiene otros caracteres
+     */
+    public boolean idEsNumericoEnVista(){
+        boolean respuesta = false;
+        
+        try{
+            Integer.parseInt(vista.getId());
+            respuesta = true;
+        } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: Debe escribir un numero en el campo de id",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+        }
+        return respuesta;
+    }
+    
+    /**
+     * Medida de seguridad, verifica si el campo de precio tiene un numero y retroalimenta al usuario
+     * @return true, el campo tiene un numero; false, el campo contiene otros caracteres
+     */
+    public boolean precioEsNumericoEnVista(){
+        boolean respuesta = false;
+        
+        try{
+            Integer.parseInt(vista.getPrecio());
+            respuesta = true;
+        } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: Debe escribir un numero en el campo de precio",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+        }
+        return respuesta;
+    }
+    
+    /**
+     * Medida de seguridad, verifica si existe otro producto con este id y retroalimenta al usuario
+     * @param id El id del producto a analizar (int)
+     * @return true, este id ya esta ocupado por otro producto; false, el id esta libre
+     */
+    public boolean existeOtroProductoConEsteId(int id) {
+        
+        boolean respuesta = false;
+        
+        if (modelo.existeId(id) && id != selectedId) {
+            respuesta = true;
+            JOptionPane.showMessageDialog(null,
+                    "Error: Ya existe un producto con este id",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return respuesta;
+    }
+    
+    
+    //              LISTENERS               //
+    /**
+     * Se encarga de registrar un nuevo producto cuidando la integridad de el 
+     * informacion
+     */
     ActionListener oyenteRegistrar = new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent evt) {
             
+            if (idEsNumericoEnVista()) {
+                if (!campoNombreEstaVacio()) {
+                    if (precioEsNumericoEnVista()) {
+
+                        int id = Integer.parseInt(vista.getId());
+                        String nombre = vista.getNombre();
+                        int precio = Integer.parseInt(vista.getPrecio());
+                        String medida = vista.getMedida();
+
+                        if (!existeOtroProductoConEsteId(id)) {
+
+                            modelo.registrar(id, nombre, precio, medida);
+
+                            JOptionPane.showMessageDialog(null, "Registro exitoso!");
+                            recargarTodo();
+                        }
+                    }
+                }
+            }
         }
     };
     
+    /**
+     * Se encarga de modificar un nuevo producto cuidando la integridad de el 
+     * informacion
+     */
     ActionListener oyenteModificar = new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent e) {
-            
+        public void actionPerformed(ActionEvent evt) {
+
+            if (idEsNumericoEnVista()) {
+                if (!campoNombreEstaVacio()) {
+                    if (precioEsNumericoEnVista()) {
+
+                        int id = Integer.parseInt(vista.getId());
+                        String nombre = vista.getNombre();
+                        int precio = Integer.parseInt(vista.getPrecio());
+                        String medida = vista.getMedida();
+
+                        if (!existeOtroProductoConEsteId(id)) {
+                            
+                            int eleccion = JOptionPane.showConfirmDialog(null, """    
+                                                                   Por motivos de seguridad, al modificar este producto:
+                                                                   
+                                                                   - Se desasignará de los proveedores que lo ofrezcan
+                                                                   
+                                                                   ¿Desea continuar con la operación?""",
+                                    "Advertencia: Modificacion de producto",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.WARNING_MESSAGE);
+                            switch (eleccion) {
+                                case JOptionPane.YES_OPTION:
+                                    modelo.modificar(selectedId, id, nombre, precio, medida);
+                                    modelo.eliminarProductoDeProveedores(selectedId);
+                                    JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
+                                    recargarTodo();
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
         }
     };
     
+    /**
+     * Se encarga de eliminar productos del arreglo
+     */
     ActionListener oyenteEliminar = new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent e) {
-            
+        public void actionPerformed(ActionEvent evt) {
+            int eleccion = JOptionPane.showConfirmDialog(null, """    
+                                                                   Por motivos de seguridad, al eliminar este producto:
+                                                                   
+                                                                   - Se desasignará de los proveedores que lo ofrezcan
+                                                                   
+                                                                   ¿Desea continuar con la operación?""",
+                    "Advertencia: Eliminacion de producto",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+            switch (eleccion) {
+                case JOptionPane.YES_OPTION:
+                    modelo.eliminar(selectedId);
+                    modelo.eliminarProductoDeProveedores(selectedId);
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente");
+                    recargarTodo();
+                    break;
+            }
         }
     };
     
+    /**
+     * Sale del modo modificar sin haber realizado cambios
+     */
+    ActionListener oyenteCancelar = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+         recargarTodo();
+        }
+    };
+    
+    /**
+     * Redirige a el VentanaPrincipal
+     */
     ActionListener oyenteVolver = new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent e) {
-            modelo.iniciarVentanaPrincipal();
-            vista.cerrar();
+        public void actionPerformed(ActionEvent evt) {
+            volverAlMenu();
+        }
+    };
+    
+    /**
+     * Gestiona los clics en las filas de el tabla
+     */
+    MouseListener oyenteFilas = new MouseListener() {
+        @Override
+        public void mousePressed(MouseEvent Mouse_evt) {
+            
+            JTable table = (JTable) Mouse_evt.getSource();
+            selectedRow = table.getSelectedRow();
+            Point point = Mouse_evt.getPoint();
+            
+            int row = table.rowAtPoint(point);
+            
+            try {
+                selectedId = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+            } catch (NumberFormatException e) {
+                
+            }
+
+            if (Mouse_evt.getClickCount() == 1) {
+                vista.setId(table.getValueAt(table.getSelectedRow(), 0).toString());
+                vista.setNombre(table.getValueAt(table.getSelectedRow(), 1).toString());
+                vista.setPrecio(table.getValueAt(table.getSelectedRow(), 2).toString());
+                vista.setMedida(table.getValueAt(table.getSelectedRow(), 3).toString());
+                modoModificar();
+            }
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
         }
     };
 }

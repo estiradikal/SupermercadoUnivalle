@@ -1,6 +1,9 @@
 package vista;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -92,9 +95,10 @@ public class VentanaProductosVista extends javax.swing.JFrame {
         jPanel1.add(lbl_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
         jPanel1.add(txtF_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 120, -1));
 
+        lbl_textoGuia.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lbl_textoGuia.setForeground(new java.awt.Color(0, 102, 102));
         lbl_textoGuia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(lbl_textoGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 260, 20));
+        jPanel1.add(lbl_textoGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 340, 20));
 
         table_principal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -190,33 +194,251 @@ public class VentanaProductosVista extends javax.swing.JFrame {
             }
         });
     }
-   
+
+    /**
+     * Obtiene la medida en el campo de texto
+     * @return La medida en Kg o Unid (String)
+     */
+    public String getMedida() {
+        return box_medida.getSelectedItem().toString();
+    }
+
+    /**
+     * Muestra una medida en el campo de texto
+     * @param medida La medida en Kg o Unid (String)
+     */
+    public void setMedida(String medida) {
+        box_medida.setSelectedItem(medida);
+    }
+
+    /**
+     * Obtiene el id del campo de texto
+     * @return El id del producto (int)
+     */
+    public String getId() {
+        return txtF_id.getText();
+    }
+
+    /**
+     * Muestra un id en el campo de texto
+     * @param id El id que se mostrara (int)
+     */
+    public void setId(String id) {
+        txtF_id.setText(id);
+    }
+
+    /**
+     * Obtiene el nombre en el campo de texto
+     * @return El nombre del producto (String)
+     */
+    public String getNombre() {
+        return txtF_nombre.getText();
+    }
+
+    /**
+     * Muestra un nombre en el campo de texto
+     * @param nombre El nombre que mostrara (String)
+     */
+    public void setNombre(String nombre) {
+        txtF_nombre.setText(nombre);
+    }
+
+    /**
+     * Obtiene el precio en el campo de texto
+     * @return El precio del producto (String)
+     */
+    public String getPrecio() {
+        return txtF_precio.getText();
+    }
+
+    /**
+     * Muestra un precio en el campo de texto
+     * @param precio El precio que mostrara (String)
+     */
+    public void setPrecio(String precio) {
+        txtF_precio.setText(precio);
+    }
+    
     /**
      * Crea los titulos de la tabla
      */
     public void configurarTabla() {
-        String[] titulosTabla = new String[]{"ID", "NOMBRE", "PRECIO"};
+        String[] titulosTabla = new String[]{"ID", "NOMBRE", "PRECIO", "MEDIDA"};
         modeloTabla.setColumnIdentifiers(titulosTabla);
     }
    
+    /**
+     * Establece un texto para instruir en el modo Registrar
+     */
+    public void setGuiaRegistrar() {
+        lbl_textoGuia.setText("Modifique los campos arriba o presione Cancelar para el modo registro");
+    }
+
+    /**
+     * Establece un texto para instruir en el modo Modificar
+     */
+    public void setGuiaModificar() {
+        lbl_textoGuia.setText("Seleccione productos en la tabla (si los hay) para modificarlos");
+    }
+    
+    /**
+     * Cierra la ventana actual
+     */
     public void cerrar(){
         dispose();
     }
     
+    /**
+     * Añade una nueva fila con los datos de un producto
+     * @param id El numero de id del producto (int)
+     * @param nombre El nombre del producto (String)
+     * @param precio El precion del producto (int)
+     */
+    public void nuevaFila(int id, String nombre, int precio, String medida) {
+        modeloTabla.addRow(new Object[]{
+            id, nombre, precio, medida
+        });
+    }
+    
+    
+    //              FUNCIONES DE LIMPIEZA                   //
+    /**
+     * Elimina todas las filas de la tabla
+     */
+    public void limpiarTabla() {
+        int filasTabla = modeloTabla.getRowCount();
+        for (int i = 0; i < filasTabla; i++) {
+            modeloTabla.removeRow(0);
+        }
+    }
+
+    /**
+     * Elimina una fila específica de la tabla
+     *
+     * @param fila La Fila a eliminar
+     */
+    public void eliminarFilaTabla(int fila) {
+        modeloTabla.removeRow(fila);
+    }
+
+    /**
+     * Vacía los textos en los campos de id y nombre
+     */
+    public void limpiarCampos() {
+        txtF_id.setText("");
+        txtF_nombre.setText("");
+        txtF_precio.setText("");
+        box_medida.setSelectedItem("Unid");
+    }
+
+    
+    //              HABILITAR/DESHABILITAR BOTONES          //
+    /**
+     * Habilita el boton de cancelar
+     */
+    public void habilitarCancelar() {
+        btn_cancelar.setEnabled(true);
+    }
+
+    /**
+     * Deshabilita el boton de cancelar
+     */
+    public void deshabilitarCancelar() {
+        btn_cancelar.setEnabled(false);
+    }
+
+    /**
+     * Habilita el boton de registrar
+     */
+    public void habilitarRegistrar() {
+        btn_registrar.setEnabled(true);
+    }
+
+    /**
+     * Deshabilita el boton de registrar
+     */
+    public void deshabilitarRegistrar() {
+        btn_registrar.setEnabled(false);
+    }
+
+    /**
+     * Habilita el boton de Modificar
+     */
+    public void habilitarModificar() {
+        btn_modificar.setEnabled(true);
+    }
+
+    /**
+     * Deshabilita el boton de modificar
+     */
+    public void deshabilitarModificar() {
+        btn_modificar.setEnabled(false);
+    }
+
+    /**
+     * Habilita btn_eliminar y configura su color en rojo
+     */
+    public void habilitarEliminar() {
+        btn_eliminar.setEnabled(true);
+        btn_eliminar.setBackground(new java.awt.Color(255, 0, 51));
+    }
+
+    /**
+     * Deshabilita btn_eliminar y configura su color en gris
+     */
+    public void deshabilitarEliminar() {
+        btn_eliminar.setEnabled(false);
+        btn_eliminar.setBackground(new java.awt.Color(187, 187, 187));
+    }
+    
+    
+    //              LISTENERS            //
+    /**
+     * Añade un ActionListener a btn_registrar
+     * @param listener El listener (ActionListener)
+     */
     public void addActionRegistrar(ActionListener listener){
         btn_registrar.addActionListener(listener);
     }
     
+    /**
+     * Añade un ActionListener a btn_modificar
+     * @param listener El listener (ActionListener)
+     */
     public void addActionModificar(ActionListener listener){
         btn_modificar.addActionListener(listener);
     }
         
+    /**
+     * Añade un ActionListener a btn_eliminar
+     * @param listener El listener (ActionListener)
+     */
     public void addActionEliminar(ActionListener listener){
         btn_eliminar.addActionListener(listener);
     }
     
+    /**
+     * Añade un ActionListener a btn_cancelar
+     * @param listener El listener (ActionListener)
+     */
+    public void addActionCancelar(ActionListener listener){
+        btn_cancelar.addActionListener(listener);
+    }
+    
+    /**
+     * Añade un ActionListener a btn_volver
+     * @param listener El listener (ActionListener)
+     */
     public void addActionVolver(ActionListener listener){
         btn_volver.addActionListener(listener);
+    }
+    
+    /**
+     * Agrega un MouseListener a la tabla
+     * @param listener El MouseListener
+     */
+    public void addActionTable(MouseListener listener) {
+        table_principal.addMouseListener(listener);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -104,6 +104,24 @@ public class VentanaProductosModelo {
     }
     
     /**
+     * Obtiene el precio de un producto
+     * @param indice La posicion del producto en el arreglo (int)
+     * @return El precio al que los proveedores venden el producto (int)
+     */
+    public int getPrecio(int indice){
+        return productosEnElMercado.get(indice).getPrecio();
+    }
+    
+    /**
+     * Obtiene la forma de medir el producto 
+     * @param indice La posicion del producto en el arreglo (int)
+     * @return La forma de medir el producto Kg o Unid (String)
+     */
+    public String getMedida(int indice){
+        return productosEnElMercado.get(indice).getMedida();
+    }
+    
+    /**
      * Verifica si ya existe un producto con cierto id
      * @param id el id a verificar (int)
      * @return true: Existe un producto con este id; false: No existe un producto con este id (boolean)
@@ -119,6 +137,28 @@ public class VentanaProductosModelo {
         }
         
         return respuesta;
+    }
+    
+    /**
+     * Repasa todos los productos de todos los proveedores para eliminar el producto
+     * @param id El id del producto (int)
+     */
+    public void eliminarProductoDeProveedores(int id){
+        java.util.List<Proveedor> proveedores = supermercado.getMisProveedores(); // Copia todos los proveedores
+        
+        for(Proveedor proveedorActual: proveedores){ // Repasa todos los proveedores
+            
+            java.util.List<ProductoProveedor> productosDeEsteProveedor = proveedorActual.getMisProductos(); // Copia los productos de cada proveedor
+            
+            for(ProductoProveedor productoActual: productosDeEsteProveedor){ // Repasa todos los productos de cada proveedor
+                
+                if(productoActual.getId() == id){ // El proveedor tiene el producto
+                    productosDeEsteProveedor.remove(productoActual); // Elimina el producto del proveedor
+                    proveedorActual.setMisProductos(productosDeEsteProveedor); // Actualiza los produtos en proveedores
+                }
+            }
+        }
+        supermercado.setMisProveedores(proveedores); // Actualiza los proveedores en el sistema
     }
     
     /**
