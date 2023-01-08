@@ -16,7 +16,7 @@ import modelo.*;
  *
  *    Archivo:  VentanaProductosControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.0
+ *    @version  1.1
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -201,24 +201,20 @@ public class VentanaProductosControlador {
     ActionListener oyenteRegistrar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            
-            if (idEsNumericoEnVista()) {
-                if (!campoNombreEstaVacio()) {
-                    if (precioEsNumericoEnVista()) {
+        
+            if (idEsNumericoEnVista() && !campoNombreEstaVacio() && precioEsNumericoEnVista()) {
 
-                        int id = Integer.parseInt(vista.getId());
-                        String nombre = vista.getNombre();
-                        int precio = Integer.parseInt(vista.getPrecio());
-                        String medida = vista.getMedida();
+                int id = Integer.parseInt(vista.getId());
+                String nombre = vista.getNombre();
+                int precio = Integer.parseInt(vista.getPrecio());
+                String medida = vista.getMedida();
 
-                        if (!existeOtroProductoConEsteId(id)) {
+                if (!existeOtroProductoConEsteId(id)) {
 
-                            modelo.registrar(id, nombre, precio, medida);
+                    modelo.registrar(id, nombre, precio, medida);
 
-                            JOptionPane.showMessageDialog(null, "Registro exitoso!");
-                            recargarTodo();
-                        }
-                    }
+                    JOptionPane.showMessageDialog(null, "Registro exitoso!");
+                    recargarTodo();
                 }
             }
         }
@@ -232,35 +228,31 @@ public class VentanaProductosControlador {
         @Override
         public void actionPerformed(ActionEvent evt) {
 
-            if (idEsNumericoEnVista()) {
-                if (!campoNombreEstaVacio()) {
-                    if (precioEsNumericoEnVista()) {
+            if (idEsNumericoEnVista() && !campoNombreEstaVacio() && precioEsNumericoEnVista()) {
 
-                        int id = Integer.parseInt(vista.getId());
-                        String nombre = vista.getNombre();
-                        int precio = Integer.parseInt(vista.getPrecio());
-                        String medida = vista.getMedida();
+                int id = Integer.parseInt(vista.getId());
+                String nombre = vista.getNombre();
+                int precio = Integer.parseInt(vista.getPrecio());
+                String medida = vista.getMedida();
 
-                        if (!existeOtroProductoConEsteId(id)) {
-                            
-                            int eleccion = JOptionPane.showConfirmDialog(null, """    
+                if (!existeOtroProductoConEsteId(id)) {
+
+                    int eleccion = JOptionPane.showConfirmDialog(null, """    
                                                                    Por motivos de seguridad, al modificar este producto:
                                                                    
-                                                                   - Se desasignará de los proveedores que lo ofrezcan
+                                                                   - Se desasignará de los proveedores que lo ofrezcan.
                                                                    
                                                                    ¿Desea continuar con la operación?""",
-                                    "Advertencia: Modificacion de producto",
-                                    JOptionPane.YES_NO_OPTION,
-                                    JOptionPane.WARNING_MESSAGE);
-                            switch (eleccion) {
-                                case JOptionPane.YES_OPTION:
-                                    modelo.modificar(selectedId, id, nombre, precio, medida);
-                                    modelo.eliminarProductoDeProveedores(selectedId);
-                                    JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
-                                    recargarTodo();
-                                    break;
-                            }
-                        }
+                            "Advertencia: Modificacion de producto",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE);
+                    switch (eleccion) {
+                        case JOptionPane.YES_OPTION:
+                            modelo.modificar(selectedId, id, nombre, precio, medida);
+                            modelo.eliminarProductoDeProveedores(selectedId);
+                            JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
+                            recargarTodo();
+                            break;
                     }
                 }
             }
@@ -276,7 +268,7 @@ public class VentanaProductosControlador {
             int eleccion = JOptionPane.showConfirmDialog(null, """    
                                                                    Por motivos de seguridad, al eliminar este producto:
                                                                    
-                                                                   - Se desasignará de los proveedores que lo ofrezcan
+                                                                   - Se desasignará de los proveedores que lo ofrezcan.
                                                                    
                                                                    ¿Desea continuar con la operación?""",
                     "Advertencia: Eliminacion de producto",
