@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  *
  *    Archivo:  VentanaProductosVista.java
  *    Licencia: GNU-GPL 
- *    @version  1.0
+ *    @version  1.0.1
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -219,7 +219,7 @@ public class VentanaProveedoresVista extends javax.swing.JFrame {
      * Crea los titulos de la tabla
      */
     public void configurarTabla() {
-        String[] titulosTabla = new String[]{"CEDULA", "NOMBRE COMPLETO"};
+        String[] titulosTabla = new String[]{"ID", "NOMBRE"};
         modeloTabla.setColumnIdentifiers(titulosTabla);
     }
     
