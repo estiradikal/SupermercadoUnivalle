@@ -16,7 +16,7 @@ import modelo.*;
  *
  *    Archivo:  VentanaProductosControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.1
+ *    @version  1.2
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -138,15 +138,26 @@ public class VentanaProductosControlador {
      * Medida de seguridad, verifica si el campo de id tiene un numero y retroalimenta al usuario
      * @return true, el campo tiene un numero; false, el campo contiene otros caracteres
      */
-    public boolean idEsNumericoEnVista(){
-        boolean respuesta = false;
+    public boolean idEsNumeroValidoEnVista(){
         
-        try{
-            Integer.parseInt(vista.getId());
-            respuesta = true;
+        boolean respuesta = false;
+        int cantidadDigitoMin = 1; // Cuantos digitos debe tener el numero como minimo para ser aceptado 
+        
+        try{      
+            int numero = Integer.parseInt(vista.getId()); // El dato es numerico
+            if(numero >= Math.pow(10, cantidadDigitoMin-1)) // El dato es positivo y tiene entre -cantidadDigitoMin- y 10 digitos
+                respuesta = true;
+            else // El dato es negativo
+                JOptionPane.showMessageDialog(null, 
+                        "El numero introducido debe: "
+                        + "\n* Ser positivo. "
+                        + "\n* Tener entre " + cantidadDigitoMin + " y 10 digitos (Los ceros a la izquierda se eliminan)",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null,
-                        "Error: Debe escribir un numero en el campo de id",
+                JOptionPane.showMessageDialog(null, 
+                        "El numero introducido debe: "
+                        + "\n* Tener entre " + cantidadDigitoMin + " y 10 digitos (Los ceros a la izquierda se eliminan)",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
         }
@@ -183,8 +194,10 @@ public class VentanaProductosControlador {
         
         if (modelo.existeId(id) && id != selectedId) {
             respuesta = true;
-            JOptionPane.showMessageDialog(null,
-                    "Error: Ya existe un producto con este id",
+            JOptionPane.showMessageDialog(null, """
+                                                Ya existe un producto con este ID.
+                                                
+                                                Nota: Los ceros a la izquierda no son tomados en cuenta en la creacion de un ID.""",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -202,9 +215,10 @@ public class VentanaProductosControlador {
         @Override
         public void actionPerformed(ActionEvent evt) {
         
-            if (idEsNumericoEnVista() && !campoNombreEstaVacio() && precioEsNumericoEnVista()) {
+            if (idEsNumeroValidoEnVista() && !campoNombreEstaVacio() && precioEsNumericoEnVista()) {
 
                 int id = Integer.parseInt(vista.getId());
+                selectedId = -1;
                 String nombre = vista.getNombre();
                 int precio = Integer.parseInt(vista.getPrecio());
                 String medida = vista.getMedida();
@@ -228,7 +242,7 @@ public class VentanaProductosControlador {
         @Override
         public void actionPerformed(ActionEvent evt) {
 
-            if (idEsNumericoEnVista() && !campoNombreEstaVacio() && precioEsNumericoEnVista()) {
+            if (idEsNumeroValidoEnVista() && !campoNombreEstaVacio() && precioEsNumericoEnVista()) {
 
                 int id = Integer.parseInt(vista.getId());
                 String nombre = vista.getNombre();
