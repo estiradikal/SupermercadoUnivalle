@@ -57,18 +57,32 @@ public class VentanaPrincipalModelo {
      * Instancia una nueva ventana paraasignar Productos a proveedores
      */
     public void iniciarVentanaProductosProveedores(){
+        
+        VentanaAsignarProductoProveedorVista vista = new VentanaAsignarProductoProveedorVista();
+        VentanaAsignarProductoProveedorModelo modelo = new VentanaAsignarProductoProveedorModelo();
+        VentanaAsignarProductoProveedorControlador controlador = new VentanaAsignarProductoProveedorControlador();
+        
     }
     
     /**
      * Instancia una nueva ventana para comprar productos
      */
     public void iniciarVentanaComprarProductos(){
+        
+      VentanaComprarProductoVista vista = new VentanaComprarProductoVista();
+      VentanaComprarModelo modelo = new VentanaComprarModelo();
+      VentanaComprarControlador controlador = new VentanaComprarControlador();
+  
     }
     
     /**
      * Instancia una nueva ventana del registro de ventas
      */
     public void iniciarVentanaRegistroVentas(){
+        
+        VentanaVenderProductoVista vista = new VentanaVenderProductoVista();
+        VentanaVenderModelo modelo = new VentanaVenderModelo();
+        VentanaVenderControlador controlador = new VentanaVenderControlador();
     }
      
 }
