@@ -125,6 +125,11 @@ public class VentanaProveedoresVista extends javax.swing.JFrame {
 
         btn_volver.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_volver.setText("Volver");
+        btn_volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_volverActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -140,6 +145,10 @@ public class VentanaProveedoresVista extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_volverActionPerformed
 
     /**
      * Look & Feel autogenerado por Netbeans

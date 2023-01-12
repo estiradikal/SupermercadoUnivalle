@@ -106,18 +106,18 @@ public class VentanaAsignarProductoProveedorVista extends javax.swing.JFrame {
 
         btn_asignar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_asignar.setText("Asignar");
-        jPanel1.add(btn_asignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 90, -1));
+        jPanel1.add(btn_asignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 90, -1));
 
         btn_eliminar.setBackground(new java.awt.Color(187, 187, 187));
         btn_eliminar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_eliminar.setForeground(new java.awt.Color(255, 255, 255));
         btn_eliminar.setText("Eliminar");
         btn_eliminar.setEnabled(false);
-        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 90, -1));
+        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 410, 90, -1));
 
         btn_volver.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_volver.setText("Volver");
-        jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, -1, -1));
+        jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 410, -1, -1));
 
         jPanel1.add(combo_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 190, -1));
 

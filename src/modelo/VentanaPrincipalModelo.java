@@ -60,7 +60,7 @@ public class VentanaPrincipalModelo {
         
         VentanaAsignarProductoProveedorVista vista = new VentanaAsignarProductoProveedorVista();
         VentanaAsignarProductoProveedorModelo modelo = new VentanaAsignarProductoProveedorModelo();
-        VentanaAsignarProductoProveedorControlador controlador = new VentanaAsignarProductoProveedorControlador();
+        VentanaAsignarProductoProveedorControlador controlador = new VentanaAsignarProductoProveedorControlador(modelo, vista);
         
     }
     
@@ -69,9 +69,9 @@ public class VentanaPrincipalModelo {
      */
     public void iniciarVentanaComprarProductos(){
         
-      VentanaComprarProductoVista vista = new VentanaComprarProductoVista();
+      VentanaComprarVista vista = new VentanaComprarVista();
       VentanaComprarModelo modelo = new VentanaComprarModelo();
-      VentanaComprarControlador controlador = new VentanaComprarControlador();
+      VentanaComprarControlador controlador = new VentanaComprarControlador(modelo,vista);
   
     }
     
@@ -80,9 +80,9 @@ public class VentanaPrincipalModelo {
      */
     public void iniciarVentanaRegistroVentas(){
         
-        VentanaVenderProductoVista vista = new VentanaVenderProductoVista();
+        VentanaVenderVista vista = new VentanaVenderVista();
         VentanaVenderModelo modelo = new VentanaVenderModelo();
-        VentanaVenderControlador controlador = new VentanaVenderControlador();
+        VentanaVenderControlador controlador = new VentanaVenderControlador(modelo,vista);
     }
      
 }

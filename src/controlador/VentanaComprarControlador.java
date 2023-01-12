@@ -1,6 +1,9 @@
 
 package controlador;
 
+import modelo.*;
+import vista.*;
+
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01  
  *    Laboratorio # 4
@@ -17,5 +20,22 @@ package controlador;
 */
 
 public class VentanaComprarControlador {
+    
+    int selectedId;
+    int selectedRow;
+
+    protected VentanaComprarModelo modelo = new VentanaComprarModelo();
+    protected VentanaComprarVista vista = new VentanaComprarVista();
+
+    public VentanaComprarControlador(VentanaComprarModelo Modelo, VentanaComprarVista Vista) {
+
+        this.modelo = modelo;
+        this.vista = vista;
+
+        vista.setVisible(true);
+        vista.setLocationRelativeTo(null);
+        vista.setResizable(false);
+    }
+    
     
 }

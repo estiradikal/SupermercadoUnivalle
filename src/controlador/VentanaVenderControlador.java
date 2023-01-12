@@ -1,6 +1,9 @@
 
 package controlador;
 
+import modelo.*;
+import vista.*;
+
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01
  *    Laboratorio # 4
@@ -17,5 +20,21 @@ package controlador;
 */
 
 public class VentanaVenderControlador {
+    
+    int selectedId;
+    int selectedRow;
+
+    protected VentanaVenderModelo modelo = new VentanaVenderModelo();
+    protected VentanaVenderVista vista = new VentanaVenderVista();
+
+    public VentanaVenderControlador(VentanaVenderModelo modelo, VentanaVenderVista vista) {
+
+        this.modelo = modelo;
+        this.vista = vista;
+
+        vista.setVisible(true);
+        vista.setLocationRelativeTo(null);
+        vista.setResizable(false);
+    }
     
 }
