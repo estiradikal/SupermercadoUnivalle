@@ -58,9 +58,7 @@ public class VentanaPrincipalModelo {
      */
     public void iniciarVentanaProductosProveedores(){
         
-        VentanaAsignarProductoProveedorVista vista = new VentanaAsignarProductoProveedorVista();
-        VentanaAsignarProductoProveedorModelo modelo = new VentanaAsignarProductoProveedorModelo();
-        VentanaAsignarProductoProveedorControlador controlador = new VentanaAsignarProductoProveedorControlador(modelo, vista);
+        
         
     }
     
