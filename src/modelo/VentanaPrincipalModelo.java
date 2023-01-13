@@ -58,8 +58,6 @@ public class VentanaPrincipalModelo {
      */
     public void iniciarVentanaProductosProveedores(){
         
-        
-        
     }
     
     /**
