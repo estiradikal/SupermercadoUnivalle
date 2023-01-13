@@ -1,6 +1,8 @@
 
 package controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import modelo.*;
 import vista.*;
 
@@ -20,22 +22,127 @@ import vista.*;
 */
 
 public class VentanaComprarControlador {
+  
+    protected int selectedId;
+    protected int selectedRow;
     
-    int selectedId;
-    int selectedRow;
-
     protected VentanaComprarModelo modelo = new VentanaComprarModelo();
-    protected VentanaComprarVista vista = new VentanaComprarVista();
-
-    public VentanaComprarControlador(VentanaComprarModelo Modelo, VentanaComprarVista Vista) {
-
+    protected VentanaComprarVista vista = new VentanaComprarVista(); 
+    
+    public VentanaComprarControlador(VentanaComprarModelo modelo, VentanaComprarVista vista) {
         this.modelo = modelo;
         this.vista = vista;
-
+        
         vista.setVisible(true);
         vista.setLocationRelativeTo(null);
         vista.setResizable(false);
+        
+        vista.addActionVolver(oyenteVolver);
+        /*
+        vista.addActionRegistrar(oyenteRegistrar);
+        vista.addActionModificar(oyenteModificar);
+        vista.addActionEliminar(oyenteEliminar);
+        vista.addActionCancelar(oyenteCancelar);
+        vista.addActionTable(oyenteFilas);
+        */
+        
+        cargarTabla();
+        
+        vista.setGuiaModificar();
+    }
+    
+    //              ELEMENTOS DE LA INTERFAZ               //
+    /**
+     * Carga los datos del arreglo en el modelo a la tabla
+     */
+    
+    public void cargarTabla() {
+        for (int i = 0; i < modelo.getProveedoresCantidad(); i++) {
+            String Proveedor = modelo.addProveedor(i);
+            /*
+            Proveedor copiaProveedor = modelo.getProveedor (i);    
+            List<ProductosProveedor> copiaProductos = copiaProveedor.getProductos;
+            for (int j = 0; j < copiaProductos.size(); j++) {   
+                String nombreProveedor = copiaProveedor.getNombre();
+                String idProveedor = String.valueOf(copiaProveedor.getId);
+                String nombreProducto = copiaProductos.get(j).getNombre();
+                String idProducto = String.valueOf(copiaProductos.get(j).getId());
+                vista.nuevaFila(idProveedor, nombreProveedor,idProducto, nombreProducto);
+            }
+            */
+        }
+    }
+    
+    //              MODOS DE OPERACION               //
+    /**
+     * Habilita y deshabilita elementos en la interfaz para REGISTRAR NUEVOS
+     * CLIENTES
+     */
+    public void modoRegistrar() {
+        vista.setGuiaModificar();
+        vista.deshabilitarCancelar();
+        vista.deshabilitarModificar();
+        vista.deshabilitarEliminar();
+        vista.habilitarRegistrar();
     }
     
     
+    
+    /**
+     * Habilita y deshabilita elementos en la interfaz para HACER MODIFICACIONES
+     * EN CLIENTES EXISTENTES (Modificar datos y eliminar)
+     */
+    public void modoModificar() {
+        vista.setGuiaRegistrar();
+        vista.deshabilitarRegistrar();
+        vista.habilitarModificar();
+        vista.habilitarEliminar();
+        vista.habilitarCancelar();
+    }
+   
+    /**
+     * Recarga algunos elementos y datos de la vista
+     */
+    /*
+    public void recargarTodo(){
+        vista.limpiarTabla();
+        modoRegistrar();
+        cargarTabla();
+    }
+    
+    /**
+     * Instancia una VentanaPrincipal y cierra la actual
+     */
+    /*
+    public void volverAlMenu(){
+        vista.cerrar();
+        modelo.iniciarVentanaPrincipal();
+    }
+    
+    ActionListener oyenteRegistrar = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            modelo.registrar(proveedor);
+        }
+        
+    };
+    */
+    
+    /**
+     * Instancia una VentanaPrincipal y cierra la actual
+     */
+    public void volverAlMenu(){
+        vista.cerrar();
+        modelo.iniciarVentanaPrincipal();
+    }
+    
+    /**
+     * Redirige a el VentanaPrincipal
+     */
+    ActionListener oyenteVolver = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            volverAlMenu();
+        }
+    };
 }

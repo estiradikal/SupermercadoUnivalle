@@ -36,10 +36,43 @@ public class VentanaComprarVista extends javax.swing.JFrame {
      */
     public VentanaComprarVista() {
         initComponents();
-        table_comprar.setModel(modeloTabla);
+        table_principal.setModel(modeloTabla);
         configurarTabla();
     }
-
+    
+    
+    /**
+     * deshabilita el boton modificar
+     */
+    
+     public void deshabilitarModificar() {
+        btn_eliminar.setEnabled(false);
+    }
+     
+     /**
+     * Deshabilita btn_eliminar y configura su color en gris
+     */
+    public void deshabilitarEliminar() {
+        btn_eliminar.setEnabled(false);
+        btn_eliminar.setBackground(new java.awt.Color(187, 187, 187));
+    }
+    
+     /**
+     * habilita el boton de modificar
+     */
+    
+     public void habilitarModificar() {
+        btn_modificar.setEnabled(true);
+    }
+     
+     /**
+     * Habilita btn_eliminar y configura su color en rojo
+     */
+    public void habilitarEliminar() {
+        btn_eliminar.setEnabled(true);
+        btn_eliminar.setBackground(new java.awt.Color(255, 0, 51));
+    }
+  
     /**
      * Codigo autogenerado por Netbeans
      */
@@ -53,15 +86,17 @@ public class VentanaComprarVista extends javax.swing.JFrame {
         lbl_titulo = new javax.swing.JLabel();
         lbl_textoGuia = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_comprar = new javax.swing.JTable();
+        table_principal = new javax.swing.JTable();
         btn_cancelar = new javax.swing.JButton();
-        btn_comprar = new javax.swing.JButton();
+        btn_eliminar = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
         combo_comprar_producto = new javax.swing.JComboBox<>();
         combo_comprar_proveedor = new javax.swing.JComboBox<>();
         lbl_nombre1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         lbl_nombre2 = new javax.swing.JLabel();
+        btn_comprar1 = new javax.swing.JButton();
+        btn_modificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 500));
@@ -78,7 +113,7 @@ public class VentanaComprarVista extends javax.swing.JFrame {
 
         lbl_nombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_nombre.setText("Total a pagar: ");
-        jPanel1.add(lbl_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, -1, 20));
+        jPanel1.add(lbl_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, 20));
 
         lbl_titulo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_titulo.setText("Comprar");
@@ -89,7 +124,7 @@ public class VentanaComprarVista extends javax.swing.JFrame {
         lbl_textoGuia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbl_textoGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 340, 20));
 
-        table_comprar.setModel(new javax.swing.table.DefaultTableModel(
+        table_principal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -97,7 +132,7 @@ public class VentanaComprarVista extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(table_comprar);
+        jScrollPane1.setViewportView(table_principal);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 340, 220));
 
@@ -106,13 +141,13 @@ public class VentanaComprarVista extends javax.swing.JFrame {
         btn_cancelar.setEnabled(false);
         jPanel1.add(btn_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 90, -1));
 
-        btn_comprar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btn_comprar.setText("Comprar");
-        jPanel1.add(btn_comprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 90, -1));
+        btn_eliminar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        btn_eliminar.setText("Eliminar");
+        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 450, 90, -1));
 
         btn_volver.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_volver.setText("Volver");
-        jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 450, -1, -1));
+        jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 450, -1, -1));
 
         jPanel1.add(combo_comprar_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 190, -1));
 
@@ -126,6 +161,14 @@ public class VentanaComprarVista extends javax.swing.JFrame {
         lbl_nombre2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_nombre2.setText("Cantidad");
         jPanel1.add(lbl_nombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, 20));
+
+        btn_comprar1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        btn_comprar1.setText("Comprar");
+        jPanel1.add(btn_comprar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 90, -1));
+
+        btn_modificar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        btn_modificar.setText("Modificar");
+        jPanel1.add(btn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, 90, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -251,8 +294,21 @@ public class VentanaComprarVista extends javax.swing.JFrame {
      * Crea los titulos de la tabla
      */
     public void configurarTabla() {
-        String[] titulosTabla = new String[]{"CEDULA", "NOMBRE COMPLETO"};
+        String[] titulosTabla = new String[]{"ID","PROVEEDOR", "ID","PRODUCTO","CANTIDAD"};
         modeloTabla.setColumnIdentifiers(titulosTabla);
+    }
+    
+     /**
+     * Añade una nueva fila con los datos de un nuevo afiliado
+     *
+     * @param Id El Id del nuevo afiliado
+     * @param nombre El nombre completo del nuevo afiliado
+     */
+    
+       public void nuevaFila(String idProveedor, String nombreProveedor,String idProducto, String nombreProducto, int cantidad) {
+        modeloTabla.addRow(new Object[]{
+            idProveedor,nombreProveedor,idProducto, nombreProducto,cantidad
+        });
     }
     
     /**
@@ -329,14 +385,14 @@ public class VentanaComprarVista extends javax.swing.JFrame {
      * Habilita el boton de registrar
      */
     public void habilitarRegistrar() {
-        btn_comprar.setEnabled(true);
+        btn_eliminar.setEnabled(true);
     }
 
     /**
      * Deshabilita el boton de registrar
      */
     public void deshabilitarRegistrar() {
-        btn_comprar.setEnabled(false);
+        btn_eliminar.setEnabled(false);
     }
 
     
@@ -346,7 +402,7 @@ public class VentanaComprarVista extends javax.swing.JFrame {
      * @param listener El listener (ActionListener)
      */
     public void addActionRegistrar(ActionListener listener){
-        btn_comprar.addActionListener(listener);
+        btn_eliminar.addActionListener(listener);
     }
 
     /**
@@ -370,13 +426,15 @@ public class VentanaComprarVista extends javax.swing.JFrame {
      * @param listener El MouseListener
      */
     public void addActionTable(MouseListener listener) {
-        table_comprar.addMouseListener(listener);
+        table_principal.addMouseListener(listener);
     }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancelar;
-    private javax.swing.JButton btn_comprar;
+    private javax.swing.JButton btn_comprar1;
+    private javax.swing.JButton btn_eliminar;
+    private javax.swing.JButton btn_modificar;
     private javax.swing.JButton btn_volver;
     private javax.swing.JComboBox<String> combo_comprar_producto;
     private javax.swing.JComboBox<String> combo_comprar_proveedor;
@@ -389,7 +447,7 @@ public class VentanaComprarVista extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_nombre2;
     private javax.swing.JLabel lbl_textoGuia;
     private javax.swing.JLabel lbl_titulo;
-    private javax.swing.JTable table_comprar;
+    private javax.swing.JTable table_principal;
     // End of variables declaration//GEN-END:variables
 
 }
