@@ -86,9 +86,9 @@ public class VentanaPrincipalControlador {
     ActionListener oyenteProductosProveedores = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "Aun no implementado");
-//            vista.cerrar();
-//            modelo.iniciarVentanaProductosProveedores();
+            //JOptionPane.showMessageDialog(null, "Aun no implementado");
+            vista.cerrar();
+            modelo.iniciarVentanaProductosProveedores();
         }
     };
     
@@ -109,9 +109,8 @@ public class VentanaPrincipalControlador {
     ActionListener oyenteRegistroVentas = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "Aun no implementado");
-//            vista.cerrar();
-//            modelo.iniciarVentanaRegistroVentas();
+            vista.cerrar();
+            modelo.iniciarVentanaRegistroVentas();
         }
     };
 }
