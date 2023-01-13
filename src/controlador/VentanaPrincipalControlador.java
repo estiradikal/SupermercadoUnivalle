@@ -98,9 +98,8 @@ public class VentanaPrincipalControlador {
     ActionListener oyenteComprarProductos = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "Aun no implementado");
-//            vista.cerrar();
-//            modelo.iniciarVentanaComprarProductos();
+            vista.cerrar();
+            modelo.iniciarVentanaComprarProductos();
         }
     };
     

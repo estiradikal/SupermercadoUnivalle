@@ -63,6 +63,9 @@ public class VentanaPrincipalModelo {
      * Instancia una nueva ventana para comprar productos
      */
     public void iniciarVentanaComprarProductos(){
+        VentanaInventarioVista vista = new VentanaInventarioVista();
+        VentanaInventarioModelo modelo = new VentanaInventarioModelo();
+        VentanaInventarioControlador controlador = new VentanaInventarioControlador(modelo, vista);
     }
     
     /**
