@@ -7,7 +7,7 @@ package modelo;
  *
  *    Archivo:  VentanaPrincipalModelo.java
  *    Licencia: GNU-GPL 
- *    @version  1.0
+ *    @version  1.1
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -66,7 +66,7 @@ public class VentanaPrincipalModelo {
      * Instancia una nueva ventana para comprar productos
      */
     public void iniciarVentanaComprarProductos(){
-        VentanaIComprarVista vista = new VentanaIComprarVista();
+        VentanaComprarVista vista = new VentanaComprarVista();
         VentanaComprarModelo modelo = new VentanaComprarModelo();
         VentanaComprarControlador controlador = new VentanaComprarControlador(modelo, vista);
     }
