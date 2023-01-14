@@ -1,12 +1,13 @@
 package controlador;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import modelo.*;
 
 /**
@@ -16,7 +17,7 @@ import modelo.*;
  *
  *    Archivo:  VentanaInventarioControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.2
+ *    @version  1.3
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -29,17 +30,16 @@ import vista.*;
 public class VentanaComprarControlador {
     
     protected int selectedId;
-    protected int selectedRow;
     
     protected VentanaComprarModelo modelo = new VentanaComprarModelo();
-    protected VentanaIComprarVista vista = new VentanaIComprarVista();    
+    protected VentanaComprarVista vista = new VentanaComprarVista();    
     
     /**
      * Constructor de la clase VentanaInventarioControlador
      * @param modelo El modelo de la ventana (VentanaComprarModelo)
-     * @param vista La vista de la ventana (VentanaIComprarVista)
+     * @param vista La vista de la ventana (VentanaComprarVista)
      */
-    public VentanaComprarControlador(VentanaComprarModelo modelo, VentanaIComprarVista vista) {
+    public VentanaComprarControlador(VentanaComprarModelo modelo, VentanaComprarVista vista) {
         this.modelo = modelo;
         this.vista = vista;
         
@@ -47,14 +47,14 @@ public class VentanaComprarControlador {
         vista.setLocationRelativeTo(null);
         vista.setResizable(false);
         
+        vista.addActionRegistrarCompra(oyenteRegistrar);
+        vista.addProveedorListener(oyenteProveedor);
         vista.addActionVolver(oyenteVolver);
-        vista.addActionComprar(oyenteComprar);
-        vista.addActionEliminar(oyenteEliminar);
-        vista.addActionCancelar(oyenteCancelar);
-        vista.addActionTable(oyenteFilas);
+        vista.addActionRegistrarCompra(oyenteRegistrar);
+        vista.addCantidadListener(calculadoraDeTotales);
         
+        vista.configurarTabla();
         cargarTabla();
-        vista.setGuiaModificar();
         cargarProveedores();
     }
     
@@ -64,12 +64,13 @@ public class VentanaComprarControlador {
      * Carga los datos del arreglo en el modelo a la tabla
      */
     public void cargarTabla() {
-        for (int i = 0; i < modelo.getCantidadProductosInventario(); i++) {
-            String id = Integer.toString(modelo.getIdProducto(i));
-            String nombre = modelo.getNombreProducto(i);
-            String cantidad = Integer.toString(modelo.getCantidadProducto(i));
-            String medida = modelo.getMedidaProducto(i);
-            vista.nuevaFilaTabla(id, nombre, cantidad, medida);
+        for (int i = 0; i < modelo.getCantidadCompras(); i++) {
+            String fecha = modelo.getFechaCompra(i);
+            String producto = modelo.getProductoCompra(i);
+            String precio = Integer.toString(modelo.getPrecioCompra(i));
+            String cantidad = Integer.toString(modelo.getCantidadCompra(i));
+            String total = Integer.toString(modelo.getTotalCompra(i));
+            vista.nuevaFilaTabla(fecha, producto, precio, cantidad, total);
         }
     }
 
@@ -79,126 +80,21 @@ public class VentanaComprarControlador {
     public void cargarProveedores(){
         vista.eliminarProveedoresCargados();
         for(int i = 0; i < modelo.getCantidadProveedores(); i++) {
-            String proveedorCompleto = modelo.getProveedorCompleto(i);
+            String proveedorCompleto = modelo.getProveedorCifrado(i);
             vista.cargarProveedor(proveedorCompleto);
         }
-    }
+    }    
     
     /**
-     * 
-     * @param proveedorCompleto
-     * @return 
-     */
-    public int obtenerIdProveedor(String proveedorCompleto){
-        String cadenaCompacta = proveedorCompleto;
-        int id;
-        int intermedio = 0;
-
-        for (int i = 0; i < cadenaCompacta.length(); i++) {
-            if(cadenaCompacta.charAt(i) == '@'  ){
-                intermedio = i;
-                break;
-            }
-        }
-        
-        id = Integer.parseInt(cadenaCompacta.substring(0, intermedio));
-        
-        return id;
-    }
-    
-    public String obtenerNombreProveedor(String proveedorCompleto){
-        String cadenaCompacta = proveedorCompleto;
-        String id;
-        int intermedio = 0;
-
-        for (int i = 0; i < cadenaCompacta.length(); i++) {
-            if(cadenaCompacta.charAt(i) == '@'  ){
-                intermedio = i;
-                break;
-            }
-        }
-        
-        id = cadenaCompacta.substring(intermedio+1, cadenaCompacta.length());
-        
-        return id;
-    }
-    
-    /**
-     * 
-     * @param proveedorCompleto
-     * @return 
-     */
-    public int obtenerIdProducto(String productoCompleto){
-        String cadenaCompacta = productoCompleto;
-        int id;
-        int intermedio = 0;
-
-        for (int i = 0; i < cadenaCompacta.length(); i++) {
-            if(cadenaCompacta.charAt(i) == '@'  ){
-                intermedio = i;
-                break;
-            }
-        }
-        
-        id = Integer.parseInt(cadenaCompacta.substring(0, intermedio));
-        
-        return id;
-    }
-    
-    public String obtenerNombreProducto(String productoCompleto){
-        String cadenaCompacta = productoCompleto;
-        String id;
-        int intermedio = 0;
-
-        for (int i = 0; i < cadenaCompacta.length(); i++) {
-            if(cadenaCompacta.charAt(i) == '@'  ){
-                intermedio = i;
-                break;
-            }
-        }
-        
-        id = cadenaCompacta.substring(intermedio+1, cadenaCompacta.length());
-        
-        return id;
-    }
-    
-    /**
-     * 
-     * @param idProveedor 
+     * Carga todos los productos que ofrece un proveedor en especifico a la vista
+     * @param idProveedor El id del proveedor como numero entero (int)
      */
     public void cargarProductosProveedor(int idProveedor){
         modelo.seleccionarProductos(idProveedor);
         for(int i = 0; i < modelo.getCantidadProductosProveedor(); i++){
-            String nombreProducto = modelo.getProductoCompleto(i);
+            String nombreProducto = modelo.getProductoCifrado(i);
             vista.cargarProducto(nombreProducto);
         }
-    }
-    
-    //              MODOS DE OPERACION               //
-    /**
-     * Habilita y deshabilita elementos en la interfaz para REGISTRAR NUEVOS
-     * CLIENTES
-     */
-    public void modoRegistrar() {
-        vista.setGuiaModificar();
-        vista.habilitarProveedores();
-        vista.habilitarProductos();
-        vista.habilitarCantidad();
-        vista.deshabilitarCancelar();
-        vista.deshabilitarEliminar();
-    }
-
-    /**
-     * Habilita y deshabilita elementos en la interfaz para HACER MODIFICACIONES
-     * EN CLIENTES EXISTENTES (Modificar datos y eliminar)
-     */
-    public void modoModificar() {
-        vista.setGuiaRegistrar();
-        vista.deshabilitarProveedores();
-        vista.deshabilitarProductos();
-        vista.deshabilitarCantidad();
-        vista.habilitarEliminar();
-        vista.habilitarCancelar();
     }
     
     /**
@@ -207,7 +103,6 @@ public class VentanaComprarControlador {
     public void recargarTodo(){
         vista.limpiarCampos();
         vista.limpiarTabla();
-        modoRegistrar();
         cargarTabla();
     }
     
@@ -220,7 +115,36 @@ public class VentanaComprarControlador {
     }
     
     
-     //              MEDIDAS DE SEGURIDAD                //
+    //              MEDIDAS DE SEGURIDAD                //
+    /**
+     * Verifica si ya hay un producto seleccionado en la vista para empezar a usarlo
+     * @return false
+     */
+    public boolean productoEstaSeleccionado(){
+        
+        boolean respuesta = false;
+        
+        try {
+            vista.getProducto();
+            respuesta = true;
+        } catch (NullPointerException e) {
+            // Aun no se ha seleccionado ningun producto
+        }
+        return respuesta;
+    }
+    
+    /**
+     * Verifica si el campo de cantidad esta vacio pero no muestra ningun mensaje
+     * @return true, el campo esta vacio; false, el campo contiene otros caracteres
+     */
+    public boolean campoCantidadEstaVacio(){
+        boolean respuesta = true;
+        if(vista.getCantidad().isEmpty())
+            respuesta = false;
+        
+        return respuesta;
+    }
+    
     /**
      * Medida de seguridad, verifica si el campo de cedula tiene un numero y retroalimenta al usuario
      * @return true, el campo tiene un numero; false, el campo contiene otros caracteres
@@ -243,11 +167,16 @@ public class VentanaComprarControlador {
                         "Debe escribir un numero en el campo de cantidad",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
+                vista.setCantidad("");
         }
         return respuesta;
     }
     
-    public boolean proveedorTieneProductos(){
+    /**
+     * Verifica si el proveedor actual tiene productos para usarlos
+     * @return 
+     */
+    public boolean proveedorTieneProductos(boolean retroalimentar){
         
         boolean respuesta = false;
         
@@ -255,6 +184,7 @@ public class VentanaComprarControlador {
             vista.getProducto();
             respuesta = true;
         } catch(java.lang.NullPointerException e){
+            if(retroalimentar)
             JOptionPane.showMessageDialog(null, 
                         "Este proveedor no tiene ningun producto en su catalogo",
                         "Error",
@@ -270,58 +200,53 @@ public class VentanaComprarControlador {
      * Se encarga de registrar un nuevo cliente cuidando la integridad de la 
      * informacion
      */
-    ActionListener oyenteComprar = new ActionListener() {
+    ActionListener oyenteRegistrar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
           
-            if (proveedorTieneProductos() && cantidadEsNumeroValidoEnVista()) {
+            if (proveedorTieneProductos(true) && cantidadEsNumeroValidoEnVista()) {
 
-                int cedula = Integer.parseInt(vista.getCantidad());
-                selectedId =-1;
-                int idProducto = obtenerIdProducto(vista.getProducto());
-                String nombreProducto = obtenerNombreProducto(vista.getProducto()); 
+                LocalDateTime fechaActual = LocalDateTime.now();
+                DateTimeFormatter formatoPresentacion = DateTimeFormatter.ofPattern("MM/dd/yyyy, HH:mm:ss");                
+                String fecha = formatoPresentacion.format(fechaActual);
                 
-                // DESARROLLADOR
-                // Aqui se debe registrar el producto en el inventario
+                String nombreProductoCifrado = vista.getProducto(); // Obtiene el nombre completo del producto
+                
+                String producto  = modelo.descifrarNombre(nombreProductoCifrado);
+                int id = modelo.descifrarId(nombreProductoCifrado);
+                int precio = modelo.getPrecioProductoId(id);
+                int cantidad = Integer.parseInt(vista.getCantidad());
+                int total = modelo.calcularTotal(nombreProductoCifrado, cantidad);
+                
+                modelo.registrarCompra(fecha, producto, precio, cantidad, total);
+                modelo.addProductosAlInventario(nombreProductoCifrado, cantidad);
 
                 JOptionPane.showMessageDialog(null, "Registro exitoso!");
                 recargarTodo();
+            }
+        }
+    };
+    
+    /**
+     * Carga solo los productos que pertenecen al proveedor elegido
+     */
+    ActionListener oyenteProveedor = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            try {
+                vista.eliminarProductosCargados();  
                 
+                JComboBox box = (JComboBox) evt.getSource();
+                String proveedorSeleccionado = box.getSelectedItem().toString(); 
+                
+                selectedId = modelo.descifrarId(proveedorSeleccionado);
+                
+                cargarProductosProveedor(selectedId);
+                
+            } catch(NullPointerException e) {
+                //  Este proveedor aun no tiene productos para ofrecer
             }
-        }
-    };
-    
-    /**
-     * Se encarga de eliminar clientes del arreglo
-     */
-    ActionListener oyenteEliminar = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-            int eleccion = JOptionPane.showConfirmDialog(null, """    
-                                                                   Esta operacion es irreversible.
-                                                               
-                                                                   ¿Esta seguro de que desea continuar?""",
-                    "Advertencia: Eliminacion de cliente",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE);
-            switch (eleccion) {
-                case JOptionPane.YES_OPTION:
-                    modelo.eliminar(selectedId);
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente.");
-                    recargarTodo();
-                    break;
-            }
-        }
-    };
-    
-    /**
-     * Sale del modo modificar sin haber realizado cambios
-     */
-    ActionListener oyenteCancelar = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-         recargarTodo();
-        }
+        } 
     };
     
     /**
@@ -335,43 +260,28 @@ public class VentanaComprarControlador {
     };
     
     /**
-     * Gestiona los clics en las filas de la tabla
+     * Calcula el costo total de la compra dinamicamente
      */
-    MouseListener oyenteFilas = new MouseListener() {
+    KeyListener calculadoraDeTotales = new KeyListener(){
         @Override
-        public void mousePressed(MouseEvent Mouse_evt) {
-            
-            JTable table = (JTable) Mouse_evt.getSource();
-            selectedRow = table.getSelectedRow();
-            Point point = Mouse_evt.getPoint();
-            
-            int row = table.rowAtPoint(point);
-            
-            try {
-                selectedId = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
-            } catch (NumberFormatException e) {
-                
-            }
+        public void keyTyped(KeyEvent e) {  
+        }
 
-            if (Mouse_evt.getClickCount() == 1) {
-                modoModificar();
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if(campoCantidadEstaVacio() || !productoEstaSeleccionado() || !cantidadEsNumeroValidoEnVista())
+                vista.setCosto("-");
+            else{
+                String nombreProductoCifrado = vista.getProducto();
+                int cantidad = Integer.parseInt(vista.getCantidad());
+                String total = Integer.toString(modelo.calcularTotal(nombreProductoCifrado, cantidad));
+                vista.setCosto(total);
             }
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
+        public void keyReleased(KeyEvent e) {
+            
         }
     };
 }
