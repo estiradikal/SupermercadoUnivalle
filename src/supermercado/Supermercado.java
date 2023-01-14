@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  *    Archivo:  Supermercado.java
  *    Licencia: GNU-GPL 
- *    @version  1.0
+ *    @version  1.1
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -31,6 +31,7 @@ public class Supermercado {
     protected java.util.List<ProductoInventario> misProductos = new ArrayList<>();
     protected java.util.List<Cliente> misClientes = new ArrayList<>();
     protected java.util.List<Proveedor> misProveedores = new ArrayList<>();
+    protected java.util.List<Compra> misCompras = new ArrayList<>();
     protected java.util.List<Venta> misVentas = new ArrayList<>();
 
     /**
@@ -40,6 +41,8 @@ public class Supermercado {
         restaurarDatos();
     }
 
+    
+    //              GETTERS Y SETTERS               //
     /**
      * Obtiene el arreglo de productos en el mercado
      * @return El arreglo de productos en el mercado (List-ProductoProveedor-)
@@ -109,6 +112,23 @@ public class Supermercado {
     }
 
     /**
+     * Obtiene el arreglo de compras del supermercado
+     * @return misVentas El arreglo de compras del supermercado (List-Compra-)
+     */
+    public List<Compra> getMisCompras() {
+        return misCompras;
+    }
+
+    /**
+     * Asigna un arreglo de compras al supermercado
+     * @param misCompras El arreglo de compras del supermercado (List-Compra-)
+     */
+    public void setMisCompras(List<Compra> misCompras) {
+        this.misCompras = misCompras;
+        guardarDatos();
+    }
+
+    /**
      * Obtiene el arreglo de ventas del supermercado
      * @return misVentas El arreglo de ventas del supermercado (List-Venta-)
      */
@@ -125,6 +145,8 @@ public class Supermercado {
         guardarDatos();
     }
     
+    
+    //              COPIA Y RESTAURACION DE INFORMACION                //
     /**
      * Crea un archivo binario con extension .data para guardar los arreglos de la clase
      */
@@ -136,6 +158,7 @@ public class Supermercado {
             backup.writeObject(misProductos);
             backup.writeObject(misClientes);
             backup.writeObject(misProveedores);
+            backup.writeObject(misCompras);
             backup.writeObject(misVentas);
             backup.flush();
             
@@ -155,6 +178,7 @@ public class Supermercado {
             misProductos = (ArrayList) recuperar.readObject();
             misClientes = (ArrayList) recuperar.readObject();
             misProveedores = (ArrayList) recuperar.readObject();
+            misCompras = (ArrayList) recuperar.readObject();
             misVentas = (ArrayList) recuperar.readObject();
             recuperar.close();
             
