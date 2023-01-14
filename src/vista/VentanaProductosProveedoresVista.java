@@ -4,6 +4,7 @@ package vista;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 import supermercado.*;
 
@@ -85,6 +86,11 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
         lbl_proveedor.setText("Proveedor");
         jPanel1.add(lbl_proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
+        box_proveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                box_proveedoresActionPerformed(evt);
+            }
+        });
         jPanel1.add(box_proveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 190, -1));
 
         lbl_productos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -147,6 +153,10 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void box_proveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_box_proveedoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_box_proveedoresActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -190,10 +200,11 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
     public void setProveedor(String Proveedor) {
         box_proveedores.setSelectedItem(Proveedor);
     }
-    
+   
     
     public void addProveedor(String Proveedor) {
         box_proveedores.addItem(Proveedor);
+        add(box_proveedores); 
     }
     
     public String getProductoProveedor() {
@@ -224,7 +235,7 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
      */
     public void nuevaFila(String idProveedor, String nombreProveedor,String idProducto, String nombreProducto) {
         modeloTabla.addRow(new Object[]{
-            idProveedor,nombreProveedor,idProducto, nombreProducto
+            idProveedor, nombreProveedor, idProducto, nombreProducto
         });
     }
     

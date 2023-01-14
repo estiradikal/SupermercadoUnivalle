@@ -29,6 +29,7 @@ public class VentanaProductosProveedoresControlador {
     protected VentanaProductosProveedoresModelo modelo = new VentanaProductosProveedoresModelo();
     protected VentanaProductosProveedoresVista vista = new VentanaProductosProveedoresVista(); 
     
+    
     public VentanaProductosProveedoresControlador(VentanaProductosProveedoresModelo modelo, VentanaProductosProveedoresVista vista) {
         this.modelo = modelo;
         this.vista = vista;
@@ -58,7 +59,8 @@ public class VentanaProductosProveedoresControlador {
     
     public void cargarTabla() {
         for (int i = 0; i < modelo.getProveedoresCantidad(); i++) {
-            String Proveedor = modelo.addProveedor(i);
+            //String Proveedor = modelo.getProveedor(i);
+            //vista.nuevaFila(Proveedor);
             /*
             Proveedor copiaProveedor = modelo.getProveedor (i);    
             List<ProductosProveedor> copiaProductos = copiaProveedor.getProductos;
@@ -86,6 +88,20 @@ public class VentanaProductosProveedoresControlador {
         vista.habilitarRegistrar();
     }
     
+    
+    public void cargarProveedor() {
+        for (int i = 0; i < modelo.getProveedoresCantidad(); i++) {
+            String Proveedor = String.valueOf(modelo.getProveedor(i));
+            vista.addProveedor(Proveedor);
+        }
+    }
+    
+    public void cargarProductos() {
+        for (int i = 0; i < modelo.getProductosCantidad(); i++) {
+            String Productos = modelo.getProductos(i);
+            vista.addProductoProveedor(Productos);
+        }
+    }
     
     
     /**

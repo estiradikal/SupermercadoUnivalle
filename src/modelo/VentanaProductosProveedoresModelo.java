@@ -2,6 +2,7 @@ package modelo;
 
 import vista.*;
 import controlador.*;
+import javax.swing.JComboBox;
 import supermercado.*;
 
 
@@ -30,24 +31,22 @@ public class VentanaProductosProveedoresModelo {
     public VentanaProductosProveedoresModelo(){
     }
     
-    /*
-    public String cargarProveedores(int indice){
-        return proveedores.get(indice).getNombre();
-    }
-    */
     
-    public String addProveedor(int indice){
-        for (Proveedor actual:proveedores){
-            //return proveedor += actual.getNombre();
-        }
+    public String getProveedor(int indice){
         return proveedores.get(indice).getNombre();
-        
     }
     
     public int getProveedoresCantidad(){
         return proveedores.size();
     }
 
+    public String getProductos(int indice){
+        return productosEnElMercado.get(indice).getNombre();
+    }
+    
+    public int getProductosCantidad(){
+        return proveedores.size();
+    }
     
     public void iniciarVentanaPrincipal() {
         VentanaPrincipalModelo modelo = new VentanaPrincipalModelo();
