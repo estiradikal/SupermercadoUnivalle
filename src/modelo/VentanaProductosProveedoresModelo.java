@@ -7,7 +7,7 @@ package modelo;
  *
  *    Archivo:  VentanaProductosProveedoresModelo.java
  *    Licencia: GNU-GPL 
- *    @version  1.1
+ *    @version  1.2
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -149,6 +149,58 @@ public class VentanaProductosProveedoresModelo {
         
         // Se actualizan los proveedores en supermercado
         supermercado.setMisProveedores(proveedores);
+    }
+    
+    public void desasignarProductoDeProveedor(int idProducto, int idProveedor){
+        
+        // Se copia el arreglo de productos del proveedor que tiene el idProveedor
+        for(Proveedor proveedorActual: proveedores){
+            if(proveedorActual.getId() == idProveedor){
+                productosProveedorActual = proveedorActual.getMisProductos();
+                break;
+            }
+        }
+        
+        // Se busca el producto con el idProducto para desasignarlo de la copia del proveedor
+        for(ProductoProveedor productoActual: productosProveedorActual){
+            if(productoActual.getId() == idProducto){
+                productosProveedorActual.remove(productoActual);
+                break;
+            }
+        }
+        
+        // Se reasigna el arreglo modificado a su proveedor original
+        reasignarProductosA(idProveedor);
+        
+        // Se actualizan los proveedores en supermercado
+        supermercado.setMisProveedores(proveedores);
+    }
+    
+    public boolean productoYaOfrecidoPorProveedor(String nombreProductoCifrado, String nombreProveedorCifrado){
+        
+        boolean respuesta = false;
+        
+        // Se recupera el id del producto y del proveedor
+        int idProducto = descifrarId(nombreProductoCifrado);
+        int idProveedor = descifrarId(nombreProveedorCifrado);
+        
+        // Se copia el arreglo de productos del proveedor que tiene el idProveedor
+        for(Proveedor proveedorActual: proveedores){
+            if(proveedorActual.getId() == idProveedor){
+                productosProveedorActual = proveedorActual.getMisProductos();
+                break;
+            }
+        }
+        
+        // Se busca si el producto existe en el catalogo del proveedor
+        for(ProductoProveedor productoActual: productosProveedorActual){
+            if(productoActual.getId() == idProducto){
+                respuesta = true;
+                break;
+            }
+        }
+        
+        return respuesta;
     }
     
     /**

@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
  *
  *    Archivo:  VentanaProductosVista.java
  *    Licencia: GNU-GPL 
- *    @version  1.0.1
+ *    @version  1.2
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -61,8 +61,7 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table_principal = new javax.swing.JTable();
         btn_asignar = new javax.swing.JButton();
-        btn_modificar = new javax.swing.JButton();
-        btn_eliminar = new javax.swing.JButton();
+        btn_desasignar = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
         lbl_textoGuia = new javax.swing.JLabel();
 
@@ -111,17 +110,12 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
 
         btn_asignar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_asignar.setText("Asignar");
-        jPanel1.add(btn_asignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 90, -1));
+        jPanel1.add(btn_asignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 110, -1));
 
-        btn_modificar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btn_modificar.setText("Modificar");
-        btn_modificar.setEnabled(false);
-        jPanel1.add(btn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, -1, -1));
-
-        btn_eliminar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btn_eliminar.setText("Eliminar");
-        btn_eliminar.setEnabled(false);
-        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 450, 90, -1));
+        btn_desasignar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        btn_desasignar.setText("Desasignar");
+        btn_desasignar.setEnabled(false);
+        jPanel1.add(btn_desasignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 450, 110, -1));
 
         btn_volver.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_volver.setText("Volver");
@@ -233,14 +227,14 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
      * Establece un texto para instruir en el modo Registrar
      */
     public void setGuiaRegistrar() {
-        lbl_textoGuia.setText("Modifique los campos arriba o presione Cancelar para el modo registro");
+        lbl_textoGuia.setText("Presione Desasignar para continuar o Cancelar para volver al modo asignacion");
     }
 
     /**
      * Establece un texto para instruir en el modo Modificar
      */
     public void setGuiaModificar() {
-        lbl_textoGuia.setText("Seleccione los elementos de la tabla para modificar o eliminar productos de un proveedor");
+        lbl_textoGuia.setText("Seleccione una fila de la tabla para desasignar un producto de un proveedor");
     }
     
     /**
@@ -287,28 +281,30 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
         btn_asignar.setEnabled(false);
     }
 
-    public void habilitarModificar() {
-        btn_modificar.setEnabled(true);
-    }
-
-    public void deshabilitarModificar() {
-        btn_modificar.setEnabled(false);
-    }
-
     /**
      * Habilita btn_eliminar y configura su color en rojo
      */
     public void habilitarEliminar() {
-        btn_eliminar.setEnabled(true);
-        btn_eliminar.setBackground(new java.awt.Color(255, 0, 51));
+        btn_desasignar.setEnabled(true);
+        btn_desasignar.setBackground(new java.awt.Color(255, 0, 51));
     }
 
     /**
      * Deshabilita btn_eliminar y configura su color en gris
      */
     public void deshabilitarEliminar() {
-        btn_eliminar.setEnabled(false);
-        btn_eliminar.setBackground(new java.awt.Color(187, 187, 187));
+        btn_desasignar.setEnabled(false);
+        btn_desasignar.setBackground(new java.awt.Color(187, 187, 187));
+    }
+    
+    public void habilitarBoxes(){
+        box_proveedor.setEnabled(true);
+        box_producto.setEnabled(true);
+    }
+    
+    public void deshabilitarBoxes(){
+        box_proveedor.setEnabled(false);
+        box_producto.setEnabled(false);
     }
     
     //                  LISTENERS                       //
@@ -322,21 +318,12 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
     }
 
     /**
-     * Agrega un ActionListener al btn_modificar
+     * Agrega un ActionListener al btn_desasignar
      *
      * @param listener El ActionListener
      */
-    public void addActionModificar(ActionListener listener) {
-        btn_modificar.addActionListener(listener);
-    }
-
-    /**
-     * Agrega un ActionListener al btn_eliminar
-     *
-     * @param listener El ActionListener
-     */
-    public void addActionEliminar(ActionListener listener) {
-        btn_eliminar.addActionListener(listener);
+    public void addActionDesasignar(ActionListener listener) {
+        btn_desasignar.addActionListener(listener);
     }
 
     /**
@@ -371,8 +358,7 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> box_proveedor;
     private javax.swing.JButton btn_asignar;
     private javax.swing.JButton btn_cancelar;
-    private javax.swing.JButton btn_eliminar;
-    private javax.swing.JButton btn_modificar;
+    private javax.swing.JButton btn_desasignar;
     private javax.swing.JButton btn_volver;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
