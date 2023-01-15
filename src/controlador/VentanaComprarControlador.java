@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JComboBox;
@@ -17,7 +19,7 @@ import modelo.*;
  *
  *    Archivo:  VentanaInventarioControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.3
+ *    @version  1.4
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -49,8 +51,10 @@ public class VentanaComprarControlador {
         
         vista.addActionRegistrarCompra(oyenteRegistrar);
         vista.addProveedorListener(oyenteProveedor);
+        vista.addProductosListener(oyenteProductos);
         vista.addActionVolver(oyenteVolver);
         vista.addActionRegistrarCompra(oyenteRegistrar);
+        vista.addCantidadListener(eliminarCantidad);
         vista.addCantidadListener(calculadoraDeTotales);
         
         vista.configurarTabla();
@@ -193,7 +197,7 @@ public class VentanaComprarControlador {
         
         return respuesta;
     }
-
+    
     
     //              LISTENERS               //
     /**
@@ -250,6 +254,21 @@ public class VentanaComprarControlador {
     };
     
     /**
+     * Carga solo los productos que pertenecen al proveedor elegido
+     */
+    ActionListener oyenteProductos = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            try {
+                vista.setCantidad("");
+                vista.setCosto("0");
+            } catch(NullPointerException e) {
+                //  Este proveedor aun no tiene productos para ofrecer
+            }
+        } 
+    };
+    
+    /**
      * Redirige a la VentanaPrincipal
      */
     ActionListener oyenteVolver = new ActionListener() {
@@ -260,28 +279,89 @@ public class VentanaComprarControlador {
     };
     
     /**
+     * Elimina el contenido del campo de cantidad en la vista
+     */
+    MouseListener eliminarCantidad = new MouseListener(){
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            vista.setCantidad("");
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+    };
+    
+    /**
      * Calcula el costo total de la compra dinamicamente
      */
     KeyListener calculadoraDeTotales = new KeyListener(){
         @Override
-        public void keyTyped(KeyEvent e) {  
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if(campoCantidadEstaVacio() || !productoEstaSeleccionado() || !cantidadEsNumeroValidoEnVista())
-                vista.setCosto("-");
-            else{
+        public void keyTyped(KeyEvent evt) { 
+            
+            int tecla = evt.getKeyChar();
+            char caracter = evt.getKeyChar();
+            boolean esNumero = tecla == 8 || tecla >= 48 && tecla <= 57;
+            boolean esBackspace = caracter == 8;
+            boolean campoCantidadEstaVacio = false;
+            boolean campoCantidadEstaLleno = vista.getCantidad().length() == 4;
+            
+            
+            
+            // Configurar valor de campo vacio
+            if (esBackspace) {
+                campoCantidadEstaVacio = vista.getCantidad().length() == 0;   
+            }
+            
+            // Verificacion de tecla presionada
+            if(!esNumero || campoCantidadEstaLleno)
+                evt.consume();
+                        
+            try {
                 String nombreProductoCifrado = vista.getProducto();
-                int cantidad = Integer.parseInt(vista.getCantidad());
+                String cantidadActualizada = "";
+
+                if(campoCantidadEstaVacio){
+                    cantidadActualizada = "0";
+                }
+                else if (esBackspace) {
+                    cantidadActualizada = vista.getCantidad().substring(0, vista.getCantidad().length());
+                } else if (esNumero && vista.getCantidad().length() != 4) {
+                    cantidadActualizada = vista.getCantidad() + caracter;
+                }
+
+                int cantidad = Integer.parseInt(cantidadActualizada);
                 String total = Integer.toString(modelo.calcularTotal(nombreProductoCifrado, cantidad));
                 vista.setCosto(total);
+
+            } catch (NumberFormatException e) {
+            } catch (NullPointerException e) {
             }
         }
 
         @Override
-        public void keyReleased(KeyEvent e) {
+        public void keyPressed(KeyEvent evt) {
+            boolean flechaPresionada = evt.getExtendedKeyCode()== KeyEvent.VK_LEFT;
             
+            if(flechaPresionada){
+                evt.consume();
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent evt) { 
         }
     };
 }
