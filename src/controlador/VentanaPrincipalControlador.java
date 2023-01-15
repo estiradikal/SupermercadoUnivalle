@@ -97,7 +97,7 @@ public class VentanaPrincipalControlador {
      */
     ActionListener oyenteComprarProductos = new ActionListener(){
         @Override
-        public void actionPerformed(ActionEvent e) { 
+        public void actionPerformed(ActionEvent e) {
             vista.cerrar();
             modelo.iniciarVentanaComprarProductos();
         }
