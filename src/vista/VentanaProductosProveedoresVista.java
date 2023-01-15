@@ -4,9 +4,7 @@ package vista;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
-import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
-import supermercado.*;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01
@@ -57,50 +55,47 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
         lbl_titulo = new javax.swing.JLabel();
         btn_cancelar = new javax.swing.JButton();
         lbl_proveedor = new javax.swing.JLabel();
-        box_proveedores = new javax.swing.JComboBox<>();
-        lbl_productos = new javax.swing.JLabel();
-        box_productos = new javax.swing.JComboBox<>();
+        box_proveedor = new javax.swing.JComboBox<>();
+        lbl_producto = new javax.swing.JLabel();
+        box_producto = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_principal = new javax.swing.JTable();
-        btn_registrar = new javax.swing.JButton();
+        btn_asignar = new javax.swing.JButton();
         btn_modificar = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
         lbl_textoGuia = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(500, 540));
+        setPreferredSize(new java.awt.Dimension(500, 540));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_titulo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbl_titulo.setText("Productos de proveedores");
+        lbl_titulo.setText("Asignar productos a proveedores");
         jPanel1.add(lbl_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         btn_cancelar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_cancelar.setText("Cancelar");
         btn_cancelar.setEnabled(false);
-        jPanel1.add(btn_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 90, -1));
+        jPanel1.add(btn_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 90, -1));
 
         lbl_proveedor.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_proveedor.setText("Proveedor");
-        jPanel1.add(lbl_proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        jPanel1.add(lbl_proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
-        box_proveedores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                box_proveedoresActionPerformed(evt);
-            }
-        });
-        jPanel1.add(box_proveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 190, -1));
+        jPanel1.add(box_proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, 250, -1));
 
-        lbl_productos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbl_productos.setText("Productos");
-        lbl_productos.setMaximumSize(new java.awt.Dimension(54, 20));
-        lbl_productos.setMinimumSize(new java.awt.Dimension(54, 20));
-        lbl_productos.setName(""); // NOI18N
-        lbl_productos.setPreferredSize(new java.awt.Dimension(54, 20));
-        jPanel1.add(lbl_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 70, -1));
-        jPanel1.add(box_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 190, -1));
+        lbl_producto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbl_producto.setText("Producto");
+        lbl_producto.setMaximumSize(new java.awt.Dimension(54, 20));
+        lbl_producto.setMinimumSize(new java.awt.Dimension(54, 20));
+        lbl_producto.setName(""); // NOI18N
+        lbl_producto.setPreferredSize(new java.awt.Dimension(54, 20));
+        jPanel1.add(lbl_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 70, -1));
+        jPanel1.add(box_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 250, -1));
 
         table_principal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -112,11 +107,11 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(table_principal);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 340, 260));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 470, 260));
 
-        btn_registrar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btn_registrar.setText("Registrar");
-        jPanel1.add(btn_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 90, -1));
+        btn_asignar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        btn_asignar.setText("Asignar");
+        jPanel1.add(btn_asignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 90, -1));
 
         btn_modificar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_modificar.setText("Modificar");
@@ -130,18 +125,19 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
 
         btn_volver.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_volver.setText("Volver");
-        jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 450, -1, -1));
+        jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 450, -1, -1));
         btn_volver.getAccessibleContext().setAccessibleDescription("");
 
         lbl_textoGuia.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lbl_textoGuia.setForeground(new java.awt.Color(0, 102, 102));
-        jPanel1.add(lbl_textoGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 340, 20));
+        lbl_textoGuia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbl_textoGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 470, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,10 +148,6 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void box_proveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_box_proveedoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_box_proveedoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,29 +186,27 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
     }
     
     public String getProveedor() {
-        return box_proveedores.getSelectedItem().toString(); 
+        return box_proveedor.getSelectedItem().toString(); 
     }
     
-    public void setProveedor(String Proveedor) {
-        box_proveedores.setSelectedItem(Proveedor);
+    public void setProveedor(String proveedor) {
+        box_proveedor.setSelectedItem(proveedor);
     }
-   
     
-    public void addProveedor(String Proveedor) {
-        box_proveedores.addItem(Proveedor);
-        add(box_proveedores);  
+    public void addProveedor(String proveedor) {
+        box_proveedor.addItem(proveedor);
     }
     
     public String getProductoProveedor() {
-        return box_productos.getSelectedItem().toString(); 
+        return box_producto.getSelectedItem().toString(); 
     }
     
-    public void addProductoProveedor(String Producto) {
-        box_productos.addItem(Producto);
+    public void addProductoProveedor(String producto) {
+        box_producto.addItem(producto);
     }
     
     public void setProductoProveedor(String ProductoProveedor) {
-        box_proveedores.setSelectedItem(ProductoProveedor);
+        box_proveedor.setSelectedItem(ProductoProveedor);
     }
     
     /**
@@ -233,7 +223,7 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
      * @param Id El Id del nuevo afiliado
      * @param nombre El nombre completo del nuevo afiliado
      */
-    public void nuevaFila(String idProveedor, String nombreProveedor,String idProducto, String nombreProducto) {
+    public void nuevaFila(int idProveedor, String nombreProveedor, int idProducto, String nombreProducto) {
         modeloTabla.addRow(new Object[]{
             idProveedor, nombreProveedor, idProducto, nombreProducto
         });
@@ -250,7 +240,7 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
      * Establece un texto para instruir en el modo Modificar
      */
     public void setGuiaModificar() {
-        lbl_textoGuia.setText("Seleccione los productos de los proveedores en la tabla (si los hay) para modificarlos");
+        lbl_textoGuia.setText("Seleccione los elementos de la tabla para modificar o eliminar productos de un proveedor");
     }
     
     /**
@@ -290,11 +280,11 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
     }
 
     public void habilitarRegistrar() {
-        btn_registrar.setEnabled(true);
+        btn_asignar.setEnabled(true);
     }
 
     public void deshabilitarRegistrar() {
-        btn_registrar.setEnabled(false);
+        btn_asignar.setEnabled(false);
     }
 
     public void habilitarModificar() {
@@ -323,12 +313,12 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
     
     //                  LISTENERS                       //
     /**
-     * Agrega un ActionListener al btn_agregar
+     * Agrega un ActionListener al btn_asignar
      *
      * @param listener El ActionListener
      */
-    public void addActionRegistrar(ActionListener listener) {
-        btn_registrar.addActionListener(listener);
+    public void addActionAsignar(ActionListener listener) {
+        btn_asignar.addActionListener(listener);
     }
 
     /**
@@ -377,16 +367,16 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> box_productos;
-    private javax.swing.JComboBox<String> box_proveedores;
+    private javax.swing.JComboBox<String> box_producto;
+    private javax.swing.JComboBox<String> box_proveedor;
+    private javax.swing.JButton btn_asignar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_modificar;
-    private javax.swing.JButton btn_registrar;
     private javax.swing.JButton btn_volver;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbl_productos;
+    private javax.swing.JLabel lbl_producto;
     private javax.swing.JLabel lbl_proveedor;
     private javax.swing.JLabel lbl_textoGuia;
     private javax.swing.JLabel lbl_titulo;

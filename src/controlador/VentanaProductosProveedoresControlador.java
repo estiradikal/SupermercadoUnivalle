@@ -17,7 +17,7 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.*;
 import vista.*;
 
@@ -39,6 +39,7 @@ public class VentanaProductosProveedoresControlador {
         vista.setResizable(false);
         
         vista.addActionVolver(oyenteVolver);
+        vista.addActionAsignar(oyenteAsignar);
         /*
         vista.addActionRegistrar(oyenteRegistrar);
         vista.addActionModificar(oyenteModificar);
@@ -47,31 +48,33 @@ public class VentanaProductosProveedoresControlador {
         vista.addActionTable(oyenteFilas);
         */
         
+        cargarProductos();
+        cargarProveedores();
         cargarTabla();
         
         vista.setGuiaModificar();
     }
     
     //              ELEMENTOS DE LA INTERFAZ               //
-    /**
-     * Carga los datos del arreglo en el modelo a la tabla
-     */
-    
-    public void cargarTabla() {
-        for (int i = 0; i < modelo.getProveedoresCantidad(); i++) {
-            //String Proveedor = modelo.getProveedor(i);
-            //vista.nuevaFila(Proveedor);
-            /*
-            Proveedor copiaProveedor = modelo.getProveedor (i);    
-            List<ProductosProveedor> copiaProductos = copiaProveedor.getProductos;
-            for (int j = 0; j < copiaProductos.size(); j++) {   
-                String nombreProveedor = copiaProveedor.getNombre();
-                String idProveedor = String.valueOf(copiaProveedor.getId);
-                String nombreProducto = copiaProductos.get(j).getNombre();
-                String idProducto = String.valueOf(copiaProductos.get(j).getId());
-                vista.nuevaFila(idProveedor, nombreProveedor,idProducto, nombreProducto);
+        
+    public void cargarTabla(){
+        
+        vista.limpiarTabla();
+        
+        for(int i = 0; i < modelo.getCantidadProveedores(); i++){
+            
+            String nombreProveedorActual = modelo.getNombreProveedor(i);
+            int idProveedorActual = modelo.getIdProveedor(i);
+            
+            modelo.seleccionarProductos(idProveedorActual);
+            
+            for(int j = 0; j < modelo.getCantidadProductosProveedor(); j++){
+                
+                int idProductoActual = modelo.getIdProductoProveedor(j);
+                String nombreProductoActual = modelo.getNombreProductoProveedor(j);                
+                
+                vista.nuevaFila(idProveedorActual, nombreProveedorActual, idProductoActual, nombreProductoActual);
             }
-            */
         }
     }
     
@@ -89,20 +92,19 @@ public class VentanaProductosProveedoresControlador {
     }
     
     
-    public void cargarProveedor() {
-        for (int i = 0; i < modelo.getProveedoresCantidad(); i++) {
-            String Proveedor = String.valueOf(modelo.getProveedor(i));
-            vista.addProveedor(Proveedor);
+    public void cargarProveedores() {
+        for (int i = 0; i < modelo.getCantidadProveedores(); i++) {
+            String nombreProveedorActual = modelo.getProveedorCifrado(i);
+            vista.addProveedor(nombreProveedorActual);
         }
     }
     
     public void cargarProductos() {
-        for (int i = 0; i < modelo.getProductosCantidad(); i++) {
-            String Productos = modelo.getProductos(i);
-            vista.addProductoProveedor(Productos);
+        for (int i = 0; i < modelo.getCantidadProductosEnElMercado(); i++) {
+            String nombreProductoActual = modelo.getProductoCifrado(i);
+            vista.addProductoProveedor(nombreProductoActual);
         }
     }
-    
     
     /**
      * Habilita y deshabilita elementos en la interfaz para HACER MODIFICACIONES
@@ -151,6 +153,20 @@ public class VentanaProductosProveedoresControlador {
         vista.cerrar();
         modelo.iniciarVentanaPrincipal();
     }
+    
+    
+    ActionListener oyenteAsignar = new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String nombreProductoCifrado = vista.getProductoProveedor();
+            String nombreProveedorCifrado = vista.getProveedor();
+            
+            modelo.asignarProductoAProveedor(nombreProductoCifrado, nombreProveedorCifrado);
+            JOptionPane.showMessageDialog(null, "Ejecucion completada");
+            
+            cargarTabla();
+        }
+    };
     
     /**
      * Redirige a el VentanaPrincipal
