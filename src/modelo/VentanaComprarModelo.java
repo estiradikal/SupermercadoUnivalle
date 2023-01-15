@@ -7,7 +7,7 @@ package modelo;
  *
  *    Archivo:  VentanaInventarioModelo.java
  *    Licencia: GNU-GPL 
- *    @version  1.2
+ *    @version  1.3
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -74,8 +74,8 @@ public class VentanaComprarModelo {
     public String getProductoCifrado(int indice){
         String productoActual = "";
         
-        productoActual += proveedores.get(indice).getId();
-        productoActual += "@" + proveedores.get(indice).getNombre();
+        productoActual += productosProveedor.get(indice).getId();
+        productoActual += "@" + productosProveedor.get(indice).getNombre();
         
         return productoActual;
     }
@@ -191,7 +191,7 @@ public class VentanaComprarModelo {
      * @param total El costo total de la compra (int)
      */
     public void registrarCompra(String fecha, String producto, int precio, int cantidad, int total){
-        comprasRegistradas.add(new Compra(fecha, producto, precio, cantidad, total));
+        comprasRegistradas.add(0, new Compra(fecha, producto, precio, cantidad, total));
         supermercado.setMisCompras(comprasRegistradas);
     }
     
