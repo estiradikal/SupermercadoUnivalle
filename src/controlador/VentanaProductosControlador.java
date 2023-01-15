@@ -17,7 +17,7 @@ import modelo.*;
  *
  *    Archivo:  VentanaProductosControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.2
+ *    @version  1.3
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -208,6 +208,12 @@ public class VentanaProductosControlador {
     
     
     //              FUNCIONES               //
+    public void modificarProducto(int id, String nombre, int precio, String medida){
+        modelo.modificar(selectedId, id, nombre, precio, medida);
+        modelo.eliminarProductoDeProveedores(selectedId);
+        JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
+        recargarTodo();
+    }
     public void eliminarProducto() {
         modelo.eliminar(selectedId);
         modelo.eliminarProductoDeProveedores(selectedId);
@@ -258,8 +264,8 @@ public class VentanaProductosControlador {
                 String nombre = vista.getNombre();
                 int precio = Integer.parseInt(vista.getPrecio());
                 String medida = vista.getMedida();
-
-                if (!existeOtroProductoConEsteId(id)) {
+                
+                             if (!existeOtroProductoConEsteId(id)) {
 
                     int eleccion = JOptionPane.showConfirmDialog(null, """    
                                                                    Por motivos de seguridad, al modificar este producto:
@@ -272,13 +278,15 @@ public class VentanaProductosControlador {
                             JOptionPane.WARNING_MESSAGE);
                     switch (eleccion) {
                         case JOptionPane.YES_OPTION:
-                            modelo.modificar(selectedId, id, nombre, precio, medida);
-                            modelo.eliminarProductoDeProveedores(selectedId);
-                            JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
-                            recargarTodo();
-                            break;
+                        try {
+                            modificarProducto(id, nombre, precio, medida);
+                        } catch (ConcurrentModificationException e) {
+                            modificarProducto(id, nombre, precio, medida);
+                        }
+                        break;
                     }
                 }
+
             }
         }
     };

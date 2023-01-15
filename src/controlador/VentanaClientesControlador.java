@@ -1,5 +1,20 @@
 package controlador;
 
+/**
+ *    Fundamentos de programación orientada a eventos 750014C-01
+ *    Elboratorio # 4
+ *    Profesor: Luis Romo Portilla 
+ *
+ *    Archivo:  VentanaClientesControlador.java
+ *    Licencia: GNU-GPL 
+ *    @version  1.3
+ *    
+ *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
+ *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
+ *    @author   Juan David Loaiza Santiago        (202177570-3743) {@literal <"juan.loaiza.santiago@correounivalle.edu.co">}
+ * 
+*/
+
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,22 +24,6 @@ import java.util.ConcurrentModificationException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import modelo.*;
-
-/**
- *    Fundamentos de programación orientada a eventos 750014C-01
- *    Elboratorio # 4
- *    Profesor: Luis Romo Portilla 
- *
- *    Archivo:  VentanaClientesControlador.java
- *    Licencia: GNU-GPL 
- *    @version  1.2
- *    
- *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
- *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
- *    @author   Juan David Loaiza Santiago        (202177570-3743) {@literal <"juan.loaiza.santiago@correounivalle.edu.co">}
- * 
-*/
-
 import vista.*;
 
 public class VentanaClientesControlador {
@@ -192,6 +191,12 @@ public class VentanaClientesControlador {
     
     
     //              FUNCIONES               //
+    public void modificarCliente(int cedula, String nombre) {
+        modelo.modificar(selectedId, cedula, nombre);
+        JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
+        recargarTodo();
+    }
+    
     public void eliminarCliente() {
         modelo.eliminar(selectedId);
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente.");
@@ -230,6 +235,7 @@ public class VentanaClientesControlador {
     ActionListener oyenteModificar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
+
             if (cedulaEsNumeroValidoEnVista() && !campoNombreEstaVacio()) {
 
                 int cedula = Integer.parseInt(vista.getCedula());
@@ -245,11 +251,14 @@ public class VentanaClientesControlador {
                             JOptionPane.WARNING_MESSAGE);
                     switch (eleccion) {
                         case JOptionPane.YES_OPTION:
-                            modelo.modificar(selectedId, cedula, nombre);
-                            JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
-                            recargarTodo();
+                        try {
+                            modificarCliente(cedula, nombre);
+                        } catch (ConcurrentModificationException e) {
+                            modificarCliente(cedula, nombre);
                             break;
+                        }
                     }
+
                 }
             }
         }
@@ -261,20 +270,20 @@ public class VentanaClientesControlador {
     ActionListener oyenteEliminar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            try{
+            try {
                 int eleccion = JOptionPane.showConfirmDialog(null, """    
                                                                    Esta operacion es irreversible.
                                                                
                                                                    ¿Esta seguro de que desea continuar?""",
-                "Advertencia: Eliminacion de cliente",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
-        switch (eleccion) {
-            case JOptionPane.YES_OPTION:
-                eliminarCliente();
-                break;
-        }
-            } catch(ConcurrentModificationException e){
+                        "Advertencia: Eliminacion de cliente",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+                switch (eleccion) {
+                    case JOptionPane.YES_OPTION:
+                        eliminarCliente();
+                        break;
+                }
+            } catch (ConcurrentModificationException e) {
                 eliminarCliente();
             }
         }

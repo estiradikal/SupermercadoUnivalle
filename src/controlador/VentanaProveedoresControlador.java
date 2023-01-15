@@ -17,7 +17,7 @@ import modelo.*;
  *
  *    Archivo:  VentanaProveedoresControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.2
+ *    @version  1.3
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -192,6 +192,12 @@ public class VentanaProveedoresControlador {
     
     
     //              FUNCIONES               //
+    public void modificarProveedor(int id, String nombre) {
+        modelo.modificar(selectedId, id, nombre);
+        JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
+        recargarTodo();
+    }
+    
     public void eliminarProveedor() {
         modelo.eliminar(selectedId);
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente.");
@@ -245,9 +251,11 @@ public class VentanaProveedoresControlador {
                             JOptionPane.WARNING_MESSAGE);
                     switch (eleccion) {
                         case JOptionPane.YES_OPTION:
-                            modelo.modificar(selectedId, id, nombre);
-                            JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
-                            recargarTodo();
+                            try{
+                                modificarProveedor(id, nombre);
+                            } catch (ConcurrentModificationException e){
+                                modificarProveedor(id, nombre);
+                            }
                             break;
                     }
                 }
@@ -261,22 +269,24 @@ public class VentanaProveedoresControlador {
     ActionListener oyenteEliminar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            try{
-                int eleccion = JOptionPane.showConfirmDialog(null, """    
+
+            int eleccion = JOptionPane.showConfirmDialog(null, """    
                                                                    Esta operacion es irreversible.
                                                                
                                                                    ¿Esta seguro de que desea continuar?""",
-                "Advertencia: Eliminacion de proveedor",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
-        switch (eleccion) {
-            case JOptionPane.YES_OPTION:
-                eliminarProveedor();
+                    "Advertencia: Eliminacion de proveedor",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+            switch (eleccion) {
+                case JOptionPane.YES_OPTION:
+                try {
+                    eliminarProveedor();
+                } catch (ConcurrentModificationException e) {
+                    eliminarProveedor();
+                }
                 break;
-        }
-            } catch(ConcurrentModificationException e){
-                eliminarProveedor();
             }
+
         }
     };
     
