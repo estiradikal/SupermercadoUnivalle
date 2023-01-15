@@ -1,9 +1,15 @@
 package controlador;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ConcurrentModificationException;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import modelo.*;
 
 /**
@@ -13,7 +19,7 @@ import modelo.*;
  *
  *    Archivo:  VentanaInventarioControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.0
+ *    @version  1.1
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -26,6 +32,7 @@ import vista.*;
 public class VentanaInventarioControlador {
     
     protected int selectedId;
+    protected int selectedRow;
     
     protected VentanaInventarioModelo modelo = new VentanaInventarioModelo();
     protected VentanaInventarioVista vista = new VentanaInventarioVista();    
@@ -43,13 +50,15 @@ public class VentanaInventarioControlador {
         vista.setLocationRelativeTo(null);
         vista.setResizable(false);
         
-        vista.addActionRegistrarCompra(oyenteRegistrar);
+        vista.addActionModificar(oyenteModificar);
+        vista.addActionEliminar(oyenteEliminar);
+        vista.addActionCancelar(oyenteCancelar);
         vista.addActionVolver(oyenteVolver);
-        vista.addActionRegistrarCompra(oyenteRegistrar);
-        vista.addCantidadListener(calculadoraDeTotales);
+        vista.addActionTable(oyenteFilas);
+        vista.addPorcentajeListener(mouseGuardPorcentaje);
+        vista.addPorcentajeListener(keyGuardPorcentaje);
         
         vista.configurarTabla();
-        cargarTabla();
         recargarTodo();
     }
     
@@ -91,8 +100,10 @@ public class VentanaInventarioControlador {
         modelo.iniciarVentanaPrincipal();
     }
     
+    
     //              MODOS DE OPERACION              //
     public void modoVisualizar(){
+        vista.setGuiaModificar();
         vista.deshabilitarPorcentaje();
         vista.deshabilitarModificar();
         vista.deshabilitarEliminar();
@@ -100,6 +111,7 @@ public class VentanaInventarioControlador {
     }
     
     public void modoModificar(){
+        vista.setGuiaVisualizar();
         vista.habilitarPorcentaje();
         vista.habilitarModificar();
         vista.habilitarEliminar();
@@ -107,7 +119,11 @@ public class VentanaInventarioControlador {
     }
     
     
-    //              MEDIDAS DE SEGURIDAD                //
+    //              FUNCIONES               //
+    public void eliminarProductoActual(){
+        modelo.eliminar(selectedId);
+        recargarTodo();
+    }
         
     
     //              LISTENERS               //
@@ -115,10 +131,54 @@ public class VentanaInventarioControlador {
      * Se encarga de registrar un nuevo cliente cuidando la integridad de la 
      * informacion
      */
-    ActionListener oyenteRegistrar = new ActionListener() {
+    ActionListener oyenteModificar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-          
+            try{
+                double ganancia = Double.parseDouble(vista.getPorcentaje());
+                modelo.modificarPrecioDeVenta(selectedId, ganancia);
+                recargarTodo();
+                JOptionPane.showMessageDialog(null, "Operacion realizada con exito.");
+            } catch (NumberFormatException e){
+                
+            }
+            
+        }
+    };
+    
+    /**
+     * Se encarga de registrar un nuevo cliente cuidando la integridad de la 
+     * informacion
+     */
+    ActionListener oyenteEliminar = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            try {
+                int eleccion = JOptionPane.showConfirmDialog(null, """    
+                                                                   Se perdera todo este producto en su inventario.
+                                                                   
+                                                                   ¿Desea continuar con la operación?""",
+                        "Advertencia: Eliminacion de producto",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+                switch (eleccion) {
+                    case JOptionPane.YES_OPTION:
+                        eliminarProductoActual();
+                        break;
+                }
+            } catch (ConcurrentModificationException e) {
+                eliminarProductoActual();
+            }
+        }
+    };
+    
+    /**
+     * Recarga todo sin efectuar cambios
+     */
+    ActionListener oyenteCancelar = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            recargarTodo();
         }
     };
     
@@ -133,26 +193,136 @@ public class VentanaInventarioControlador {
     };
     
     /**
+     * Gestiona los clics en las filas de la tabla
+     */
+    MouseListener oyenteFilas = new MouseListener() {
+        @Override
+        public void mousePressed(MouseEvent Mouse_evt) {
+            
+            JTable table = (JTable) Mouse_evt.getSource();
+            selectedRow = table.getSelectedRow();
+            Point point = Mouse_evt.getPoint();
+            
+            int row = table.rowAtPoint(point);
+            
+            try {
+                selectedId = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+            } catch (NumberFormatException e) {
+                
+            }
+
+            if (Mouse_evt.getClickCount() == 1) {
+                modoModificar();
+            }
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+    };
+    
+    /**
+     * Elimina el contenido del campo de cantidad en la vista
+     */
+    MouseListener mouseGuardPorcentaje = new MouseListener(){
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            vista.setPorcentaje("");
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+    };
+    
+    /**
      * Establece las limitaciones del campo de porcentaje
      */
-    KeyListener calculadoraDeTotales = new KeyListener(){
+    KeyListener keyGuardPorcentaje = new KeyListener(){
         @Override
         public void keyTyped(KeyEvent evt) { 
             
+            // OBTENCION DE TECLA
             int tecla = evt.getKeyChar();
-            System.out.println("Tecla: " + tecla);
             char caracter = evt.getKeyChar();
-            boolean esTeclaPermitida = tecla == 8 || tecla >= 48 && tecla <= 57;
-            boolean campoCantidadEstaVacio = false;
-            boolean campoCantidadEstaLleno = vista.getCantidad().length() == 6;
             
-            // Verificacion de tecla presionada
-            if(!esTeclaPermitida || campoCantidadEstaLleno)
+            // TECLAS PERMITIDAS //
+            int punto = 46;
+            int backspace = 8;            
+            // Teclas permitidas + numeros
+            boolean esTeclaPermitida = tecla == punto || tecla == backspace || tecla >= 48 && tecla <= 57;
+            
+            // ANCHO DEL CAMPO  //
+            int anchoDeCampo = 6;
+            boolean campoCantidadEstaLleno = vista.getPorcentaje().length() == anchoDeCampo;
+            
+            // EXISTENCIA DE UN UNICO PUNTO //
+            boolean hayPunto = false;  
+            int posicionDelPunto = 0;
+            String copiaCampo = vista.getPorcentaje();            
+            for(int i = 0; i < copiaCampo.length(); i++){
+                if(copiaCampo.charAt(i) == '.'){
+                    posicionDelPunto = i;
+                    hayPunto = true;
+                    break;
+                }
+            }
+            // SOLO DOS DECIMALES //
+            boolean hayDosDecimales = false;
+            if(hayPunto){
+                String decimales;
+                decimales = copiaCampo.substring(posicionDelPunto+1, copiaCampo.length());
+                System.out.println("Decimales: " + decimales);
+                if(decimales.length() >= 2)
+                    hayDosDecimales = true;
+            }
+            
+            // SOLO TRES ENTEROS //
+            boolean hayTresEnteros = false;
+            if(!hayPunto && vista.getPorcentaje().length() >= 3){
+                hayTresEnteros = true;                
+            }
+            
+            //  CONSUMIR EVENTOS INDESEADOS //
+            if(!esTeclaPermitida || campoCantidadEstaLleno || hayDosDecimales)
+                evt.consume();
+            if(hayPunto && caracter == '.')
+                evt.consume();
+            if(hayTresEnteros && !hayPunto && caracter != '.')
                 evt.consume();
         }
 
         @Override
         public void keyPressed(KeyEvent evt) {
+            boolean flechaPresionada = evt.getExtendedKeyCode()== KeyEvent.VK_LEFT;
+            
+            if(flechaPresionada){
+                evt.consume();
+            }
         }
 
         @Override

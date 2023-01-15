@@ -7,7 +7,7 @@ package vista;
  *
  *    Archivo:  VentanaInventarioVista.java
  *    Licencia: GNU-GPL 
- *    @version  1.0
+ *    @version  1.1
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -93,7 +93,7 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
 
         btn_modificar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_modificar.setText("Modificar");
-        jPanel1.add(btn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 550, 90, -1));
+        jPanel1.add(btn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 550, 110, -1));
 
         txtF_porcentaje.setText("0");
         jPanel1.add(txtF_porcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 550, 60, -1));
@@ -113,13 +113,13 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
 
         btn_cancelar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_cancelar.setText("Cancelar");
-        jPanel1.add(btn_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 550, 90, -1));
+        jPanel1.add(btn_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 550, 90, -1));
 
         lbl_cantidad1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_cantidad1.setText("%");
         jPanel1.add(lbl_cantidad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 550, -1, -1));
 
-        lbl_textoGuia.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lbl_textoGuia.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         lbl_textoGuia.setForeground(new java.awt.Color(0, 102, 102));
         lbl_textoGuia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbl_textoGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 950, 20));
@@ -129,7 +129,7 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
         btn_eliminar.setForeground(new java.awt.Color(255, 255, 255));
         btn_eliminar.setText("Eliminar producto");
         btn_eliminar.setEnabled(false);
-        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 550, 160, -1));
+        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 550, 160, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,7 +139,7 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
         );
 
         pack();
@@ -217,7 +217,7 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
      * Asigna un texto al txtF_cantidad
      * @param texto El texto que se asignara al campo (String)
      */
-    public void setCantidad(String texto){
+    public void setPorcentaje(String texto){
         txtF_porcentaje.setText(texto);
     }
         
@@ -225,7 +225,7 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
      * Obtiene el texto en txt_cantidad
      * @return La cantidad de producto sin verificar validez (String)
      */
-    public String getCantidad(){
+    public String getPorcentaje(){
         return txtF_porcentaje.getText();
     }
 
@@ -256,7 +256,7 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
      * Establece un texto para instruir en el modo Visualizar
      */
     public void setGuiaVisualizar() {
-        lbl_textoGuia.setText("Cambie el porcentaje de ganacia, elimine  el producto o presione Cancelar si desea descartar los cambios. Consejo: Use máximo dos decimales en el porcentaje");
+        lbl_textoGuia.setText("Cambie el porcentaje de ganacia, elimine el producto o presione Cancelar si desea descartar los cambios.");
     }
 
     /**
@@ -362,9 +362,29 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
      * Añade un ActionListener al JButton de comprar
      * @param listener El ActionListener
      */
-    public void addActionRegistrarCompra(ActionListener listener){
+    public void addActionModificar(ActionListener listener){
         btn_modificar.addActionListener(listener);
     }   
+    
+    /**
+     * Añade un ActionListener al JButton de comprar
+     * @param listener El ActionListener
+     */
+    public void addActionEliminar(ActionListener listener){
+        btn_eliminar.addActionListener(listener);
+    }  
+    
+    /**
+     * Añade un ActionListener al JButton de cancelar
+     * @param listener El ActionListener
+     */
+    public void addActionCancelar(ActionListener listener){
+        btn_cancelar.addActionListener(listener);
+    }  
+    
+    public void addActionTable(MouseListener listener){
+        table_principal.addMouseListener(listener);
+    }
     
     /**
      * Añade un ActionListener al JButton de volver
@@ -378,7 +398,7 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
      * Añade un MouseListener al txtF_cantidad
      * @param listener El KeyListener
      */
-    public void addCantidadListener(MouseListener listener){
+    public void addPorcentajeListener(MouseListener listener){
         txtF_porcentaje.addMouseListener(listener);
     }
     
@@ -386,7 +406,7 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
      * Añade un KeyListener al txtF_cantidad
      * @param listener El KeyListener
      */
-    public void addCantidadListener(KeyListener listener){
+    public void addPorcentajeListener(KeyListener listener){
         txtF_porcentaje.addKeyListener(listener);
     }
     
