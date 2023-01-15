@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ConcurrentModificationException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import modelo.*;
@@ -190,6 +191,13 @@ public class VentanaClientesControlador {
     }
     
     
+    //              FUNCIONES               //
+    public void eliminarCliente() {
+        modelo.eliminar(selectedId);
+        JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente.");
+        recargarTodo();
+    }
+    
     //              LISTENERS               //
     /**
      * Se encarga de registrar un nuevo cliente cuidando la integridad de la 
@@ -253,19 +261,21 @@ public class VentanaClientesControlador {
     ActionListener oyenteEliminar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            int eleccion = JOptionPane.showConfirmDialog(null, """    
+            try{
+                int eleccion = JOptionPane.showConfirmDialog(null, """    
                                                                    Esta operacion es irreversible.
                                                                
                                                                    ¿Esta seguro de que desea continuar?""",
-                    "Advertencia: Eliminacion de cliente",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE);
-            switch (eleccion) {
-                case JOptionPane.YES_OPTION:
-                    modelo.eliminar(selectedId);
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente.");
-                    recargarTodo();
-                    break;
+                "Advertencia: Eliminacion de cliente",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+        switch (eleccion) {
+            case JOptionPane.YES_OPTION:
+                eliminarCliente();
+                break;
+        }
+            } catch(ConcurrentModificationException e){
+                eliminarCliente();
             }
         }
     };

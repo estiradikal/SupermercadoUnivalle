@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ConcurrentModificationException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import modelo.*;
@@ -206,6 +207,15 @@ public class VentanaProductosControlador {
     }
     
     
+    //              FUNCIONES               //
+    public void eliminarProducto() {
+        modelo.eliminar(selectedId);
+        modelo.eliminarProductoDeProveedores(selectedId);
+        JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente");
+        recargarTodo();
+    }
+    
+    
     //              LISTENERS               //
     /**
      * Se encarga de registrar un nuevo producto cuidando la integridad de el 
@@ -279,22 +289,23 @@ public class VentanaProductosControlador {
     ActionListener oyenteEliminar = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            int eleccion = JOptionPane.showConfirmDialog(null, """    
+            try{
+                int eleccion = JOptionPane.showConfirmDialog(null, """    
                                                                    Por motivos de seguridad, al eliminar este producto:
                                                                    
                                                                    - Se desasignará de los proveedores que lo ofrezcan.
                                                                    
                                                                    ¿Desea continuar con la operación?""",
-                    "Advertencia: Eliminacion de producto",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE);
-            switch (eleccion) {
-                case JOptionPane.YES_OPTION:
-                    modelo.eliminar(selectedId);
-                    modelo.eliminarProductoDeProveedores(selectedId);
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente");
-                    recargarTodo();
-                    break;
+                "Advertencia: Eliminacion de producto",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+        switch (eleccion) {
+            case JOptionPane.YES_OPTION:
+                eliminarProducto();
+                break;
+        }
+            } catch(ConcurrentModificationException e){
+                eliminarProducto();
             }
         }
     };
