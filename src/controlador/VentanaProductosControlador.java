@@ -3,6 +3,8 @@ package controlador;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ConcurrentModificationException;
@@ -49,6 +51,7 @@ public class VentanaProductosControlador {
         vista.addActionEliminar(oyenteEliminar);
         vista.addActionCancelar(oyenteCancelar);
         vista.addActionTable(oyenteFilas);
+        vista.addActionId(keyguardId);
         
         cargarTabla();
         vista.setGuiaModificar();
@@ -380,6 +383,47 @@ public class VentanaProductosControlador {
 
         @Override
         public void mouseExited(MouseEvent e) {
+        }
+    };
+    
+    /**
+     * Establece las limitaciones de un campo de cedula o id
+     */
+    KeyListener keyguardId = new KeyListener(){
+        @Override
+        public void keyTyped(KeyEvent evt) { 
+            String copiaCampo = vista.getId();
+            
+            // OBTENCION DE TECLA
+            int tecla = evt.getKeyChar();
+            char caracter = evt.getKeyChar();
+            
+            // TECLAS PERMITIDAS //
+            int backspace = 8;            
+            // Teclas permitidas + numeros
+            boolean esTeclaPermitida = tecla == backspace || tecla >= 48 && tecla <= 57;
+            
+            // ANCHO DEL CAMPO  //
+            int anchoDeCampo = 10;
+            boolean campoCantidadEstaLleno = copiaCampo.length() == anchoDeCampo;
+     
+            // ELIMINAR CEROS A LA IZQUIERDA //
+            boolean campoEstaVacio = copiaCampo.length() == 0;
+            if (campoEstaVacio && caracter == '0') {
+                evt.consume();
+            }
+
+            //  CONSUMIR EVENTOS INDESEADOS //
+            if(!esTeclaPermitida || campoCantidadEstaLleno)
+                evt.consume();
+        }
+
+        @Override
+        public void keyPressed(KeyEvent evt) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent evt) { 
         }
     };
 }

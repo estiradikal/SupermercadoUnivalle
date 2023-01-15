@@ -1,7 +1,9 @@
 package vista;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -185,7 +187,7 @@ public class VentanaClientesVista extends javax.swing.JFrame {
      * Obtiene la cedula en el campo de texto
      * @return La cedula en el JTextField (String)
      */
-    public String getCedula(){
+    public String getCedula() {
         return txtF_cedula.getText();
     }
     
@@ -392,6 +394,14 @@ public class VentanaClientesVista extends javax.swing.JFrame {
      */
     public void addActionTable(MouseListener listener) {
         table_principal.addMouseListener(listener);
+    }
+    
+    /**
+     * Agrega un KeyListener al campo de cedula
+     * @param listener El MouseListener
+     */
+    public void addActionCedula(KeyListener listener) {
+        txtF_cedula.addKeyListener(listener);
     }
     
 

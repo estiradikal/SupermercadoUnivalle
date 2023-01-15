@@ -1,6 +1,7 @@
 package vista;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import javax.swing.table.DefaultTableModel;
 
@@ -437,6 +438,14 @@ public class VentanaProductosVista extends javax.swing.JFrame {
      */
     public void addActionTable(MouseListener listener) {
         table_principal.addMouseListener(listener);
+    }
+    
+    /**
+     * Añade un KeyListener al txtF_id para proteger las teclas que recibe
+     * @param listener El keylistener
+     */
+    public void addActionId(KeyListener listener){
+        txtF_id.addKeyListener(listener);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

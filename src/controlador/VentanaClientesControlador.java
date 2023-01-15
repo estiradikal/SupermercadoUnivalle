@@ -18,11 +18,14 @@ package controlador;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ConcurrentModificationException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import modelo.*;
 import vista.*;
 
@@ -53,6 +56,7 @@ public class VentanaClientesControlador {
         vista.addActionEliminar(oyenteEliminar);
         vista.addActionCancelar(oyenteCancelar);
         vista.addActionTable(oyenteFilas);
+        vista.addActionCedula(keyguardId);
         
         cargarTabla();
         vista.setGuiaModificar();
@@ -154,13 +158,13 @@ public class VentanaClientesControlador {
                 JOptionPane.showMessageDialog(null, 
                         "El numero introducido debe: "
                         + "\n* Ser positivo. "
-                        + "\n* Tener entre " + cantidadDigitoMin + " y 10 digitos (Los ceros a la izquierda se eliminan)",
+                        + "\n* Tener al menos " + cantidadDigitoMin + " digitos (Los ceros a la izquierda no cuentan)",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, 
                         "El numero introducido debe: "
-                        + "\n* Tener entre " + cantidadDigitoMin + " y 10 digitos (Los ceros a la izquierda se eliminan)",
+                        + "\n* Tener al menos" + cantidadDigitoMin + " digitos (Los ceros a la izquierda no cuentan)",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
         }
@@ -349,6 +353,47 @@ public class VentanaClientesControlador {
 
         @Override
         public void mouseExited(MouseEvent e) {
+        }
+    };
+    
+    /**
+     * Establece las limitaciones de un campo de cedula o id
+     */
+    KeyListener keyguardId = new KeyListener(){
+        @Override
+        public void keyTyped(KeyEvent evt) { 
+            String copiaCampo = vista.getCedula();
+            
+            // OBTENCION DE TECLA
+            int tecla = evt.getKeyChar();
+            char caracter = evt.getKeyChar();
+            
+            // TECLAS PERMITIDAS //
+            int backspace = 8;            
+            // Teclas permitidas + numeros
+            boolean esTeclaPermitida = tecla == backspace || tecla >= 48 && tecla <= 57;
+            
+            // ANCHO DEL CAMPO  //
+            int anchoDeCampo = 10;
+            boolean campoCantidadEstaLleno = copiaCampo.length() == anchoDeCampo;
+     
+            // ELIMINAR CEROS A LA IZQUIERDA //
+            boolean campoEstaVacio = copiaCampo.length() == 0;
+            if (campoEstaVacio && caracter == '0') {
+                evt.consume();
+            }
+
+            //  CONSUMIR EVENTOS INDESEADOS //
+            if(!esTeclaPermitida || campoCantidadEstaLleno)
+                evt.consume();
+        }
+
+        @Override
+        public void keyPressed(KeyEvent evt) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent evt) { 
         }
     };
 }
