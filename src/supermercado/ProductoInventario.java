@@ -20,18 +20,23 @@ import java.io.Serializable;
 public class ProductoInventario extends ProductoProveedor implements Serializable{
     
     protected int cantidad;
+    int precio;
+    protected double porcentajeGanancia;
+    protected double ganancia;
+    int precioDeVenta;
 
     /**
      * Constructor de la clase ProductoProveedor
      * @param cantidad La cantidad de producto que se comprara (int)
      * @param Id El id del producto (int)
      * @param nombre El nombre del producto (String)
-     * @param precio El precio del producto (int)
+     * @param precio El precio de compra del producto (int)
      * @param medida La medida (kilogramos o unidades) del producto (String)
      */
     public ProductoInventario(int cantidad, int Id, String nombre, int precio, String medida) {
         super(Id, nombre, precio, medida);
         this.cantidad = cantidad;
+        cambiarPrecioDeVenta(10);
     }
 
     /**
@@ -48,5 +53,28 @@ public class ProductoInventario extends ProductoProveedor implements Serializabl
      */
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+    
+    public int getPrecioDeCompra(){
+        return precio;
+    }
+    
+    public void actualizarPrecioDeCompra(int nuevoPrecioDeCompra){
+        precio = nuevoPrecioDeCompra;
+        cambiarPrecioDeVenta(porcentajeGanancia);
+    }
+    
+    public int getPrecioDeVenta(){
+        return precioDeVenta;
+    }
+    
+    public double getPorcentajeGanancia(){
+        return porcentajeGanancia;
+    }
+    
+    public void cambiarPrecioDeVenta(double porcentajeDeGanancia){
+        porcentajeGanancia = porcentajeDeGanancia;
+        ganancia = porcentajeGanancia / 100;
+        precioDeVenta = (int)Math.round((double)precio + (double)precio * ganancia);
     }
 }
