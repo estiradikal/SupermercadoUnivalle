@@ -17,6 +17,7 @@ package vista;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import javax.swing.table.DefaultTableModel;
 
 public class VentanaComprarVista extends javax.swing.JFrame {
@@ -104,13 +105,15 @@ public class VentanaComprarVista extends javax.swing.JFrame {
 
         lbl_total.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_total.setText("Total a pagar: $");
-        jPanel1.add(lbl_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, -1, -1));
-        jPanel1.add(txtF_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 150, -1));
+        jPanel1.add(lbl_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 310, -1, -1));
+
+        txtF_cantidad.setText("0");
+        jPanel1.add(txtF_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 50, -1));
 
         lbl_costo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_costo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_costo.setText("-");
-        jPanel1.add(lbl_costo, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 310, 100, -1));
+        jPanel1.add(lbl_costo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 100, -1));
 
         lbl_cantidad.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_cantidad.setText("Cantidad");
@@ -259,7 +262,7 @@ public class VentanaComprarVista extends javax.swing.JFrame {
      * Crea los titulos de la tabla
      */
     public void configurarTabla() {
-        String[] titulosTabla = new String[]{"FECHA", "PRODUCTO", "COSTO (kg/unid)", "CANTIDAD", "TOTAL", };
+        String[] titulosTabla = new String[]{"FECHA", "PRODUCTO", "COSTO kg/unid ($)", "CANTIDAD", "TOTAL ($)", };
         modeloTabla.setColumnIdentifiers(titulosTabla);
     }
     
@@ -300,8 +303,6 @@ public class VentanaComprarVista extends javax.swing.JFrame {
     }
     
     public void limpiarCampos(){
-        box_proveedor.setSelectedIndex(0);
-        box_producto.setSelectedIndex(0);
         lbl_costo.setText("-");
         txtF_cantidad.setText("");
     }
@@ -352,11 +353,27 @@ public class VentanaComprarVista extends javax.swing.JFrame {
     }
     
     /**
+     * Agrega un ActionListener al JComboBox de productos
+     * @param listener El ActionListener
+     */
+    public void addProductosListener(ActionListener listener) {
+        box_producto.addActionListener(listener);
+    }
+    
+    /**
      * Agrega un ActionListener al JComboBox de producto
      * @param listener El ActionListener
      */
     public void addProductoListener(ActionListener listener) {
         box_producto.addActionListener(listener);
+    }
+    
+    /**
+     * Añade un MouseListener al txtF_cantidad
+     * @param listener El KeyListener
+     */
+    public void addCantidadListener(MouseListener listener){
+        txtF_cantidad.addMouseListener(listener);
     }
     
     /**
