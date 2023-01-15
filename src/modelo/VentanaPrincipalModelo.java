@@ -72,6 +72,15 @@ public class VentanaPrincipalModelo {
     }
     
     /**
+     * Instancia una nueva ventana para gestionar los productos del inventario
+     */
+    public void iniciarVentanaGestionarInventario(){
+        VentanaInventarioVista vista = new VentanaInventarioVista();
+        VentanaInventarioModelo modelo = new VentanaInventarioModelo();
+        VentanaInventarioControlador controlador = new VentanaInventarioControlador(modelo, vista);
+    }
+    
+    /**
      * Instancia una nueva ventana del registro de ventas
      */
     public void iniciarVentanaRegistroVentas(){

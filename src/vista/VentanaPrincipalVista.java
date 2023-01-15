@@ -46,6 +46,8 @@ public class VentanaPrincipalVista extends javax.swing.JFrame {
         btn_productosProveedores = new javax.swing.JButton();
         lbl_gestionar2 = new javax.swing.JLabel();
         lbl_gestionar3 = new javax.swing.JLabel();
+        btn_gestionarInventario = new javax.swing.JButton();
+        lbl_gestionar4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(520, 400));
@@ -71,43 +73,43 @@ public class VentanaPrincipalVista extends javax.swing.JFrame {
 
         lbl_gestionar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_gestionar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_gestionar.setText("Plantillas");
-        jPanel1.add(lbl_gestionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 80, -1));
+        lbl_gestionar.setText("Gestionar");
+        jPanel1.add(lbl_gestionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 80, -1));
 
         btn_proveedores.setBackground(new java.awt.Color(255, 0, 51));
         btn_proveedores.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_proveedores.setForeground(new java.awt.Color(255, 255, 255));
         btn_proveedores.setText("Proveedores");
-        jPanel1.add(btn_proveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 190, 30));
+        jPanel1.add(btn_proveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 190, 30));
 
         btn_clientes.setBackground(new java.awt.Color(255, 0, 51));
         btn_clientes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_clientes.setForeground(new java.awt.Color(255, 255, 255));
         btn_clientes.setText("Clientes");
-        jPanel1.add(btn_clientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 190, 30));
+        jPanel1.add(btn_clientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 190, 30));
 
         btn_productos.setBackground(new java.awt.Color(255, 0, 51));
         btn_productos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_productos.setForeground(new java.awt.Color(255, 255, 255));
         btn_productos.setText("Productos");
-        jPanel1.add(btn_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 190, 30));
+        jPanel1.add(btn_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 190, 30));
 
         lbl_gestionar1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_gestionar1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_gestionar1.setText("Ventas");
-        jPanel1.add(lbl_gestionar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, 80, -1));
+        lbl_gestionar1.setText("Registro de ventas");
+        jPanel1.add(lbl_gestionar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 200, -1));
 
         btn_comprarProductos.setBackground(new java.awt.Color(255, 0, 51));
         btn_comprarProductos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_comprarProductos.setForeground(new java.awt.Color(255, 255, 255));
         btn_comprarProductos.setText("Comprar productos");
-        jPanel1.add(btn_comprarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, 200, 30));
+        jPanel1.add(btn_comprarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 200, 30));
 
         btn_registroVentas.setBackground(new java.awt.Color(255, 0, 51));
         btn_registroVentas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_registroVentas.setForeground(new java.awt.Color(255, 255, 255));
-        btn_registroVentas.setText("Registro de ventas");
-        jPanel1.add(btn_registroVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, 200, 30));
+        btn_registroVentas.setText("Vender productos");
+        jPanel1.add(btn_registroVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 200, 30));
 
         btn_productosProveedores.setBackground(new java.awt.Color(255, 0, 51));
         btn_productosProveedores.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -118,17 +120,28 @@ public class VentanaPrincipalVista extends javax.swing.JFrame {
                 btn_productosProveedoresActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_productosProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 200, 30));
+        jPanel1.add(btn_productosProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 200, 30));
 
         lbl_gestionar2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_gestionar2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_gestionar2.setText("Asignar");
-        jPanel1.add(lbl_gestionar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 80, -1));
+        jPanel1.add(lbl_gestionar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 80, -1));
 
         lbl_gestionar3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_gestionar3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_gestionar3.setText("Inventario");
-        jPanel1.add(lbl_gestionar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 180, 80, -1));
+        lbl_gestionar3.setText("Registro de compras");
+        jPanel1.add(lbl_gestionar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 200, -1));
+
+        btn_gestionarInventario.setBackground(new java.awt.Color(255, 0, 51));
+        btn_gestionarInventario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_gestionarInventario.setForeground(new java.awt.Color(255, 255, 255));
+        btn_gestionarInventario.setText("Gestionar inventario");
+        jPanel1.add(btn_gestionarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 200, 30));
+
+        lbl_gestionar4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbl_gestionar4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_gestionar4.setText("Inventario");
+        jPanel1.add(lbl_gestionar4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 200, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -233,6 +246,14 @@ public class VentanaPrincipalVista extends javax.swing.JFrame {
     }
     
     /**
+     * Añade un ActionListener al JButton de gestionar inventario
+     * @param listener El ActionListener
+     */
+    public void addActionGestionarInventario(ActionListener listener){
+        btn_gestionarInventario.addActionListener(listener);
+    }
+    
+    /**
      * Añade un ActionListener al JButton de Registro de Ventas
      * @param listener El ActionListener
      */
@@ -243,6 +264,7 @@ public class VentanaPrincipalVista extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_clientes;
     private javax.swing.JButton btn_comprarProductos;
+    private javax.swing.JButton btn_gestionarInventario;
     private javax.swing.JButton btn_productos;
     private javax.swing.JButton btn_productosProveedores;
     private javax.swing.JButton btn_proveedores;
@@ -252,6 +274,7 @@ public class VentanaPrincipalVista extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_gestionar1;
     private javax.swing.JLabel lbl_gestionar2;
     private javax.swing.JLabel lbl_gestionar3;
+    private javax.swing.JLabel lbl_gestionar4;
     private javax.swing.JLabel lbl_rojoCabecera;
     private javax.swing.JLabel lbl_titulo;
     // End of variables declaration//GEN-END:variables

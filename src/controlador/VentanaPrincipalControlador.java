@@ -7,7 +7,7 @@ package controlador;
  *
  *    Archivo:  VentanaPrincipalControlador.java
  *    Licencia: GNU-GPL 
- *    @version  1.1
+ *    @version  1.2
  *    
  *    @author   Alejandro Guerrero Cano           (202179652-3743) {@literal <"alejandro.cano@correounivalle.edu.co">}
  *    @author   Estiven Andres Martinez Granados  (202179687-3743) {@literal <"estiven.martinez@correounivalle.edu.co">}
@@ -17,7 +17,6 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
 import modelo.*;
 import vista.*;
 
@@ -44,6 +43,7 @@ public class VentanaPrincipalControlador {
         vista.addActionClientes(oyenteClientes);
         vista.addActionProductosProveedores(oyenteProductosProveedores);
         vista.addActionComprarProductos(oyenteComprarProductos);
+        vista.addActionGestionarInventario(oyenteGestionarInventario);
         vista.addActionRegistroVentas(oyenteRegistroVentas);
     }
 
@@ -100,6 +100,17 @@ public class VentanaPrincipalControlador {
         public void actionPerformed(ActionEvent e) {
             vista.cerrar();
             modelo.iniciarVentanaComprarProductos();
+        }
+    };
+    
+    /**
+     * Redirige al metodo modelo.iniciarVentanaGestionarInventario y cierra la ventana
+     */
+    ActionListener oyenteGestionarInventario = new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            vista.cerrar();
+            modelo.iniciarVentanaGestionarInventario();
         }
     };
     
