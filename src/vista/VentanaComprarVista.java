@@ -18,6 +18,8 @@ package vista;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class VentanaComprarVista extends javax.swing.JFrame {
@@ -263,7 +265,14 @@ public class VentanaComprarVista extends javax.swing.JFrame {
      */
     public void configurarTabla() {
         String[] titulosTabla = new String[]{"FECHA", "PRODUCTO", "COSTO kg/unid ($)", "CANTIDAD", "TOTAL ($)", };
-        modeloTabla.setColumnIdentifiers(titulosTabla);
+        modeloTabla.setColumnIdentifiers(titulosTabla);        
+ 
+        // CENTRAR CONTENIDO DE COLUMNAS
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for(int i = 0; i < titulosTabla.length; i++){
+            table_principal.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
     }
     
     /**

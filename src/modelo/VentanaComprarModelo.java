@@ -17,6 +17,7 @@ package modelo;
 
 import controlador.VentanaPrincipalControlador;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import supermercado.*;
 import vista.VentanaPrincipalVista;
 
@@ -26,7 +27,7 @@ public class VentanaComprarModelo {
     java.util.List<Compra> comprasRegistradas = supermercado.getMisCompras();
     java.util.List<Proveedor> proveedores = supermercado.getMisProveedores();
     java.util.List<ProductoProveedor> productosProveedor = new ArrayList<>();
-    java.util.List<ProductoInventario> productosInventario = new ArrayList<>();
+    java.util.List<ProductoInventario> productosInventario = supermercado.getMisProductos();
     
     
     public VentanaComprarModelo(){
@@ -200,7 +201,7 @@ public class VentanaComprarModelo {
      * @param nombreCifrado El nombre del producto de forma id@nombre (String)
      * @param cantidadNueva La cantidad a agregar (int)
      */
-    public void addProductosAlInventario(String nombreCifrado, int cantidadNueva){
+    public void addProductosAlInventario(String nombreCifrado, int cantidadNueva, int precioDeCompra){
         
         boolean modificadoEnInventario = false;
         
@@ -218,6 +219,7 @@ public class VentanaComprarModelo {
             if(productoActual.getId() == id){
                 int cantidadAnterior = productoActual.getCantidad();
                 productoActual.setCantidad(cantidadAnterior + cantidadNueva);
+                productoActual.actualizarPrecioDeCompra(precioDeCompra);
                 modificadoEnInventario = true;
                 break;
             }
@@ -236,6 +238,8 @@ public class VentanaComprarModelo {
                 }
             }
             productosInventario.add(new ProductoInventario(cantidadNueva, id, nombre, precio, medida));
+            int ultimoProducto = productosInventario.size()-1;
+            productosInventario.get(ultimoProducto).actualizarPrecioDeCompra(precioDeCompra);
         }
         supermercado.setMisProductos(productosInventario);
     }

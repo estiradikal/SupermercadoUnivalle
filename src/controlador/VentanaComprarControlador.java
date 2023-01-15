@@ -223,7 +223,7 @@ public class VentanaComprarControlador {
                 int total = modelo.calcularTotal(nombreProductoCifrado, cantidad);
                 
                 modelo.registrarCompra(fecha, producto, precio, cantidad, total);
-                modelo.addProductosAlInventario(nombreProductoCifrado, cantidad);
+                modelo.addProductosAlInventario(nombreProductoCifrado, cantidad, precio);
 
                 JOptionPane.showMessageDialog(null, "Registro exitoso!");
                 recargarTodo();
