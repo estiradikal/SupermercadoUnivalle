@@ -40,6 +40,15 @@ public class VentanaVenderVista extends javax.swing.JFrame {
         configurarTabla();
     }
     
+    //              LISTENERS               //
+    /**
+     * Añade un ActionListener al JButton de comprar
+     * @param listener El ActionListener
+     */
+    public void addActionRegistrarCompra(ActionListener listener){
+        btn_vender.addActionListener(listener);
+    }
+    
      /**
      * deshabilita el boton modificar
      */
@@ -91,11 +100,11 @@ public class VentanaVenderVista extends javax.swing.JFrame {
         btn_eliminar = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
         combo_vender_producto = new javax.swing.JComboBox<>();
-        combo_vender_proveedor = new javax.swing.JComboBox<>();
+        combo_cliente = new javax.swing.JComboBox<>();
         lbl_nombre1 = new javax.swing.JLabel();
         combo_vender_cantidad = new javax.swing.JTextField();
         lbl_nombre2 = new javax.swing.JLabel();
-        btn_comprar1 = new javax.swing.JButton();
+        btn_vender = new javax.swing.JButton();
         btn_modificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -108,7 +117,7 @@ public class VentanaVenderVista extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_cedula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbl_cedula.setText("Proveedor");
+        lbl_cedula.setText("Cliente");
         jPanel1.add(lbl_cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         lbl_nombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -143,15 +152,15 @@ public class VentanaVenderVista extends javax.swing.JFrame {
 
         btn_eliminar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_eliminar.setText("Eliminar");
-        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 450, 90, -1));
+        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 450, 90, -1));
 
         btn_volver.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_volver.setText("Volver");
-        jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 450, -1, -1));
+        jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, -1, -1));
 
         jPanel1.add(combo_vender_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 190, -1));
 
-        jPanel1.add(combo_vender_proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 190, -1));
+        jPanel1.add(combo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 190, -1));
 
         lbl_nombre1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_nombre1.setText("Producto");
@@ -162,13 +171,13 @@ public class VentanaVenderVista extends javax.swing.JFrame {
         lbl_nombre2.setText("Cantidad");
         jPanel1.add(lbl_nombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, 20));
 
-        btn_comprar1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btn_comprar1.setText("Vender");
-        jPanel1.add(btn_comprar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 90, -1));
+        btn_vender.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        btn_vender.setText("Vender");
+        jPanel1.add(btn_vender, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 90, -1));
 
         btn_modificar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_modificar.setText("Modificar");
-        jPanel1.add(btn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, 90, -1));
+        jPanel1.add(btn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, 100, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -349,8 +358,8 @@ public class VentanaVenderVista extends javax.swing.JFrame {
     }
 
     
-    public void  nuevoProveedor(String proveedor){
-        combo_vender_proveedor.addItem(proveedor);
+    public void  nuevoCliente(String cliente){
+        combo_cliente.addItem(cliente);
     }
     
     public void nuevoProducto(String producto){
@@ -364,7 +373,7 @@ public class VentanaVenderVista extends javax.swing.JFrame {
      * Crea los titulos de la tabla
      */
     public void configurarTabla() {
-        String[] titulosTabla = new String[]{"ID","PROVEEDOR", "ID","PRODUCTO","CANTIDAD"};
+        String[] titulosTabla = new String[]{"CÉDULA","CLIENTE", "ID","PRODUCTO","CANTIDAD"};
         modeloTabla.setColumnIdentifiers(titulosTabla);
     }
     
@@ -375,9 +384,9 @@ public class VentanaVenderVista extends javax.swing.JFrame {
      * @param nombre El nombre completo del nuevo afiliado
      */
     
-       public void nuevaFila(String idProveedor, String nombreProveedor,String idProducto, String nombreProducto, int cantidad) {
+       public void nuevaFila(String cedula, String nombreCliente,String idProducto, String nombreProducto, int cantidad) {
         modeloTabla.addRow(new Object[]{
-            idProveedor,nombreProveedor,idProducto, nombreProducto,cantidad
+            cedula,nombreCliente,idProducto, nombreProducto,cantidad
         });
     }
     
@@ -468,11 +477,11 @@ public class VentanaVenderVista extends javax.swing.JFrame {
     
     //              LISTENERS            //
     /**
-     * Añade un ActionListener a btn_registrar
+     * Añade un ActionListener a btn_vender
      * @param listener El listener (ActionListener)
      */
-    public void addActionRegistrar(ActionListener listener){
-        btn_eliminar.addActionListener(listener);
+    public void addActionVender(ActionListener listener){
+        btn_vender.addActionListener(listener);
     }
 
     /**
@@ -502,13 +511,13 @@ public class VentanaVenderVista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancelar;
-    private javax.swing.JButton btn_comprar1;
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_modificar;
+    private javax.swing.JButton btn_vender;
     private javax.swing.JButton btn_volver;
+    private javax.swing.JComboBox<String> combo_cliente;
     private javax.swing.JTextField combo_vender_cantidad;
     private javax.swing.JComboBox<String> combo_vender_producto;
-    private javax.swing.JComboBox<String> combo_vender_proveedor;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_cedula;

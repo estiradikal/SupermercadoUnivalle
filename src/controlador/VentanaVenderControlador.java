@@ -38,6 +38,7 @@ public class VentanaVenderControlador {
         vista.setResizable(false);
         
         vista.addActionVolver(oyenteVolver);
+     //   vista.addActionVender(oyenteVender);
         /*
         vista.addActionRegistrar(oyenteRegistrar);
         vista.addActionModificar(oyenteModificar);
@@ -49,18 +50,18 @@ public class VentanaVenderControlador {
         cargarTabla();
         
         vista.setGuiaModificar();
-        cargarProveedores();
+        cargarClientes();
         cargarProductos();
     }
     
-    public void cargarProveedores(){
-        for (int i = 0; i < modelo.getCantidadProveedores(); i++) {
-            int id=modelo.getIdProveedor(i);
-            String nombre=modelo.getNombreProveedor(i);
+    public void cargarClientes(){
+        for (int i = 0; i < modelo.getCantidadClientes(); i++) {
+            int id=modelo.getIdCliente(i);
+            String nombre=modelo.getNombreCliente(i);
             
             String nombreCifrado = id + "@" + nombre;
                     
-            vista.nuevoProveedor(nombreCifrado);
+            vista.nuevoCliente(nombreCifrado);
             
         }
     }
@@ -96,8 +97,8 @@ public class VentanaVenderControlador {
      */
     
     public void cargarTabla() {
-        for (int i = 0; i < modelo.getProveedoresCantidad(); i++) {
-            String Proveedor = modelo.addProveedor(i);
+        for (int i = 0; i < modelo.getCantidadClientes(); i++) {
+            String cliente = modelo.addCliente(i);
             /*
             Proveedor copiaProveedor = modelo.getProveedor (i);    
             List<ProductosProveedor> copiaProductos = copiaProveedor.getProductos;

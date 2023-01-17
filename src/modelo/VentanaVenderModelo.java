@@ -29,7 +29,7 @@ public class VentanaVenderModelo {
     /**
      * Lista de la clase Proveedores
      */
-    java.util.List<Proveedor> misProveedores=supermercado.getMisProveedores();
+    java.util.List<Cliente> misClientes=supermercado.getMisClientes();
     java.util.List<ProductoInventario> misProductos=supermercado.getMisProductos();
     
     //Constructor
@@ -41,24 +41,24 @@ public class VentanaVenderModelo {
      * Retorna el tamaño que devuelva el ArrayList
      * @return 
      */
-    public int getCantidadProveedores(){
-        return misProveedores.size();
+    public int getCantidadClientes(){
+        return misClientes.size();
     }
     /**
      * Trae el Id del proveedor
      * @param indice
      * @return 
      */
-    public int getIdProveedor(int indice){
-        return misProveedores.get(indice).getId();
+    public int getIdCliente(int indice){
+        return misClientes.get(indice).getCedula();
     }
     /**
      * Trae el nombre del proveedor
      * @param indice
      * @return 
      */
-    public String getNombreProveedor(int indice){
-        return misProveedores.get(indice).getNombre();
+    public String getNombreCliente(int indice){
+        return misClientes.get(indice).getNombre();
     }
     /**
      * Retorna la cantidad de productos disponibles en el inventario
@@ -107,16 +107,16 @@ public class VentanaVenderModelo {
     
     
     
-    public String addProveedor(int indice){
-        for (Proveedor actual:misProveedores){
+    public String addCliente(int indice){
+        for (Cliente actual:misClientes){
             //return proveedor += actual.getNombre();
         }
-        return misProveedores.get(indice).getNombre();
+        return misClientes.get(indice).getNombre();
         
     }
     
     public int getProveedoresCantidad(){
-        return misProveedores.size();
+        return misClientes.size();
     }
 
     
