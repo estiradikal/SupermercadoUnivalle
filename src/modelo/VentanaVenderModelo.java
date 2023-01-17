@@ -1,11 +1,9 @@
 
 package modelo;
 
-import controlador.VentanaPrincipalControlador;
-import supermercado.ProductoProveedor;
-import supermercado.Proveedor;
-import supermercado.Supermercado;
-import vista.VentanaPrincipalVista;
+import controlador.*;
+import supermercado.*;
+import vista.*;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01
@@ -24,31 +22,101 @@ import vista.VentanaPrincipalVista;
 
 public class VentanaVenderModelo {
     
+    /**
+     *Instancia de la clase Supermercado 
+     */
     Supermercado supermercado = new Supermercado();
+    /**
+     * Lista de la clase Proveedores
+     */
+    java.util.List<Proveedor> misProveedores=supermercado.getMisProveedores();
+    java.util.List<ProductoInventario> misProductos=supermercado.getMisProductos();
     
-    java.util.List<Proveedor> proveedores = supermercado.getMisProveedores();
-    java.util.List<ProductoProveedor> productosEnElMercado = supermercado.getProductosEnElMercado();
-    
+    //Constructor
     public VentanaVenderModelo(){
         
     }
     
-    /*
-    public String cargarProveedores(int indice){
-        return proveedores.get(indice).getNombre();
+    /**
+     * Retorna el tamaño que devuelva el ArrayList
+     * @return 
+     */
+    public int getCantidadProveedores(){
+        return misProveedores.size();
     }
-    */
+    /**
+     * Trae el Id del proveedor
+     * @param indice
+     * @return 
+     */
+    public int getIdProveedor(int indice){
+        return misProveedores.get(indice).getId();
+    }
+    /**
+     * Trae el nombre del proveedor
+     * @param indice
+     * @return 
+     */
+    public String getNombreProveedor(int indice){
+        return misProveedores.get(indice).getNombre();
+    }
+    /**
+     * Retorna la cantidad de productos disponibles en el inventario
+     * @return 
+     */
+    public int getCantidadProductos(){
+        return misProductos.size();
+    }
+    /**
+     * Retorna el Id del producto
+     * @param indice
+     * @return 
+     */
+    public int getIdProducto(int indice){
+        return misProductos.get(indice).getId();
+    }
+    /**
+     * Retorna el nombre del producto
+     * @param indice
+     * @return 
+     */
+    public String getNombreProducto(int indice){
+        return misProductos.get(indice).getNombre();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     public String addProveedor(int indice){
-        for (Proveedor actual:proveedores){
+        for (Proveedor actual:misProveedores){
             //return proveedor += actual.getNombre();
         }
-        return proveedores.get(indice).getNombre();
+        return misProveedores.get(indice).getNombre();
         
     }
     
     public int getProveedoresCantidad(){
-        return proveedores.size();
+        return misProveedores.size();
     }
 
     

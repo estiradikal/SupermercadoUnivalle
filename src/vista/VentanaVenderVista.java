@@ -349,9 +349,14 @@ public class VentanaVenderVista extends javax.swing.JFrame {
     }
 
     
-    //              GETTERS Y SETTERS               //
-
-    //Para realizar lineas de código...
+    public void  nuevoProveedor(String proveedor){
+        combo_vender_proveedor.addItem(proveedor);
+    }
+    
+    public void nuevoProducto(String producto){
+        combo_vender_producto.addItem(producto);
+    }
+    
     
     //              CONFIGURACIONES             //
     

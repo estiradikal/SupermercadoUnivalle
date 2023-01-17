@@ -49,7 +49,46 @@ public class VentanaVenderControlador {
         cargarTabla();
         
         vista.setGuiaModificar();
+        cargarProveedores();
+        cargarProductos();
     }
+    
+    public void cargarProveedores(){
+        for (int i = 0; i < modelo.getCantidadProveedores(); i++) {
+            int id=modelo.getIdProveedor(i);
+            String nombre=modelo.getNombreProveedor(i);
+            
+            String nombreCifrado = id + "@" + nombre;
+                    
+            vista.nuevoProveedor(nombreCifrado);
+            
+        }
+    }
+    
+    public void cargarProductos(){
+        for (int i = 0; i < modelo.getCantidadProductos(); i++) {
+            int id=modelo.getIdProducto(i);
+            String nombre=modelo.getNombreProducto(i);
+            
+            String nombreCifrado=id+"@"+nombre;
+            vista.nuevoProducto(nombreCifrado);
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //              ELEMENTOS DE LA INTERFAZ               //
     /**
