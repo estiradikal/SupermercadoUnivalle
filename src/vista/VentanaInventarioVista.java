@@ -119,7 +119,6 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
         lbl_cantidad1.setText("%");
         jPanel1.add(lbl_cantidad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 550, -1, -1));
 
-        lbl_textoGuia.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         lbl_textoGuia.setForeground(new java.awt.Color(0, 102, 102));
         lbl_textoGuia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbl_textoGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 950, 20));

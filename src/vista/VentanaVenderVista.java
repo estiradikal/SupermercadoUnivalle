@@ -2,6 +2,8 @@ package vista;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,42 +48,9 @@ public class VentanaVenderVista extends javax.swing.JFrame {
      * @param listener El ActionListener
      */
     public void addActionRegistrarCompra(ActionListener listener){
-        btn_vender.addActionListener(listener);
+        btn_registrar.addActionListener(listener);
     }
-    
-     /**
-     * deshabilita el boton modificar
-     */
-    
-     public void deshabilitarModificar() {
-        btn_eliminar.setEnabled(false);
-    }
-     
-     /**
-     * Deshabilita btn_eliminar y configura su color en gris
-     */
-    public void deshabilitarEliminar() {
-        btn_eliminar.setEnabled(false);
-        btn_eliminar.setBackground(new java.awt.Color(187, 187, 187));
-    }
-    
-     /**
-     * habilita el boton de modificar
-     */
-    
-     public void habilitarModificar() {
-        btn_modificar.setEnabled(true);
-    }
-     
-     /**
-     * Habilita btn_eliminar y configura su color en rojo
-     */
-    public void habilitarEliminar() {
-        btn_eliminar.setEnabled(true);
-        btn_eliminar.setBackground(new java.awt.Color(255, 0, 51));
-    }
-
-
+   
     /**
      * Codigo autogenerado por Netbeans
      */
@@ -90,48 +59,55 @@ public class VentanaVenderVista extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lbl_cedula = new javax.swing.JLabel();
+        lbl_cliente = new javax.swing.JLabel();
         lbl_nombre = new javax.swing.JLabel();
+        lbl_titulo1 = new javax.swing.JLabel();
         lbl_titulo = new javax.swing.JLabel();
-        lbl_textoGuia = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_vender = new javax.swing.JTable();
-        btn_cancelar = new javax.swing.JButton();
-        btn_eliminar = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
-        combo_vender_producto = new javax.swing.JComboBox<>();
-        combo_cliente = new javax.swing.JComboBox<>();
-        lbl_nombre1 = new javax.swing.JLabel();
-        combo_vender_cantidad = new javax.swing.JTextField();
-        lbl_nombre2 = new javax.swing.JLabel();
-        btn_vender = new javax.swing.JButton();
-        btn_modificar = new javax.swing.JButton();
+        box_producto = new javax.swing.JComboBox<>();
+        box_cliente = new javax.swing.JComboBox<>();
+        lbl_producto = new javax.swing.JLabel();
+        txtF_cantidad = new javax.swing.JTextField();
+        lbl_cantidad = new javax.swing.JLabel();
+        btn_registrar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 500));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setMinimumSize(new java.awt.Dimension(400, 500));
-        jPanel1.setPreferredSize(new java.awt.Dimension(400, 500));
+        jPanel1.setMinimumSize(new java.awt.Dimension(520, 400));
+        jPanel1.setPreferredSize(new java.awt.Dimension(520, 400));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbl_cedula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbl_cedula.setText("Cliente");
-        jPanel1.add(lbl_cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        lbl_cliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbl_cliente.setText("Cliente");
+        jPanel1.add(lbl_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
 
         lbl_nombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbl_nombre.setText("Total a pagar: ");
-        jPanel1.add(lbl_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, 20));
+        lbl_nombre.setText("Total a pagar: $ ");
+        jPanel1.add(lbl_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 310, 110, -1));
+        lbl_nombre.getAccessibleContext().setAccessibleName("Total a pagar: $");
+
+        lbl_titulo1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbl_titulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_titulo1.setText("Registro de ventas");
+        lbl_titulo1.setMaximumSize(new java.awt.Dimension(116, 16));
+        lbl_titulo1.setMinimumSize(new java.awt.Dimension(116, 16));
+        lbl_titulo1.setPreferredSize(new java.awt.Dimension(116, 16));
+        jPanel1.add(lbl_titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, 750, 20));
+        lbl_titulo1.getAccessibleContext().setAccessibleName("Registro de ventas");
 
         lbl_titulo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbl_titulo.setText("Vender");
-        jPanel1.add(lbl_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-        lbl_textoGuia.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        lbl_textoGuia.setForeground(new java.awt.Color(0, 102, 102));
-        lbl_textoGuia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(lbl_textoGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 340, 20));
+        lbl_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_titulo.setText("Nueva venta");
+        lbl_titulo.setMaximumSize(new java.awt.Dimension(83, 16));
+        lbl_titulo.setMinimumSize(new java.awt.Dimension(83, 16));
+        lbl_titulo.setPreferredSize(new java.awt.Dimension(83, 16));
+        jPanel1.add(lbl_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 750, 20));
 
         table_vender.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -143,51 +119,46 @@ public class VentanaVenderVista extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(table_vender);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 340, 220));
-
-        btn_cancelar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btn_cancelar.setText("Cancelar");
-        btn_cancelar.setEnabled(false);
-        jPanel1.add(btn_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 90, -1));
-
-        btn_eliminar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btn_eliminar.setText("Eliminar");
-        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 450, 90, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 750, 160));
 
         btn_volver.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_volver.setText("Volver");
-        jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, -1, -1));
+        jPanel1.add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 310, 90, -1));
 
-        jPanel1.add(combo_vender_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 190, -1));
+        jPanel1.add(box_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 400, -1));
 
-        jPanel1.add(combo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 190, -1));
+        jPanel1.add(box_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 400, -1));
 
-        lbl_nombre1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbl_nombre1.setText("Producto");
-        jPanel1.add(lbl_nombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
-        jPanel1.add(combo_vender_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 190, -1));
+        lbl_producto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbl_producto.setText("Producto");
+        jPanel1.add(lbl_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
 
-        lbl_nombre2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbl_nombre2.setText("Cantidad");
-        jPanel1.add(lbl_nombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, 20));
+        txtF_cantidad.setText("0");
+        jPanel1.add(txtF_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 50, -1));
 
-        btn_vender.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btn_vender.setText("Vender");
-        jPanel1.add(btn_vender, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 90, -1));
+        lbl_cantidad.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbl_cantidad.setText("Cantidad");
+        jPanel1.add(lbl_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, -1, -1));
 
-        btn_modificar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btn_modificar.setText("Modificar");
-        jPanel1.add(btn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, 100, -1));
+        btn_registrar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        btn_registrar.setText("Registrar");
+        jPanel1.add(btn_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 90, -1));
+        btn_registrar.getAccessibleContext().setAccessibleName("Registrar");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setText("-");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 100, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -359,11 +330,11 @@ public class VentanaVenderVista extends javax.swing.JFrame {
 
     
     public void  nuevoCliente(String cliente){
-        combo_cliente.addItem(cliente);
+        box_cliente.addItem(cliente);
     }
     
     public void nuevoProducto(String producto){
-        combo_vender_producto.addItem(producto);
+        box_producto.addItem(producto);
     }
     
     
@@ -373,55 +344,42 @@ public class VentanaVenderVista extends javax.swing.JFrame {
      * Crea los titulos de la tabla
      */
     public void configurarTabla() {
-        String[] titulosTabla = new String[]{"CÉDULA","CLIENTE", "ID","PRODUCTO","CANTIDAD"};
+        String[] titulosTabla = new String[]{"FECHA","CLIENTE","PRODUCTO", "COSTO kg/unid ($)","CANTIDAD", "TOTAL ($)"};
         modeloTabla.setColumnIdentifiers(titulosTabla);
+        // CENTRAR CONTENIDO DE COLUMNAS
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for(int i = 0; i < titulosTabla.length; i++){
+            table_vender.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
     }
     
      /**
      * Añade una nueva fila con los datos de un nuevo afiliado
      *
-     * @param Id El Id del nuevo afiliado
-     * @param nombre El nombre completo del nuevo afiliado
+     * @param fecha La fecha de compra (String)
+     * @param nombreCliente El nombre del cliente (String)
+     * @param nombreProducto El nombre del producto (String)
+     * @param precioDeVenta Precio para vender
+     * @param cantidad La cantidad de producto (String)
+     * @param total El total a pagar por producto (String)
+     * 
      */
     
-       public void nuevaFila(String cedula, String nombreCliente,String idProducto, String nombreProducto, int cantidad) {
+       public void nuevaFila(String fecha, String nombreCliente, String nombreProducto,String precioDeVenta, String cantidad, String total) {
         modeloTabla.addRow(new Object[]{
-            cedula,nombreCliente,idProducto, nombreProducto,cantidad
+            fecha, nombreCliente,nombreProducto,cantidad, total
+            
+            
         });
     }
-    
-    /**
-     * Establece un texto para instruir en el modo Registrar
-     */
-    public void setGuiaRegistrar() {
-        lbl_textoGuia.setText("Modifique los campos arriba o presione Cancelar para el modo registro");
-    }
-
-    /**
-     * Establece un texto para instruir en el modo Modificar
-     */
-    public void setGuiaModificar() {
-        lbl_textoGuia.setText("Seleccione clientes en la tabla (si los hay) para modificarlos");
-    }
-    
+   
     /**
      * Cierra la ventana actual
      */
     public void cerrar(){
         dispose();
     }
-    
-    /**
-     * Añade una nueva fila con los datos de un cliente
-     * @param cedula El numero de cedula del cliente (int)
-     * @param nombre El nombre completo del cliente (String)
-     */
-    public void nuevaFila(int cedula, String nombre) {
-        modeloTabla.addRow(new Object[]{
-            cedula, nombre
-        });
-    }
-    
     
     //              FUNCIONES DE LIMPIEZA                   //
     /**
@@ -443,55 +401,15 @@ public class VentanaVenderVista extends javax.swing.JFrame {
         modeloTabla.removeRow(fila);
     }
 
-  
-    
-    //              HABILITAR/DESHABILITAR BOTONES          //
-    /**
-     * Habilita el boton de cancelar
-     */
-    public void habilitarCancelar() {
-        btn_cancelar.setEnabled(true);
-    }
-
-    /**
-     * Deshabilita el boton de cancelar
-     */
-    public void deshabilitarCancelar() {
-        btn_cancelar.setEnabled(false);
-    }
-
-    /**
-     * Habilita el boton de registrar
-     */
-    public void habilitarRegistrar() {
-        btn_eliminar.setEnabled(true);
-    }
-
-    /**
-     * Deshabilita el boton de registrar
-     */
-    public void deshabilitarRegistrar() {
-        btn_eliminar.setEnabled(false);
-    }
-
-    
     //              LISTENERS            //
     /**
      * Añade un ActionListener a btn_vender
      * @param listener El listener (ActionListener)
      */
     public void addActionVender(ActionListener listener){
-        btn_vender.addActionListener(listener);
+        btn_registrar.addActionListener(listener);
     }
 
-    /**
-     * Añade un ActionListener a btn_cancelar
-     * @param listener El listener (ActionListener)
-     */
-    public void addActionCancelar(ActionListener listener){
-        btn_cancelar.addActionListener(listener);
-    }
-    
     /**
      * Añade un ActionListener a btn_volver
      * @param listener El listener (ActionListener)
@@ -510,23 +428,21 @@ public class VentanaVenderVista extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_cancelar;
-    private javax.swing.JButton btn_eliminar;
-    private javax.swing.JButton btn_modificar;
-    private javax.swing.JButton btn_vender;
+    private javax.swing.JComboBox<String> box_cliente;
+    private javax.swing.JComboBox<String> box_producto;
+    private javax.swing.JButton btn_registrar;
     private javax.swing.JButton btn_volver;
-    private javax.swing.JComboBox<String> combo_cliente;
-    private javax.swing.JTextField combo_vender_cantidad;
-    private javax.swing.JComboBox<String> combo_vender_producto;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbl_cedula;
+    private javax.swing.JLabel lbl_cantidad;
+    private javax.swing.JLabel lbl_cliente;
     private javax.swing.JLabel lbl_nombre;
-    private javax.swing.JLabel lbl_nombre1;
-    private javax.swing.JLabel lbl_nombre2;
-    private javax.swing.JLabel lbl_textoGuia;
+    private javax.swing.JLabel lbl_producto;
     private javax.swing.JLabel lbl_titulo;
+    private javax.swing.JLabel lbl_titulo1;
     private javax.swing.JTable table_vender;
+    private javax.swing.JTextField txtF_cantidad;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -48,8 +48,6 @@ public class VentanaVenderControlador {
         */
         
         cargarTabla();
-        
-        vista.setGuiaModificar();
         cargarClientes();
         cargarProductos();
     }
@@ -119,11 +117,7 @@ public class VentanaVenderControlador {
      * CLIENTES
      */
     public void modoRegistrar() {
-        vista.setGuiaModificar();
-        vista.deshabilitarCancelar();
-        vista.deshabilitarModificar();
-        vista.deshabilitarEliminar();
-        vista.habilitarRegistrar();
+        
     }
     
     
@@ -133,11 +127,7 @@ public class VentanaVenderControlador {
      * EN CLIENTES EXISTENTES (Modificar datos y eliminar)
      */
     public void modoModificar() {
-        vista.setGuiaRegistrar();
-        vista.deshabilitarRegistrar();
-        vista.habilitarModificar();
-        vista.habilitarEliminar();
-        vista.habilitarCancelar();
+        
     }
    
     /**
