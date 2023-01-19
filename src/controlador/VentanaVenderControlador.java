@@ -47,10 +47,11 @@ public class VentanaVenderControlador {
         
         vista.addActionVolver(oyenteVolver);
         vista.addActionVender(oyenteVender);
-        
+        vista.addProductosListener(oyenteProductos);
         vista.addCantidadListener(eliminarCantidad);
         vista.addTotalesListener(calculadoraDeTotales);
         
+        //cargarTabla();
         cargarClientes();
         cargarProductos();
     }
@@ -61,9 +62,9 @@ public class VentanaVenderControlador {
      */
     
     public void cargarTabla() {
-        for (int i = 0; i < modelo.getCantidadClientes(); i++) {
+        for (int i = 0; i < modelo.getCantidadVentas(); i++) {
             String fecha = modelo.getFechaVenta(i);
-            String nombre = modelo.getNombreCliente(i);
+            String nombre = modelo.getNombreVenta(i);
             String producto = modelo.getProductoVenta(i);
             String precio = Integer.toString(modelo.getPrecioVenta(i));
             String cantidad = Integer.toString(modelo.getCantidadVenta(i));
@@ -196,6 +197,20 @@ public class VentanaVenderControlador {
             }
         }
     };
+    
+    ActionListener oyenteProductos = new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            try {
+                vista.setCantidad("");
+                vista.setCosto("0");
+            } catch(NullPointerException e) {
+                //  Este proveedor aun no tiene productos para ofrecer
+            }
+        }
+        
+    };
+    
     
      /**
      * Elimina el contenido del campo de cantidad en la vista

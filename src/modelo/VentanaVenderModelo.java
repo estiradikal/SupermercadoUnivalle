@@ -61,7 +61,7 @@ public class VentanaVenderModelo {
      * @param indice La posicion del proveedor en el arreglo (int)
      * @return El nombre del cliente como una cadena de texto (String)
      */
-    public String getNombreCliente(int indice){
+    public String getNombre(int indice){
         return clientes.get(indice).getNombre();
     }
     
@@ -87,12 +87,16 @@ public class VentanaVenderModelo {
         return ventas.get(indice).getFecha();
     }
     
+    public String getNombreVenta(int indice){
+        return ventas.get(indice).getCliente();
+    }
+    
     public String getProductoVenta(int indice){
         return ventas.get(indice).getProducto();
     }
     
     public int getPrecioVenta(int indice){
-        return misProductos.get(indice).getPrecioDeVenta();
+        return ventas.get(indice).getPrecio();
     }
     
     public int getCantidadVenta(int indice){
