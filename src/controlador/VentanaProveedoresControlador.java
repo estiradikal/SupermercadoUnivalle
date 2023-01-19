@@ -195,12 +195,20 @@ public class VentanaProveedoresControlador {
     
     
     //              FUNCIONES               //
+    /**
+     * Modifica el proveedor con el id seleccionado
+     * @param id El nuevo id del proveedor (int)
+     * @param nombre El nuevo nombre del proveedor (String)
+     */
     public void modificarProveedor(int id, String nombre) {
         modelo.modificar(selectedId, id, nombre);
         JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
         recargarTodo();
     }
     
+    /**
+     * Elimina el proveedor con el id seleccionado
+     */
     public void eliminarProveedor() {
         modelo.eliminar(selectedId);
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente.");

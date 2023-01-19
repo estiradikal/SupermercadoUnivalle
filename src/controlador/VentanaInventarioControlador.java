@@ -102,6 +102,9 @@ public class VentanaInventarioControlador {
     
     
     //              MODOS DE OPERACION              //
+    /**
+     * Habilita o deshabilita elementos en la pantalla para permitir solo la visualizacion
+     */
     public void modoVisualizar(){
         vista.setGuiaModificar();
         vista.deshabilitarPorcentaje();
@@ -110,6 +113,9 @@ public class VentanaInventarioControlador {
         vista.deshabilitarCancelar();  
     }
     
+    /**
+     * * Habilita o deshabilita elementos en la pantalla para permitir la alteracion del inventario
+     */
     public void modoModificar(){
         vista.setGuiaVisualizar();
         vista.habilitarPorcentaje();
@@ -120,6 +126,9 @@ public class VentanaInventarioControlador {
     
     
     //              FUNCIONES               //
+    /**
+     * Elimina el producto con el id seleccionado
+     */
     public void eliminarProductoActual(){
         modelo.eliminar(selectedId);
         recargarTodo();
