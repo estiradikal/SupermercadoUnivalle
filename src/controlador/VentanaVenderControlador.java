@@ -51,7 +51,7 @@ public class VentanaVenderControlador {
         vista.addCantidadListener(eliminarCantidad);
         vista.addTotalesListener(calculadoraDeTotales);
         
-        //cargarTabla();
+        cargarTabla();
         cargarClientes();
         cargarProductos();
     }
@@ -168,6 +168,16 @@ public class VentanaVenderControlador {
         return respuesta;
     }
     
+    public boolean cantidadSuficiente(int idProducto, int cantidadRequerida){
+        boolean respuesta = false;
+        int cantidadActual = modelo.verificarCantidadProducto(idProducto);
+        if (cantidadActual >= cantidadRequerida) {
+            respuesta = true;
+        }
+        return respuesta;
+
+    }
+    
     //              LISTENERS               //
     
     ActionListener oyenteVender = new ActionListener() {
@@ -190,10 +200,18 @@ public class VentanaVenderControlador {
                 int cantidad = Integer.parseInt(vista.getCantidad());
                 int total = modelo.calcularTotal(nombreProductoCifrado, cantidad);
                 
-                modelo.registrarVenta(fecha, cliente, precio, producto, cantidad, total);
-
-                JOptionPane.showMessageDialog(null, "Registro exitoso!");
-                recargarTodo();
+                if(cantidadSuficiente(id, cantidad)){
+                    modelo.registrarVenta(fecha, cliente, precio, producto, cantidad, total);
+                    JOptionPane.showMessageDialog(null, "Registro exitoso!");
+                    recargarTodo();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, 
+                        "La cantidad de producto en el inventario no es suficiente.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+                
             }
         }
     };

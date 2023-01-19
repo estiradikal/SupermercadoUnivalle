@@ -215,6 +215,24 @@ public class VentanaVenderModelo {
         return total;
     }
     
+    public int verificarCantidadProducto(int idProducto){
+        int cantidad = 0;
+        for(ProductoInventario productoActual: misProductos){
+            if(productoActual.getId() == idProducto){
+                cantidad = productoActual.getCantidad();
+            }
+        }
+        return cantidad;
+    }
+    
+    public void descontarDelInventario(int idProducto, int cantidad){
+        for(ProductoInventario productoActual: misProductos){
+            if(productoActual.getId() == idProducto){
+                int cantidadActual = productoActual.getCantidad();
+                productoActual.setCantidad(cantidadActual - cantidad);
+            }
+        }
+    }
     
     public void iniciarVentanaPrincipal() {
         VentanaPrincipalModelo modelo = new VentanaPrincipalModelo();
