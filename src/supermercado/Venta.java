@@ -1,6 +1,8 @@
 package supermercado;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01  
@@ -19,60 +21,81 @@ import java.io.Serializable;
 
 public class Venta implements Serializable{
     
-    protected Cliente cliente;
-    protected ProductoInventario producto;
+    protected String fecha;
+    protected String cliente;
+    protected int precio;
+    protected String producto;
     protected int cantidad;
-    protected int dia;
-    protected int mes;
-    protected int anio;
-
+    protected int total;
+    
+    
+    
+    
     /**
      * Constructor de la clase Venta
+     * @param fecha La fecha de la compra de forma MM/dd/yyyy, HH:mm:ss (String)
      * @param cliente El cliente que participo en la compra (Cliente)
+     * @param precio El precio del producto a vender (int)
      * @param producto El producto que se vendió (ProctoInventario)
      * @param cantidad La cantidad de productos que se compró (int)
-     * @param dia El dia en el que se hizo la compra (int)
-     * @param mes El mes en el que se hizo la compra (int)
-     * @param anio El anio en el que se hizo la compra (int)
+     * @param total El costo total de la compra (int)
+     * 
      */
-    public Venta(Cliente cliente, ProductoInventario producto, int cantidad, int dia, int mes, int anio) {
+    public Venta(String fecha, String cliente, int precio, String producto, int cantidad, int total) {
+        this.fecha = fecha;
         this.cliente = cliente;
+        this.precio = precio;
         this.producto = producto;
         this.cantidad = cantidad;
-        this.dia = dia;
-        this.mes = mes;
-        this.anio = anio;
+        this.total = total;
+      
     }
 
     /**
-     * Obtiene el cliente que participo en la compra
-     * @return cliente El cliente (Cliente)
+     * Obtiene la fecha de la compra
+     * @return fecha La fecha como cadena de texto de forma MM/dd/yyyy, HH:mm:ss (String)
      */
-    public Cliente getCliente() {
+    public String getFecha() {
+        return fecha;
+    }
+       
+    /**
+     * Obtiene el cliente que participo en la compra
+     * @return cliente (String)
+     */
+    public String getCliente() {
         return cliente;
     }
 
     /**
      * Asigna un cliente a la venta 
-     * @param cliente El cliente (Cliente)
+     * @param cliente El cliente (String)
      */
-    public void setCliente(Cliente cliente) {
+    public void setCliente(String cliente) {
         this.cliente = cliente;
+    }
+    
+    /**
+     * Obtiene el precio del producto en la compra
+     * @return precio El precio como numero entero (int)
+     */
+    public int getPrecio() {
+        return precio;
     }
 
     /**
      * Obtiene el producto de la compra
-     * @return producto El producto que se vendio (ProductoInventario)
+     * @return producto El producto que se vendio (String)
      */
-    public ProductoInventario getProducto() {
+    public String getProducto() {
         return producto;
     }
 
     /**
      * Asigna un producto a la venta
-     * @param producto El producto de la venta (ProductoInventario)
+     * @param producto El producto de la venta (String)
      */
-    public void setProducto(ProductoInventario producto) {
+    public void setProducto(String producto) {
         this.producto = producto;
     }
 
@@ -90,6 +113,14 @@ public class Venta implements Serializable{
      */
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+    
+    /**
+     * Obtiene el costo total de la compra
+     * @return total El costo total como numero entero (int)
+     */
+    public int getTotal() {
+        return total;
     }
 
 }

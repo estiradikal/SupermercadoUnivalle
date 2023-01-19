@@ -79,7 +79,7 @@ public class VentanaComprarControlador {
     }
 
     /**
-     * 
+     * Carga todos los proveedores a la vista 
      */
     public void cargarProveedores(){
         vista.eliminarProveedoresCargados();

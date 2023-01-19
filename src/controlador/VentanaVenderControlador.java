@@ -3,8 +3,16 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 import modelo.*;
 import vista.*;
+import supermercado.*;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01
@@ -38,56 +46,14 @@ public class VentanaVenderControlador {
         vista.setResizable(false);
         
         vista.addActionVolver(oyenteVolver);
-     //   vista.addActionVender(oyenteVender);
-        /*
-        vista.addActionRegistrar(oyenteRegistrar);
-        vista.addActionModificar(oyenteModificar);
-        vista.addActionEliminar(oyenteEliminar);
-        vista.addActionCancelar(oyenteCancelar);
-        vista.addActionTable(oyenteFilas);
-        */
+        vista.addActionVender(oyenteVender);
         
-        cargarTabla();
+        vista.addCantidadListener(eliminarCantidad);
+        vista.addTotalesListener(calculadoraDeTotales);
+        
         cargarClientes();
         cargarProductos();
     }
-    
-    public void cargarClientes(){
-        for (int i = 0; i < modelo.getCantidadClientes(); i++) {
-            int id=modelo.getIdCliente(i);
-            String nombre=modelo.getNombreCliente(i);
-            
-            String nombreCifrado = id + "@" + nombre;
-                    
-            vista.nuevoCliente(nombreCifrado);
-            
-        }
-    }
-    
-    public void cargarProductos(){
-        for (int i = 0; i < modelo.getCantidadProductos(); i++) {
-            int id=modelo.getIdProducto(i);
-            String nombre=modelo.getNombreProducto(i);
-            
-            String nombreCifrado=id+"@"+nombre;
-            vista.nuevoProducto(nombreCifrado);
-            
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     //              ELEMENTOS DE LA INTERFAZ               //
     /**
@@ -96,75 +62,227 @@ public class VentanaVenderControlador {
     
     public void cargarTabla() {
         for (int i = 0; i < modelo.getCantidadClientes(); i++) {
-            String cliente = modelo.addCliente(i);
-            /*
-            Proveedor copiaProveedor = modelo.getProveedor (i);    
-            List<ProductosProveedor> copiaProductos = copiaProveedor.getProductos;
-            for (int j = 0; j < copiaProductos.size(); j++) {   
-                String nombreProveedor = copiaProveedor.getNombre();
-                String idProveedor = String.valueOf(copiaProveedor.getId);
-                String nombreProducto = copiaProductos.get(j).getNombre();
-                String idProducto = String.valueOf(copiaProductos.get(j).getId());
-                vista.nuevaFila(idProveedor, nombreProveedor,idProducto, nombreProducto);
-            }
-            */
+            String fecha = modelo.getFechaVenta(i);
+            String nombre = modelo.getNombreCliente(i);
+            String producto = modelo.getProductoVenta(i);
+            String precio = Integer.toString(modelo.getPrecioVenta(i));
+            String cantidad = Integer.toString(modelo.getCantidadVenta(i));
+            String total = Integer.toString(modelo.getTotalVenta(i));
+            vista.nuevaFilaTabla(fecha, nombre, producto, precio, cantidad, total);
         }
     }
     
-    //              MODOS DE OPERACION               //
-    /**
-     * Habilita y deshabilita elementos en la interfaz para REGISTRAR NUEVOS
-     * CLIENTES
-     */
-    public void modoRegistrar() {
-        
+    public void cargarClientes(){
+        vista.eliminarClientesCargados();
+        for (int i = 0; i < modelo.getCantidadClientes(); i++) {
+            String clienteCompleto = modelo.getClienteCifrado(i);
+               
+            vista.nuevoCliente(clienteCompleto);
+            
+        }
     }
     
-    
-    
-    /**
-     * Habilita y deshabilita elementos en la interfaz para HACER MODIFICACIONES
-     * EN CLIENTES EXISTENTES (Modificar datos y eliminar)
-     */
-    public void modoModificar() {
-        
+    public void cargarProductos(){
+        vista.eliminarProductosCargados();
+        for (int i = 0; i < modelo.getCantidadProductos(); i++) {
+            String productoCompleto = modelo.getProductoCifrado(i);
+            
+            vista.nuevoProducto(productoCompleto);
+        }
     }
-   
+    
     /**
      * Recarga algunos elementos y datos de la vista
      */
-    /*
     public void recargarTodo(){
+        vista.limpiarCampos();
         vista.limpiarTabla();
-        modoRegistrar();
         cargarTabla();
     }
     
     /**
      * Instancia una VentanaPrincipal y cierra la actual
      */
-    /*
     public void volverAlMenu(){
         vista.cerrar();
         modelo.iniciarVentanaPrincipal();
     }
     
-    ActionListener oyenteRegistrar = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            modelo.registrar(proveedor);
-        }
-        
-    };
-    */
+    
+    //              MEDIDAS DE SEGURIDAD                //
     
     /**
-     * Instancia una VentanaPrincipal y cierra la actual
+     * Verifica si ya hay un producto seleccionado en la vista para empezar a usarlo
+     * @return false
      */
-    public void volverAlMenu(){
-        vista.cerrar();
-        modelo.iniciarVentanaPrincipal();
+    public boolean productoEstaSeleccionado(){
+        
+        boolean respuesta = false;
+        
+        try {
+            vista.getProducto();
+            respuesta = true;
+        } catch (NullPointerException e) {
+            // Aun no se ha seleccionado ningun producto
+        }
+        return respuesta;
     }
+    
+    /**
+     * Verifica si el campo de cantidad esta vacio pero no muestra ningun mensaje
+     * @return true, el campo esta vacio; false, el campo contiene otros caracteres
+     */
+    public boolean campoCantidadEstaVacio(){
+        boolean respuesta = true;
+        if(vista.getCantidad().isEmpty())
+            respuesta = false;
+        
+        return respuesta;
+    }
+    
+    /**
+     * Medida de seguridad, verifica si el campo de cedula tiene un numero y retroalimenta al usuario
+     * @return true, el campo tiene un numero; false, el campo contiene otros caracteres
+     */
+    public boolean cantidadEsNumeroValidoEnVista(){
+        
+        boolean respuesta = false;
+        
+        try{      
+            int numero = Integer.parseInt(vista.getCantidad()); // El dato es numerico
+            if(numero > 0) // El dato es positivo 
+                respuesta = true;
+            else // El dato es negativo
+                JOptionPane.showMessageDialog(null, 
+                        "La cantidad debe ser mayor a cero",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, 
+                        "Debe escribir un numero en el campo de cantidad",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                vista.setCantidad("");
+        }
+        return respuesta;
+    }
+    
+    //              LISTENERS               //
+    
+    ActionListener oyenteVender = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+          
+            if (cantidadEsNumeroValidoEnVista()) {
+
+                LocalDateTime fechaActual = LocalDateTime.now();
+                DateTimeFormatter formatoPresentacion = DateTimeFormatter.ofPattern("MMM/dd/yyyy, HH:mm:ss");                
+                String fecha = formatoPresentacion.format(fechaActual);
+                
+                String nombreClienteCifrado = vista.getCliente();
+                String nombreProductoCifrado = vista.getProducto(); // Obtiene el nombre completo del producto
+                
+                String cliente = modelo.descifrarNombre(nombreClienteCifrado);
+                String producto  = modelo.descifrarNombre(nombreProductoCifrado);
+                int id = modelo.descifrarId(nombreProductoCifrado);
+                int precio = modelo.getPrecioProductoId(id);
+                int cantidad = Integer.parseInt(vista.getCantidad());
+                int total = modelo.calcularTotal(nombreProductoCifrado, cantidad);
+                
+                modelo.registrarVenta(fecha, cliente, precio, producto, cantidad, total);
+
+                JOptionPane.showMessageDialog(null, "Registro exitoso!");
+                recargarTodo();
+            }
+        }
+    };
+    
+     /**
+     * Elimina el contenido del campo de cantidad en la vista
+     */
+    MouseListener eliminarCantidad = new MouseListener(){
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            vista.setCantidad("");
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+    };
+    
+    /**
+     * Calcula el costo total de la compra dinamicamente
+     */
+    KeyListener calculadoraDeTotales = new KeyListener(){
+        @Override
+        public void keyTyped(KeyEvent evt) { 
+            
+            int tecla = evt.getKeyChar();
+            char caracter = evt.getKeyChar();
+            boolean esNumero = tecla == 8 || tecla >= 48 && tecla <= 57;
+            boolean esBackspace = caracter == 8;
+            boolean campoCantidadEstaVacio = false;
+            boolean campoCantidadEstaLleno = vista.getCantidad().length() == 4;
+            
+            
+            
+            // Configurar valor de campo vacio
+            if (esBackspace) {
+                campoCantidadEstaVacio = vista.getCantidad().length() == 0;   
+            }
+            
+            // Verificacion de tecla presionada
+            if(!esNumero || campoCantidadEstaLleno)
+                evt.consume();
+                        
+            try {
+                String nombreProductoCifrado = vista.getProducto();
+                String cantidadActualizada = "";
+
+                if(campoCantidadEstaVacio){
+                    cantidadActualizada = "0";
+                }
+                else if (esBackspace) {
+                    cantidadActualizada = vista.getCantidad().substring(0, vista.getCantidad().length());
+                } else if (esNumero && vista.getCantidad().length() != 4) {
+                    cantidadActualizada = vista.getCantidad() + caracter;
+                }
+
+                int cantidad = Integer.parseInt(cantidadActualizada);
+                String total = Integer.toString(modelo.calcularTotal(nombreProductoCifrado, cantidad));
+                vista.setCosto(total);
+
+            } catch (NumberFormatException e) {
+            } catch (NullPointerException e) {
+            }
+        }
+
+        @Override
+        public void keyPressed(KeyEvent evt) {
+            boolean flechaPresionada = evt.getExtendedKeyCode()== KeyEvent.VK_LEFT;
+            
+            if(flechaPresionada){
+                evt.consume();
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent evt) { 
+        }
+    };
     
     /**
      * Redirige a el VentanaPrincipal

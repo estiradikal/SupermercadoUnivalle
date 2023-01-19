@@ -191,12 +191,12 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
         box_proveedor.addItem(proveedor);
     }
     
-    public String getProductoProveedor() {
-        return box_producto.getSelectedItem().toString(); 
-    }
-    
     public void addProductoProveedor(String producto) {
         box_producto.addItem(producto);
+    }
+    
+    public String getProductoProveedor() {
+        return box_producto.getSelectedItem().toString(); 
     }
     
     public void setProductoProveedor(String ProductoProveedor) {

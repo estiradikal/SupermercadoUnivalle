@@ -1,6 +1,7 @@
 package vista;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -42,15 +43,6 @@ public class VentanaVenderVista extends javax.swing.JFrame {
         configurarTabla();
     }
     
-    //              LISTENERS               //
-    /**
-     * Añade un ActionListener al JButton de comprar
-     * @param listener El ActionListener
-     */
-    public void addActionRegistrarCompra(ActionListener listener){
-        btn_registrar.addActionListener(listener);
-    }
-   
     /**
      * Codigo autogenerado por Netbeans
      */
@@ -72,10 +64,10 @@ public class VentanaVenderVista extends javax.swing.JFrame {
         txtF_cantidad = new javax.swing.JTextField();
         lbl_cantidad = new javax.swing.JLabel();
         btn_registrar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lbl_costo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(400, 500));
+        setMinimumSize(new java.awt.Dimension(800, 400));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -99,7 +91,6 @@ public class VentanaVenderVista extends javax.swing.JFrame {
         lbl_titulo1.setMinimumSize(new java.awt.Dimension(116, 16));
         lbl_titulo1.setPreferredSize(new java.awt.Dimension(116, 16));
         jPanel1.add(lbl_titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, 750, 20));
-        lbl_titulo1.getAccessibleContext().setAccessibleName("Registro de ventas");
 
         lbl_titulo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -143,12 +134,11 @@ public class VentanaVenderVista extends javax.swing.JFrame {
         btn_registrar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btn_registrar.setText("Registrar");
         jPanel1.add(btn_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 90, -1));
-        btn_registrar.getAccessibleContext().setAccessibleName("Registrar");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("-");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 100, -1));
+        lbl_costo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbl_costo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbl_costo.setText("-");
+        jPanel1.add(lbl_costo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 100, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -329,12 +319,62 @@ public class VentanaVenderVista extends javax.swing.JFrame {
     }
 
     
-    public void  nuevoCliente(String cliente){
+    //              GETTERS Y SETTERS               //
+    
+    /**
+     * Asigna un texto al lbl_costo
+     * @param texto El texto que se asignara al campo (String)
+     */
+    public void setCosto(String texto){
+        lbl_costo.setText(texto);
+    }
+    
+    /**
+     * Asigna un texto al txtF_cantidad
+     * @param texto El texto que se asignara al campo (String)
+     */
+    public void setCantidad(String texto){
+        txtF_cantidad.setText(texto);
+    }
+        
+    /**
+     * Obtiene el texto en txt_cantidad
+     * @return La cantidad de producto sin verificar validez (String)
+     */
+    public String getCantidad(){
+        return txtF_cantidad.getText();
+    }
+    
+    /**
+     * Obtiene el texto en box_proveedor
+     * @return El nombre del cliente de forma id@nombre (String)
+     */
+    public String getCliente(){
+        return box_cliente.getSelectedItem().toString();
+    }
+    
+    /**
+     * Obtiene el texto en box_producto
+     * @return El nombre del producto de forma id@nombre (String)
+     */
+    public String getProducto(){
+        return box_producto.getSelectedItem().toString();
+    }
+    
+    /**
+     * Añade un nuevo proveedor como item seleccionable al JComboBox 
+     * @param cliente El id + nombre del producto (String)
+     */
+    public void nuevoCliente(String cliente){
         box_cliente.addItem(cliente);
     }
     
-    public void nuevoProducto(String producto){
-        box_producto.addItem(producto);
+     /**
+     * Añade un nuevo producto como item seleccionable al JComboBox 
+     * @param nombreProducto El id + nombre del producto (String)
+     */
+    public void nuevoProducto(String nombreProducto){
+        box_producto.addItem(nombreProducto);
     }
     
     
@@ -366,9 +406,9 @@ public class VentanaVenderVista extends javax.swing.JFrame {
      * 
      */
     
-       public void nuevaFila(String fecha, String nombreCliente, String nombreProducto,String precioDeVenta, String cantidad, String total) {
+       public void nuevaFilaTabla(String fecha, String nombreCliente, String nombreProducto,String precioDeVenta, String cantidad, String total) {
         modeloTabla.addRow(new Object[]{
-            fecha, nombreCliente,nombreProducto,cantidad, total
+            fecha, nombreCliente,nombreProducto,precioDeVenta, cantidad, total
             
             
         });
@@ -382,6 +422,27 @@ public class VentanaVenderVista extends javax.swing.JFrame {
     }
     
     //              FUNCIONES DE LIMPIEZA                   //
+    
+    /**
+     * Vacia JComboBox de clientes a cero 
+     */
+    public void eliminarClientesCargados(){
+        box_cliente.removeAllItems();
+    }
+    
+    /**
+     * Vacia JComboBox de productos a cero 
+     */
+    public void eliminarProductosCargados(){
+        box_producto.removeAllItems();
+    }
+    
+    
+    public void limpiarCampos(){
+        lbl_costo.setText("-");
+        txtF_cantidad.setText("");
+    }
+    
     /**
      * Elimina todas las filas de la tabla
      */
@@ -419,11 +480,35 @@ public class VentanaVenderVista extends javax.swing.JFrame {
     }
     
     /**
-     * Agrega un MouseListener a la tabla
-     * @param listener El MouseListener
+     * Agrega un ActionListener al JComboBox de proveedor
+     * @param listener El ActionListener
      */
-    public void addActionTable(MouseListener listener) {
-        table_vender.addMouseListener(listener);
+    public void addClienteListener(ActionListener listener) {
+        box_cliente.addActionListener(listener);
+    }
+    
+    /**
+     * Agrega un ActionListener al JComboBox de productos
+     * @param listener El ActionListener
+     */
+    public void addProductosListener(ActionListener listener) {
+        box_producto.addActionListener(listener);
+    }
+    
+    /**
+     * Añade un MouseListener al txtF_cantidad
+     * @param listener El KeyListener
+     */
+    public void addCantidadListener(MouseListener listener){
+        txtF_cantidad.addMouseListener(listener);
+    }
+    
+    /**
+     * Añade un KeyListener al txtF_cantidad
+     * @param listener El KeyListener
+     */
+    public void addTotalesListener(KeyListener listener){
+        txtF_cantidad.addKeyListener(listener);
     }
     
 
@@ -432,11 +517,11 @@ public class VentanaVenderVista extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> box_producto;
     private javax.swing.JButton btn_registrar;
     private javax.swing.JButton btn_volver;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_cantidad;
     private javax.swing.JLabel lbl_cliente;
+    private javax.swing.JLabel lbl_costo;
     private javax.swing.JLabel lbl_nombre;
     private javax.swing.JLabel lbl_producto;
     private javax.swing.JLabel lbl_titulo;

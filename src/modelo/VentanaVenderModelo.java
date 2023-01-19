@@ -2,6 +2,7 @@
 package modelo;
 
 import controlador.*;
+import java.util.ArrayList;
 import supermercado.*;
 import vista.*;
 
@@ -22,103 +23,194 @@ import vista.*;
 
 public class VentanaVenderModelo {
     
-    /**
-     *Instancia de la clase Supermercado 
-     */
     Supermercado supermercado = new Supermercado();
-    /**
-     * Lista de la clase Proveedores
-     */
-    java.util.List<Cliente> misClientes=supermercado.getMisClientes();
-    java.util.List<ProductoInventario> misProductos=supermercado.getMisProductos();
+    java.util.List<Cliente> clientes = supermercado.getMisClientes();
+    java.util.List<ProductoInventario> misProductos = supermercado.getMisProductos();
+    java.util.List<Venta> ventas = supermercado.getMisVentas();
     
     //Constructor
-    public VentanaVenderModelo(){
+    public VentanaVenderModelo(){  
+    }
+    
+     //              GETTERS CON INDICE              //
+    /**
+     * Obtiene un nombre del proveedor con informacion relevante id@nombre
+     * @param indice La posicion del proveedor en el arreglo (int)
+     * @return El nombre del cliente de forma cedula@nombre (String)
+     */
+    public String getClienteCifrado(int indice){
+        String clienteActual = "";
         
+        clienteActual += clientes.get(indice).getCedula();
+        clienteActual += "@" + clientes.get(indice).getNombre();
+        
+        return clienteActual;
+    }
+    
+   /**
+     * Obtiene el id de un proveedor 
+     * @param indice La posicion del proveedor en el arreglo (int)
+     * @return La cédula del cliente como numero entero (int)
+     */
+    public int getCedulaCliente(int indice){
+        return clientes.get(indice).getCedula();
     }
     
     /**
-     * Retorna el tamaño que devuelva el ArrayList
-     * @return 
-     */
-    public int getCantidadClientes(){
-        return misClientes.size();
-    }
-    /**
-     * Trae el Id del proveedor
-     * @param indice
-     * @return 
-     */
-    public int getIdCliente(int indice){
-        return misClientes.get(indice).getCedula();
-    }
-    /**
-     * Trae el nombre del proveedor
-     * @param indice
-     * @return 
+     * Obtiene el nombre de un proveedor
+     * @param indice La posicion del proveedor en el arreglo (int)
+     * @return El nombre del cliente como una cadena de texto (String)
      */
     public String getNombreCliente(int indice){
-        return misClientes.get(indice).getNombre();
+        return clientes.get(indice).getNombre();
     }
+    
     /**
-     * Retorna la cantidad de productos disponibles en el inventario
-     * @return 
+     * Obtiene un nombre del producto con informacion relevante id@nombre
+     * @param indice La posicion del producto en el arreglo (int)
+     * @return El nombre del producto de forma id@nombre (String)
      */
+    public String getProductoCifrado(int indice){
+        String productoActual = "";
+        
+        productoActual += misProductos.get(indice).getId();
+        productoActual += "@" + misProductos.get(indice).getNombre();
+        
+        return productoActual;
+    }
+    
+    
+    
+    //              GETTERS VENTAS             //
+ 
+    public String getFechaVenta(int indice){
+        return ventas.get(indice).getFecha();
+    }
+    
+    public String getProductoVenta(int indice){
+        return ventas.get(indice).getProducto();
+    }
+    
+    public int getPrecioVenta(int indice){
+        return misProductos.get(indice).getPrecioDeVenta();
+    }
+    
+    public int getCantidadVenta(int indice){
+        return ventas.get(indice).getCantidad();
+    }
+    
+    public int getTotalVenta(int indice){
+        return ventas.get(indice).getTotal();
+    }
+    
+    
+    //              GETTERS CON ID              //
+    
+    public int getPrecioProductoId(int id){
+        int precio = 0;
+        for(ProductoInventario productoActual: misProductos){
+            if(productoActual.getId() == id){
+                precio = productoActual.getPrecioDeVenta();
+            }
+        }
+        return precio;
+    }
+    
+    //             GETTERS CANTIDAD DE ELEMENTOS EN ARRAYS              //    
+    public int getCantidadClientes(){
+        return clientes.size();
+    }
+    
     public int getCantidadProductos(){
         return misProductos.size();
     }
+    
+    public int getCantidadVentas(){
+        return ventas.size();
+    }
+    
+    
+    //              FUNCIONES               //
+    
     /**
-     * Retorna el Id del producto
-     * @param indice
-     * @return 
+     * Descifra el id de un producto o proveedor a partir de su nombreCifrado
+     * @param nombreCifrado El nombre de forma id@nombre (String)
+     * @return id El id del producto o proveedor como un entero (int)
      */
-    public int getIdProducto(int indice){
-        return misProductos.get(indice).getId();
-    }
-    /**
-     * Retorna el nombre del producto
-     * @param indice
-     * @return 
-     */
-    public String getNombreProducto(int indice){
-        return misProductos.get(indice).getNombre();
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public String addCliente(int indice){
-        for (Cliente actual:misClientes){
-            //return proveedor += actual.getNombre();
-        }
-        return misClientes.get(indice).getNombre();
-        
-    }
-    
-    public int getProveedoresCantidad(){
-        return misClientes.size();
-    }
+    public int descifrarId(String nombreCifrado){
+        String cadenaCompacta = nombreCifrado;
+        int id;
+        int intermedio = 0;
 
+        for (int i = 0; i < cadenaCompacta.length(); i++) {
+            if(cadenaCompacta.charAt(i) == '@'  ){
+                intermedio = i;
+                break;
+            }
+        }
+        
+        id = Integer.parseInt(cadenaCompacta.substring(0, intermedio));
+        
+        return id;
+    }
+    
+    /**
+     * Descifra el nombre de un producto o proveedor a partir de su nombreCifrado
+     * @param nombreCifrado El nombre de forma id@nombre (String)
+     * @return nombre El nombre del producto o proveedor como una cadena de texto (String)
+     */
+    public String descifrarNombre(String nombreCifrado){
+        String cadenaCompacta = nombreCifrado;
+        String nombre;
+        int intermedio = 0;
+
+        for (int i = 0; i < cadenaCompacta.length(); i++) {
+            if(cadenaCompacta.charAt(i) == '@'  ){
+                intermedio = i;
+                break;
+            }
+        }
+        
+        nombre = cadenaCompacta.substring(intermedio+1, cadenaCompacta.length());
+        
+        return nombre;
+    }
+    
+    /**
+     * Crea un objeto de tipo compra para el registro de compras
+     * @param fecha La fecha de la compra de forma MM/dd/yyyy, HH:mm:ss (String)
+     * @param cliente El nombre del cliente (String)
+     * @param precio El precio del producto (int)
+     * @param producto El nombre del producto (String)
+     * @param cantidad La cantidad deproducto  (int)
+     * @param total El costo total de la compra (int)
+     */
+    public void registrarVenta(String fecha, String cliente, int precio, String producto, int cantidad, int total){
+        ventas.add(0, new Venta(fecha, cliente, precio, producto, cantidad, total));
+        supermercado.setMisVentas(ventas);
+    }
+    
+    /**
+     * Calcula el costo total de comprar una cantidad de producto usando su nombreProductoCifrado para identificar el precio
+     * @param nombreProductoCifrado El nombre del producto de forma id@nombre (String)
+     * @param cantidad La cantidad de producto (int)
+     * @return 
+     */
+    public int calcularTotal(String nombreProductoCifrado, int cantidad){
+        
+        int id = descifrarId(nombreProductoCifrado);
+        int precio = 0;
+        
+        for(ProductoInventario productoActual: misProductos){
+            if(productoActual.getId() == id){
+                precio = productoActual.getPrecioDeVenta();
+                break;
+            }
+        }
+        int total = precio * cantidad;
+        return total;
+    }
+    
     
     public void iniciarVentanaPrincipal() {
         VentanaPrincipalModelo modelo = new VentanaPrincipalModelo();
