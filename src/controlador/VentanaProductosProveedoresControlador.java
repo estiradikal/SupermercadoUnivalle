@@ -35,7 +35,11 @@ public class VentanaProductosProveedoresControlador {
     protected VentanaProductosProveedoresModelo modelo = new VentanaProductosProveedoresModelo();
     protected VentanaProductosProveedoresVista vista = new VentanaProductosProveedoresVista(); 
     
-    
+    /**
+     * Constructor de la clase VentanaProductosProveedoresControlador
+     * @param modelo El modelo (VentanaProductosProveedoresModelo)
+     * @param vista La vista (VentanaProductosProveedoresVista)
+     */
     public VentanaProductosProveedoresControlador(VentanaProductosProveedoresModelo modelo, VentanaProductosProveedoresVista vista) {
         this.modelo = modelo;
         this.vista = vista;
@@ -66,6 +70,9 @@ public class VentanaProductosProveedoresControlador {
     
     
     //              ELEMENTOS DE LA INTERFAZ               //        
+    /**
+     * Llena la tabla con todos los datos de los proveedores
+     */
     public void cargarTabla(){
         
         vista.limpiarTabla();
@@ -85,7 +92,10 @@ public class VentanaProductosProveedoresControlador {
             }
         }
     }
-    
+
+    /**
+     * Carga todos los proveedores en la vista para ser seleccionados
+     */
     public void cargarProveedores() {
         for (int i = 0; i < modelo.getCantidadProveedores(); i++) {
             String nombreProveedorActual = modelo.getProveedorCifrado(i);
@@ -93,6 +103,9 @@ public class VentanaProductosProveedoresControlador {
         }
     }
     
+    /**
+     * Carga todos los productos en la vista para ser seleccionados
+     */
     public void cargarProductos() {
         for (int i = 0; i < modelo.getCantidadProductosEnElMercado(); i++) {
             String nombreProductoActual = modelo.getProductoCifrado(i);
@@ -136,6 +149,9 @@ public class VentanaProductosProveedoresControlador {
     
     
     //              FUNCIONES                   //
+    /**
+     * Elimina la relacion entre un producto y un proveedor para que no pueda ser ofrecido
+     */
     public void desasignarFilaSeleccionada() {
         modelo.desasignarProductoDeProveedor(selectedIdProducto, selectedIdProveedor);
         cargarTabla();
@@ -147,6 +163,9 @@ public class VentanaProductosProveedoresControlador {
                                                     de que lo asigne de nuevo.""");
     }
     
+    /**
+     * Establece una relacion entre un producto y un proveedor para que pueda ofrecerlo
+     */
     ActionListener oyenteAsignar = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -168,6 +187,10 @@ public class VentanaProductosProveedoresControlador {
         }
     };
     
+    /**
+     * Redirige un evento de la interfaz a la función de desasignarFilaSeleccionada
+     * @see desasignarFilaSeleccionada() 
+     */
     ActionListener oyenteDesasignar = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent evt) {
@@ -179,6 +202,9 @@ public class VentanaProductosProveedoresControlador {
         }
     };
     
+    /**
+     * Recarga la interfaz y vuelve al modo registrar
+     */
     ActionListener oyenteCancelar = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent evt) {

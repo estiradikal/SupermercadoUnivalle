@@ -211,12 +211,23 @@ public class VentanaProductosControlador {
     
     
     //              FUNCIONES               //
+    /**
+     * Modifica el producto con el id seleccionado
+     * @param id El nuevo id (int)
+     * @param nombre El nuevo nombre (String)
+     * @param precio El nuevo precio (int)
+     * @param medida La nueva medida kg/unid (String)
+     */
     public void modificarProducto(int id, String nombre, int precio, String medida){
         modelo.modificar(selectedId, id, nombre, precio, medida);
         modelo.eliminarProductoDeProveedores(selectedId);
         JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
         recargarTodo();
     }
+    
+    /**
+     * Elimina el producto con el id seleccionado
+     */
     public void eliminarProducto() {
         modelo.eliminar(selectedId);
         modelo.eliminarProductoDeProveedores(selectedId);

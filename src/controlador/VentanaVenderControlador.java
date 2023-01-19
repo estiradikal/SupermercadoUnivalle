@@ -12,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import modelo.*;
 import vista.*;
-import supermercado.*;
 
 /**
  *    Fundamentos de programación orientada a eventos 750014C-01
@@ -37,6 +36,11 @@ public class VentanaVenderControlador {
     protected VentanaVenderModelo modelo = new VentanaVenderModelo();
     protected VentanaVenderVista vista = new VentanaVenderVista(); 
     
+    /**
+     * Constructor de VentanaVenderControlador
+     * @param modelo El modelo (VentanaVenderModelo)
+     * @param vista El constructor (VentanaVenderVista)
+     */
     public VentanaVenderControlador(VentanaVenderModelo modelo, VentanaVenderVista vista) {
         this.modelo = modelo;
         this.vista = vista;
@@ -60,7 +64,6 @@ public class VentanaVenderControlador {
     /**
      * Carga los datos del arreglo en el modelo a la tabla
      */
-    
     public void cargarTabla() {
         for (int i = 0; i < modelo.getCantidadVentas(); i++) {
             String fecha = modelo.getFechaVenta(i);
@@ -73,16 +76,21 @@ public class VentanaVenderControlador {
         }
     }
     
+    /**
+     * Carga los clientes seleccionables desde cero
+     */
     public void cargarClientes(){
         vista.eliminarClientesCargados();
         for (int i = 0; i < modelo.getCantidadClientes(); i++) {
             String clienteCompleto = modelo.getClienteCifrado(i);
                
-            vista.nuevoCliente(clienteCompleto);
-            
+            vista.nuevoCliente(clienteCompleto);   
         }
     }
     
+    /**
+     * Carga los productos seleccionables desde cero
+     */
     public void cargarProductos(){
         vista.eliminarProductosCargados();
         for (int i = 0; i < modelo.getCantidadProductos(); i++) {
@@ -179,7 +187,9 @@ public class VentanaVenderControlador {
     }
     
     //              LISTENERS               //
-    
+    /**
+     * Registra una venta verificando la disponibilidad de un producto
+     */
     ActionListener oyenteVender = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
@@ -217,6 +227,9 @@ public class VentanaVenderControlador {
         }
     };
     
+    /**
+     * Limpia el label de costo y el campo de cantidad cada vez que se cambia el producto seleccionado
+     */
     ActionListener oyenteProductos = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent evt) {
@@ -230,8 +243,7 @@ public class VentanaVenderControlador {
         
     };
     
-    
-     /**
+    /**
      * Elimina el contenido del campo de cantidad en la vista
      */
     MouseListener eliminarCantidad = new MouseListener(){
