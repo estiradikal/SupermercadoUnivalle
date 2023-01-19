@@ -191,6 +191,7 @@ public class VentanaVenderModelo {
      */
     public void registrarVenta(String fecha, String cliente, int precio, String producto, int cantidad, int total){
         ventas.add(0, new Venta(fecha, cliente, precio, producto, cantidad, total));
+        supermercado.setMisProductos(misProductos);
         supermercado.setMisVentas(ventas);
     }
     

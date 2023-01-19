@@ -201,6 +201,7 @@ public class VentanaVenderControlador {
                 int total = modelo.calcularTotal(nombreProductoCifrado, cantidad);
                 
                 if(cantidadSuficiente(id, cantidad)){
+                    modelo.descontarDelInventario(id, cantidad);
                     modelo.registrarVenta(fecha, cliente, precio, producto, cantidad, total);
                     JOptionPane.showMessageDialog(null, "Registro exitoso!");
                     recargarTodo();
