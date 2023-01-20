@@ -21,7 +21,9 @@ import modelo.*;
 import vista.*;
 
 public class VentanaPrincipalControlador {
-    
+    /**
+     * Instancias de clase.
+     */
     protected VentanaPrincipalModelo modelo = new VentanaPrincipalModelo();
     protected VentanaPrincipalVista vista = new VentanaPrincipalVista();
 

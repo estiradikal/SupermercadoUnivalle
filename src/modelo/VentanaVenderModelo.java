@@ -22,7 +22,9 @@ import vista.*;
 */
 
 public class VentanaVenderModelo {
-    
+    /**
+     * Instancia y ArrayList
+     */
     Supermercado supermercado = new Supermercado();
     java.util.List<Cliente> clientes = supermercado.getMisClientes();
     java.util.List<ProductoInventario> misProductos = supermercado.getMisProductos();
@@ -215,7 +217,11 @@ public class VentanaVenderModelo {
         int total = precio * cantidad;
         return total;
     }
-    
+    /**
+     * Verifica si los productos están disponibles en el inventario
+     * @param idProducto
+     * @return 
+     */
     public int verificarCantidadProducto(int idProducto){
         int cantidad = 0;
         for(ProductoInventario productoActual: misProductos){
@@ -225,7 +231,11 @@ public class VentanaVenderModelo {
         }
         return cantidad;
     }
-    
+    /**
+     * Descuenta los productos del inventario
+     * @param idProducto
+     * @param cantidad 
+     */
     public void descontarDelInventario(int idProducto, int cantidad){
         for(ProductoInventario productoActual: misProductos){
             if(productoActual.getId() == idProducto){
@@ -234,7 +244,9 @@ public class VentanaVenderModelo {
             }
         }
     }
-    
+    /**
+     * Instancia del MVC de VentanaPrincipal
+     */
     public void iniciarVentanaPrincipal() {
         VentanaPrincipalModelo modelo = new VentanaPrincipalModelo();
         VentanaPrincipalVista vista = new VentanaPrincipalVista();

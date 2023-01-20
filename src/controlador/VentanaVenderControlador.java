@@ -29,10 +29,14 @@ import vista.*;
 */
 
 public class VentanaVenderControlador {
-    
+    /**
+     * Declaración de variables
+     */
     protected int selectedId;
     protected int selectedRow;
-    
+    /**
+     * Instancias de clase
+     */
     protected VentanaVenderModelo modelo = new VentanaVenderModelo();
     protected VentanaVenderVista vista = new VentanaVenderVista(); 
     

@@ -31,8 +31,15 @@ import vista.*;
 
 public class VentanaClientesControlador {
     
+    /**
+     * Declaración de variables protegidas de tipo enteras.
+     */
     protected int selectedId;
     protected int selectedRow;
+    
+    /**
+     * Instancias de clase.
+     */
     
     protected VentanaClientesModelo modelo = new VentanaClientesModelo();
     protected VentanaClientesVista vista = new VentanaClientesVista();    
@@ -195,12 +202,20 @@ public class VentanaClientesControlador {
     
     
     //              FUNCIONES               //
+    
+    /**
+     * Método que no retorna nada y recibe por parametros a cedula y nombre para modificar esos campos de cliente.
+     * @param cedula
+     * @param nombre 
+     */
     public void modificarCliente(int cedula, String nombre) {
         modelo.modificar(selectedId, cedula, nombre);
         JOptionPane.showMessageDialog(null, "Modificacion exitosa!");
         recargarTodo();
     }
-    
+    /**
+     * Método que no retorna nada para eliminar clientes.
+     */
     public void eliminarCliente() {
         modelo.eliminar(selectedId);
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente.");

@@ -30,10 +30,14 @@ import modelo.*;
 import vista.*;
 
 public class VentanaInventarioControlador {
-    
+    /**
+     * Declaración de variables
+     */
     protected int selectedId;
     protected int selectedRow;
-    
+    /**
+     * Instancias de clase
+     */
     protected VentanaInventarioModelo modelo = new VentanaInventarioModelo();
     protected VentanaInventarioVista vista = new VentanaInventarioVista();    
     
@@ -325,6 +329,9 @@ public class VentanaInventarioControlador {
                 evt.consume();
         }
 
+        /**
+         * Valida opciones del teclado
+         */
         @Override
         public void keyPressed(KeyEvent evt) {
             boolean flechaPresionada = evt.getExtendedKeyCode()== KeyEvent.VK_LEFT;

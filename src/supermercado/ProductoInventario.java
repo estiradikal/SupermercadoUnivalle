@@ -18,7 +18,9 @@ import java.io.Serializable;
 */
 
 public class ProductoInventario extends ProductoProveedor implements Serializable{
-    
+    /**
+     * Declaración de variables
+     */
     protected int cantidad;
     int precio;
     protected double porcentajeGanancia;

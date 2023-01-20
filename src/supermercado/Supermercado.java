@@ -27,6 +27,9 @@ import javax.swing.JOptionPane;
 
 public class Supermercado {
     
+    /**
+     * Declaración ArrayList
+     */
     protected java.util.List<ProductoProveedor> productosEnElMercado = new ArrayList<>();
     protected java.util.List<ProductoInventario> misProductos = new ArrayList<>();
     protected java.util.List<Cliente> misClientes = new ArrayList<>();

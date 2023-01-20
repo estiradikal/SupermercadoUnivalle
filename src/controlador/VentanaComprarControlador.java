@@ -30,9 +30,13 @@ import modelo.*;
 import vista.*;
 
 public class VentanaComprarControlador {
-    
+    /**
+     * Declaración de variable.
+     */
     protected int selectedId;
-    
+    /**
+     * Instancias de clase
+     */
     protected VentanaComprarModelo modelo = new VentanaComprarModelo();
     protected VentanaComprarVista vista = new VentanaComprarVista();    
     
@@ -351,6 +355,9 @@ public class VentanaComprarControlador {
             }
         }
 
+        /**
+         * Validaciones de teclado
+         */
         @Override
         public void keyPressed(KeyEvent evt) {
             boolean flechaPresionada = evt.getExtendedKeyCode()== KeyEvent.VK_LEFT;

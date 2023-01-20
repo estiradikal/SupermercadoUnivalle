@@ -20,7 +20,9 @@ import controlador.*;
 import supermercado.*;
 
 public class VentanaProductosProveedoresModelo {
-    
+    /**
+     * Instancia y ArrayList
+     */
     Supermercado supermercado = new Supermercado();    
     java.util.List<Proveedor> proveedores = supermercado.getMisProveedores();
     java.util.List<ProductoProveedor> productosProveedorActual;
@@ -81,7 +83,7 @@ public class VentanaProductosProveedoresModelo {
         
         return productoActual;
     }
-    
+    //              GETTER Y SETTER             //
     public String getNombreProductoMercado(int indice){
         return productosEnElMercado.get(indice).getNombre();
     }
@@ -90,7 +92,6 @@ public class VentanaProductosProveedoresModelo {
         return productosEnElMercado.get(indice).getId();
     }
     
-    // Productos del proveedor seleccionado
     public String getNombreProductoProveedor(int indice){
         return productosProveedorActual.get(indice).getNombre();
     }
@@ -150,7 +151,11 @@ public class VentanaProductosProveedoresModelo {
         // Se actualizan los proveedores en supermercado
         supermercado.setMisProveedores(proveedores);
     }
-    
+    /**
+     * Desasigna el nuevo productoProveedor asignado
+     * @param idProducto
+     * @param idProveedor 
+     */
     public void desasignarProductoDeProveedor(int idProducto, int idProveedor){
         
         // Se copia el arreglo de productos del proveedor que tiene el idProveedor
@@ -175,7 +180,12 @@ public class VentanaProductosProveedoresModelo {
         // Se actualizan los proveedores en supermercado
         supermercado.setMisProveedores(proveedores);
     }
-    
+    /**
+     * Ya se encuentra en inventario
+     * @param nombreProductoCifrado
+     * @param nombreProveedorCifrado
+     * @return 
+     */
     public boolean productoYaOfrecidoPorProveedor(String nombreProductoCifrado, String nombreProveedorCifrado){
         
         boolean respuesta = false;
@@ -246,7 +256,10 @@ public class VentanaProductosProveedoresModelo {
         
         return nombre;
     }
-    
+    /**
+     * Asigna productos a proveedor
+     * @param idProveedor 
+     */
     public void reasignarProductosA(int idProveedor){
         for(Proveedor proveedorActual: proveedores){
             if(proveedorActual.getId() ==idProveedor){
@@ -254,7 +267,9 @@ public class VentanaProductosProveedoresModelo {
             }
         }
     }
-    
+    /**
+     * Instancia el MCV de VentanaPrincipal
+     */
     public void iniciarVentanaPrincipal() {
         VentanaPrincipalModelo modelo = new VentanaPrincipalModelo();
         VentanaPrincipalVista vista = new VentanaPrincipalVista();

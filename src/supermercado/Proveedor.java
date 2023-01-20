@@ -21,6 +21,9 @@ import java.util.List;
 
 public class Proveedor implements Serializable{
 
+    /**
+     * Declaración de variables
+     */
     protected int id;
     protected String nombre;
     protected java.util.List<ProductoProveedor> misProductos = new ArrayList<>();

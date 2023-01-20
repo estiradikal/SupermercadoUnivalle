@@ -20,6 +20,10 @@ import vista.*;
 import controlador.*;
 
 public class main {
+    /**
+     * Clase principal que instancia el MCV de VentanaPrincipal
+     * @param args 
+     */
     public static void main(String[] args) {
         VentanaPrincipalModelo modelo = new VentanaPrincipalModelo();
         VentanaPrincipalVista vista = new VentanaPrincipalVista();

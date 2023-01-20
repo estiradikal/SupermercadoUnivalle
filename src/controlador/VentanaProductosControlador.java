@@ -30,13 +30,21 @@ import modelo.*;
 import vista.*;
 
 public class VentanaProductosControlador {
-    
+    /**
+     * Declaración de variable
+     */
     int selectedId;
     int selectedRow;
-    
+    /**
+     * Instancias de clase
+     */
     protected VentanaProductosModelo modelo = new VentanaProductosModelo();
     protected VentanaProductosVista vista = new VentanaProductosVista();
-
+    /**
+     * Constructor de la clase VentanaProductosControlador
+     * @param modelo. El constructor recibe parametro de la clase VentanaProductosModelo
+     * @param vista. El constructor recibe parametro de la clase VentanaProductosVista
+     */
     public VentanaProductosControlador(VentanaProductosModelo modelo, VentanaProductosVista vista) {
         this.modelo = modelo;
         this.vista = vista;
@@ -428,7 +436,9 @@ public class VentanaProductosControlador {
             if(!esTeclaPermitida || campoCantidadEstaLleno)
                 evt.consume();
         }
-
+        /**
+         * Acciones del teclado
+         */
         @Override
         public void keyPressed(KeyEvent evt) {
         }

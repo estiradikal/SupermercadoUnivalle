@@ -30,10 +30,14 @@ import modelo.*;
 import vista.*;
 
 public class VentanaProveedoresControlador {
-    
+    /**
+     * Declaración de variables
+     */
     protected int selectedId;
     protected int selectedRow;
-    
+    /**
+     * Instancias de clase
+     */
     protected VentanaProveedoresModelo modelo = new VentanaProveedoresModelo();
     protected VentanaProveedoresVista vista = new VentanaProveedoresVista();    
     
@@ -395,7 +399,9 @@ public class VentanaProveedoresControlador {
             if(!esTeclaPermitida || campoCantidadEstaLleno)
                 evt.consume();
         }
-
+        /**
+         * Eventos del teclado.
+         */
         @Override
         public void keyPressed(KeyEvent evt) {
         }

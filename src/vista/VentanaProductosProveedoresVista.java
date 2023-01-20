@@ -179,6 +179,7 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
         });
     }
     
+    //              GETTER Y SETTER             //
     public String getProveedor() {
         return box_proveedor.getSelectedItem().toString(); 
     }
@@ -296,7 +297,7 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
         btn_desasignar.setEnabled(false);
         btn_desasignar.setBackground(new java.awt.Color(187, 187, 187));
     }
-    
+    //                  HABILITA Y DESHABILITA LOS COMBOBOX             //
     public void habilitarBoxes(){
         box_proveedor.setEnabled(true);
         box_producto.setEnabled(true);

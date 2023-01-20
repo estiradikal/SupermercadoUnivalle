@@ -27,11 +27,15 @@ import modelo.*;
 import vista.*;
 
 public class VentanaProductosProveedoresControlador {
-    
+    /**
+     * Declaración de variables
+     */
     protected int selectedIdProveedor;
     protected int selectedIdProducto;
     protected int selectedRow;
-    
+    /**
+     * Instancias de clase
+     */
     protected VentanaProductosProveedoresModelo modelo = new VentanaProductosProveedoresModelo();
     protected VentanaProductosProveedoresVista vista = new VentanaProductosProveedoresVista(); 
     
@@ -247,7 +251,9 @@ public class VentanaProductosProveedoresControlador {
                 modoModificar();
             }
         }
-
+        /**
+         * Eventos del mouse
+         */
         @Override
         public void mouseClicked(MouseEvent evt) {
         }

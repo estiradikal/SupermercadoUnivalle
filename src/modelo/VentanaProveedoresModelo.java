@@ -20,10 +20,14 @@ import controlador.*;
 import supermercado.*;
 
 public class VentanaProveedoresModelo {
-    
+    /**
+     * Instancia y ArrayList
+     */
     Supermercado supermercado = new Supermercado();
     java.util.List<Proveedor> proveedores = supermercado.getMisProveedores();
-    
+    /**
+     * Constructor de la clase VentanaProveedoresModelo
+     */
     public VentanaProveedoresModelo(){
     }
     

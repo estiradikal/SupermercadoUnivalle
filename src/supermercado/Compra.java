@@ -18,7 +18,9 @@ import java.io.Serializable;
 */
 
 public class Compra implements Serializable{
-    
+    /**
+     * Declaración de variables
+     */
     protected String fecha;
     protected String producto;
     protected int precio;

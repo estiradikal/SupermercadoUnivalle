@@ -20,12 +20,14 @@ import java.time.format.DateTimeFormatter;
 */
 
 public class Venta implements Serializable{
-    
+    /**
+     * Declaración de variables
+     */
     protected String fecha;
     protected String cliente;
     protected int precio;
     protected String producto;
-    protected int cantidad;
+    protected int cantidad;//Kg o unidades
     protected int total;
     
     

@@ -18,7 +18,9 @@ import java.io.Serializable;
 */
 
 public class Cliente implements Serializable{
-    
+    /**
+     * Declaración de variables
+     */
     protected int cedula;
     protected String nombre;
 

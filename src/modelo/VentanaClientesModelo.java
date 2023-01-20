@@ -21,6 +21,9 @@ import supermercado.*;
 
 public class VentanaClientesModelo {
     
+    /**
+     * Instancia de Supermercado y ArrayList de Cliente.
+     */
     Supermercado supermercado = new Supermercado();
     java.util.List<Cliente> clientes = supermercado.getMisClientes();
     

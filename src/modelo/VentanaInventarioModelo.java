@@ -20,7 +20,9 @@ import controlador.*;
 import supermercado.*;
 
 public class VentanaInventarioModelo {
-    
+    /**
+     * Instancia y arrayList
+     */
     Supermercado supermercado = new Supermercado();
     java.util.List<ProductoInventario> misProductos = supermercado.getMisProductos();
     

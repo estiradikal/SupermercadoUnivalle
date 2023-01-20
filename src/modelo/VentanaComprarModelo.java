@@ -23,6 +23,9 @@ import vista.VentanaPrincipalVista;
 
 public class VentanaComprarModelo {
     
+    /**
+     * Instancias y arrayList
+     */
     Supermercado supermercado = new Supermercado();
     java.util.List<Compra> comprasRegistradas = supermercado.getMisCompras();
     java.util.List<Proveedor> proveedores = supermercado.getMisProveedores();
