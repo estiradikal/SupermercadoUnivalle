@@ -57,23 +57,43 @@ public class ProductoInventario extends ProductoProveedor implements Serializabl
         this.cantidad = cantidad;
     }
     
+    /**
+     * Obtiene el precio del producto de la compra
+     * @return precio El precio como numero entero (int)
+     */
     public int getPrecioDeCompra(){
         return precio;
     }
     
+    /**
+     * Actualiza el precio de compra
+     * @param nuevoPrecioDeCompra El nuevo precio de compra (int)
+     */
     public void actualizarPrecioDeCompra(int nuevoPrecioDeCompra){
         precio = nuevoPrecioDeCompra;
         cambiarPrecioDeVenta(porcentajeGanancia);
     }
     
+    /**
+     * Obtiene el precio de venta del producto
+     * @return precioDeVenta El precio como numero entero (int)
+     */
     public int getPrecioDeVenta(){
         return precioDeVenta;
     }
     
+    /**
+     * Obtiene el porcentaje de ganancia del producto
+     * @return porcentajeGanancia El porcentaje de ganancia como numero decimal (double)
+     */
     public double getPorcentajeGanancia(){
         return porcentajeGanancia;
     }
     
+    /**
+     * Cambia el precio de venta
+     * @param porcentajeDeGanancia El porcentaje de ganancia (double)
+     */
     public void cambiarPrecioDeVenta(double porcentajeDeGanancia){
         porcentajeGanancia = porcentajeDeGanancia;
         ganancia = porcentajeGanancia / 100;

@@ -279,7 +279,6 @@ public class VentanaProveedoresVista extends javax.swing.JFrame {
 
     /**
      * Elimina una fila específica de la tabla
-     *
      * @param fila La Fila a eliminar
      */
     public void eliminarFilaTabla(int fila) {

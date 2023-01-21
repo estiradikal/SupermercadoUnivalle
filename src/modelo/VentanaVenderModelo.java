@@ -245,7 +245,7 @@ public class VentanaVenderModelo {
         }
     }
     /**
-     * Instancia del MVC de VentanaPrincipal
+     * Instancia una nueva VentanaPrincipal
      */
     public void iniciarVentanaPrincipal() {
         VentanaPrincipalModelo modelo = new VentanaPrincipalModelo();

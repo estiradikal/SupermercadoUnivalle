@@ -214,11 +214,6 @@ public class VentanaComprarModelo {
         // Busca si el producto existe en el inventario para solo modificar su cantidad
         for(ProductoInventario productoActual: productosInventario){
             
-            /**
-             * // DESARROLLADOR //
-             * if(productoActual.getId() == id productoActual.getNombre() == nombre()){
-             * Formato de if más seguro pero deberia ser implementado correctamente
-             */
             if(productoActual.getId() == id){
                 int cantidadAnterior = productoActual.getCantidad();
                 productoActual.setCantidad(cantidadAnterior + cantidadNueva);

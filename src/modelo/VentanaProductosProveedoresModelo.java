@@ -268,7 +268,7 @@ public class VentanaProductosProveedoresModelo {
         }
     }
     /**
-     * Instancia el MCV de VentanaPrincipal
+     * Instancia una nueva VentanaPrincipal
      */
     public void iniciarVentanaPrincipal() {
         VentanaPrincipalModelo modelo = new VentanaPrincipalModelo();

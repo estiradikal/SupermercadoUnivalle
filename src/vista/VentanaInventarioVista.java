@@ -290,26 +290,45 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
     
     
     //              HABILITAR/DESHABILITAR BOTONES              //
+    
+    /**
+     * Habilita el botón de modificar
+     */
     public void habilitarModificar(){
         btn_modificar.setEnabled(true);
     }
     
+    /**
+     * Deshabilita el boton de modificar
+     */
     public void deshabilitarModificar(){
         btn_modificar.setEnabled(false);
     }
     
+    /**
+     * Habilita el campo de texto del porcentaje de ganancia
+     */
     public void habilitarPorcentaje(){
         txtF_porcentaje.setEnabled(true);
     }
     
+    /**
+     * Deshabilita el campo de texto del porcentaje de ganancia
+     */
     public void deshabilitarPorcentaje(){
         txtF_porcentaje.setEnabled(false);
     }
     
+    /**
+     * Habilita el boton de cancelar
+     */
     public void habilitarCancelar(){
         btn_cancelar.setEnabled(true);
     }
     
+    /**
+     * Deshabilita el boton de cancelar
+     */
     public void deshabilitarCancelar(){
         btn_cancelar.setEnabled(false);
     }
@@ -332,6 +351,7 @@ public class VentanaInventarioVista extends javax.swing.JFrame {
     
     
     //              FUNCIONES DE LIMPIEZA               //
+    
     public void limpiarCampos(){
         txtF_porcentaje.setText("");
     }

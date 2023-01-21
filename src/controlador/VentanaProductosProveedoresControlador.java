@@ -57,14 +57,7 @@ public class VentanaProductosProveedoresControlador {
         vista.addActionDesasignar(oyenteDesasignar);
         vista.addActionCancelar(oyenteCancelar);
         vista.addActionTable(oyenteFilas);
-        /*
-        vista.addActionRegistrar(oyenteRegistrar);
-        vista.addActionModificar(oyenteModificar);
-        
-        vista.addActionCancelar(oyenteCancelar);
-        
-        */
-        
+               
         cargarProductos();
         cargarProveedores();
         cargarTabla();

@@ -266,18 +266,31 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
     }
     
     //              HABILITAR/DESHABILITAR BOTONES          //
+    
+    /**
+     * Habilita el boton de cancelar
+     */
     public void habilitarCancelar() {
         btn_cancelar.setEnabled(true);
     }
 
+    /**
+     * Deshabilita el boton de cancelar
+     */
     public void deshabilitarCancelar() {
         btn_cancelar.setEnabled(false);
     }
 
+    /**
+     * Habilita el boton de registrar
+     */
     public void habilitarRegistrar() {
         btn_asignar.setEnabled(true);
     }
 
+    /**
+     * Deshabilita el boton de registrar
+     */
     public void deshabilitarRegistrar() {
         btn_asignar.setEnabled(false);
     }
@@ -297,7 +310,10 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
         btn_desasignar.setEnabled(false);
         btn_desasignar.setBackground(new java.awt.Color(187, 187, 187));
     }
+    
+    
     //                  HABILITA Y DESHABILITA LOS COMBOBOX             //
+    
     public void habilitarBoxes(){
         box_proveedor.setEnabled(true);
         box_producto.setEnabled(true);
@@ -311,7 +327,6 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
     //                  LISTENERS                       //
     /**
      * Agrega un ActionListener al btn_asignar
-     *
      * @param listener El ActionListener
      */
     public void addActionAsignar(ActionListener listener) {
@@ -320,7 +335,6 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
 
     /**
      * Agrega un ActionListener al btn_desasignar
-     *
      * @param listener El ActionListener
      */
     public void addActionDesasignar(ActionListener listener) {
@@ -329,7 +343,6 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
 
     /**
      * Agrega un ActionListener al btn_volver
-     *
      * @param listener El ActionListener
      */
     public void addActionVolver(ActionListener listener) {
@@ -338,7 +351,6 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
 
     /**
      * Agrega un ActionListener al btn_cancelar
-     *
      * @param listener El ActionListener
      */
     public void addActionCancelar(ActionListener listener) {
@@ -346,8 +358,7 @@ public class VentanaProductosProveedoresVista extends javax.swing.JFrame {
     }
 
     /**
-     * Agrega un MouseListener al btn_agregar
-     *
+     * Agrega un MouseListener a la tabla
      * @param listener El MouseListener
      */
     public void addActionTable(MouseListener listener) {

@@ -21,7 +21,7 @@ import controlador.*;
 
 public class main {
     /**
-     * Clase principal que instancia el MCV de VentanaPrincipal
+     * Clase principal que instancia el MVC de VentanaPrincipal
      * @param args 
      */
     public static void main(String[] args) {
